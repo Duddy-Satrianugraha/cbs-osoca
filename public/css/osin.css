@@ -1,0 +1,62 @@
+body {
+    background-color: #f7f7f7;
+}
+
+.top-bar {
+    background: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+.top-bar .logo {
+    height: 80px;
+  }
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.btn-orange {
+    background-color: #fd7e14;
+    color: #fff;
+}
+
+.btn-red {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.label-camera {
+    background-color: #17a2b8;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: inline-block;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.dropdown-menu {
+    z-index: 10000;
+}
+
+table thead {
+    background-color: #f1f1f1;
+}
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}

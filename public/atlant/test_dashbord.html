@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Penguji OSCE - Full Width</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .top-bar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 20px;
+        }
+
+        .top-bar .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .top-bar .center-info {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .top-bar .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .top-bar .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 10px;
+        }
+
+        .status-belum {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .btn-pasien {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+        }
+
+        .card-profile img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .btn-tidak-hadir {
+            background-color: #ff4d4f;
+            color: white;
+        }
+
+        .detail-soal {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .bg-orange {
+            background-color: #fd7e14;
+            color: white;
+        }
+
+        .dropdown-menu-right {
+            right: 0;
+            left: auto;
+        }
+
+        @media (max-width: 768px) {
+            .top-bar .center-info {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="top-bar container-fluid d-flex justify-content-between align-items-center">
+    <div class="logo">UJIAN OSCE</div>
+    <div class="center-info flex-grow-1 text-center">
+        <strong>SELAMAT DATANG DI UJIAN DEMO OSCE</strong><br>
+        OC 001, A, SESI 1, JAM 08:00:00
+    </div>
+    <div class="user-info">
+        <a href="#" class="text-dark mr-2"><i class="fas fa-question-circle"></i></a>
+        <img src="avatar.jpg" alt="User Avatar" class="avatar">
+        <div class="dropdown">
+            <a class="dropdown-toggle text-dark" href="#" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dr. Penguji 1
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ISI HALAMAN -->
+<div class="container-fluid mt-3">
+    <div class="row">
+        <!-- Tabel Mahasiswa -->
+        <div class="col-lg-8 col-md-7 mb-4">
+            <h6>Mahasiswa Selanjutnya : <strong>Kelsea Griffiths - OC001X04220001</strong></h6>
+
+            <div style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-bordered mt-3 mb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Nomor Ujian</th>
+                            <th>Urutan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Kelsea Griffiths</td><td>OC001X04220001</td><td>1</td><td class="status-belum">belum</td></tr>
+                        <tr><td>2</td><td>Marion Villa</td><td>OC001X04220014</td><td>2</td><td class="status-belum">belum</td></tr>
+                        <tr><td>3</td><td>Storm Cabrera</td><td>OC001X04220013</td><td>3</td><td class="status-belum">belum</td></tr>
+                        <tr><td>4</td><td>Cassia O'Doherty</td><td>OC001X04220012</td><td>4</td><td class="status-belum">belum</td></tr>
+                        <tr><td>5</td><td>Zephaniah Lopez</td><td>OC001X04220011</td><td>5</td><td class="status-belum">belum</td></tr>
+                        <!-- Tambahkan baris lagi untuk uji scroll -->
+                        <tr><td>6</td><td>Nama Lain</td><td>OC001X04220010</td><td>6</td><td class="status-belum">belum</td></tr>
+                        <tr><td>7</td><td>Nama Lain</td><td>OC001X04220009</td><td>7</td><td class="status-belum">belum</td></tr>
+                        <tr><td>8</td><td>Nama Lain</td><td>OC001X04220008</td><td>8</td><td class="status-belum">belum</td></tr>
+                        <tr><td>9</td><td>Nama Lain</td><td>OC001X04220007</td><td>9</td><td class="status-belum">belum</td></tr>
+                        <tr><td>10</td><td>Nama Lain</td><td>OC001X04220006</td><td>10</td><td class="status-belum">belum</td></tr>
+                        <!-- dst... -->
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+        <!-- Info Penguji -->
+        <div class="col-lg-4 col-md-5 mb-4">
+            <!-- Card 1: Info Station dengan Foto di Kiri -->
+            <div class="card mb-3">
+                <div class="card-body d-flex">
+                    <!-- Foto Penguji -->
+                    <div class="flex-shrink-0 mr-3">
+                        <img src="foto_penguji.jpg" alt="Foto Penguji" class="rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                    </div>
+
+                    <!-- Informasi Station + Tombol -->
+                    <div class="flex-grow-1 w-100">
+                        <!-- Baris atas: Judul + tombol -->
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <h6 class="text-uppercase font-weight-bold mb-0">STATION 1 - PSIKIATRI</h6>
+                            <button class="btn btn-sm btn-primary">PASIEN</button>
+                        </div>
+
+                        <!-- Detail info -->
+                        <p class="mb-1">Penguji: <strong>DR. PENGUJI 1</strong></p>
+                        <p class="text-muted mb-0">14 Peserta</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Card 2: Kamera dan Aksi -->
+            <div class="card">
+                <div class="card-body">
+                    <!-- Baris atas: Teks kiri dan kontrol kanan -->
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <p class="mb-0 font-weight-bold">Arahkan QR Code Mahasiswa ke kamera</p>
+                        <div class="d-flex align-items-center">
+                            <span class="badge badge-info p-2 mr-2">CAMERA ON</span>
+                            <button class="btn btn-outline-secondary btn-sm">ISI MANUAL</button>
+                        </div>
+                    </div>
+
+                    <!-- Gambar mahasiswa -->
+                    <div class="text-center mb-3">
+                        <img src="foto_mahasiswa.jpg" alt="Foto Mahasiswa" class="img-fluid rounded" style="max-height: 200px; object-fit: cover;">
+                    </div>
+
+                    <!-- Nomor urut dan tombol -->
+                    <div class="text-center">
+                        <p class="mb-2">Nomor urut selanjutnya: <strong>1</strong></p>
+                        <button class="btn btn-danger btn-block">TIDAK HADIR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Detail Soal -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="mb-3">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalPenilaian">LIHAT DETAIL SOAL</button>
+                <button class="btn bg-orange ml-2">HASIL PEMERIKSAAN TIDAK TAMPIL</button>
+            </div>
+            <div class="detail-soal">
+                <p><strong>Sistem Organ:</strong> Psikiatri</p>
+                <p><strong>Judul Kasus:</strong> Anemia hemolitik</p>
+                <p><strong>Instruksi untuk Kandidat:</strong></p>
+                <p><strong>SKENARIO KLINIK:</strong><br>
+                Seorang laki-laki 40 tahun datang ke klinik dokter umum dengan keluhan nyeri pada sendi jari-jari kaki kiri dan kanan.</p>
+                <p><strong>TUGAS:</strong></p>
+                <ol>
+                    <li>Lakukan anamnesis pada pasien!</li>
+                    <li>Lakukan pemeriksaan fisik yang relevan pada pasien!</li>
+                    <li>Tentukan pemeriksaan penunjang dan tanyakan hasilnya kepada penguji!</li>
+                    <li>Tuliskan diagnosis dan 2 (dua) diagnosis banding, tuliskan dalam lembar diagnosis dan terapi!</li>
+                    <li>Tentukan tatalaksana farmakoterapi untuk terapi inisiasi awal pada kasus ini, tuliskan resep dalam lembar terapi!</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Penilaian -->
+<div class="modal fade" id="modalPenilaian" tabindex="-1" role="dialog" aria-labelledby="modalPenilaianLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Apakah Anda yakin dengan nilai ini?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th>Kompetensi Yang Dinilai</th>
+                <th>Bobot</th>
+                <th>Nilai</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Anamnesis</td><td>4</td><td>3</td></tr>
+              <tr><td>Pemeriksaan Fisik/Psikiatri</td><td>3</td><td>3</td></tr>
+              <tr><td>Interpretasi Data/Kemampuan Prosedural Pemeriksaan Penunjang</td><td>3</td><td>3</td></tr>
+              <tr><td>Penegakan Diagnosis dan Diagnosis Banding</td><td>3</td><td>3</td></tr>
+              <tr><td>Tatalaksana Farmakoterapi</td><td>3</td><td>3</td></tr>
+              <tr><td>Komunikasi dan Edukasi Pasien</td><td>2</td><td>3</td></tr>
+              <tr><td>Perilaku Profesional</td><td>1</td><td>3</td></tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2"><strong>Global Rating</strong></td>
+                <td><strong>Lulus</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
+          <button type="button" class="btn btn-success">YAKIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Bootstrap JS + FontAwesome (untuk ikon tanda tanya) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/a2e0e6b415.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

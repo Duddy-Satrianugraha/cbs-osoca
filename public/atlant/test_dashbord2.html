@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Penguji OSCE</title>
+
+    <!-- Bootstrap 3.3.0 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- FontAwesome 4.1.0 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .top-bar {
+            background: #fff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-orange {
+            background-color: #fd7e14;
+            color: #fff;
+        }
+
+        .btn-red {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .label-camera {
+            background-color: #17a2b8;
+            padding: 5px 10px;
+            font-size: 12px;
+            display: inline-block;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .dropdown-menu {
+            z-index: 10000;
+        }
+
+        table thead {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="top-bar">
+    <div class="row">
+        <div class="col-xs-4"><strong>UJIAN OSCE</strong></div>
+        <div class="col-xs-4 text-center">
+            <strong>SELAMAT DATANG DI UJIAN DEMO OSCE</strong><br>
+            <small>OC 001, A, SESI 1, JAM 08:00:00</small>
+        </div>
+        <div class="col-xs-4 text-right">
+            <div class="dropdown">
+                <span>User</span>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Dr. Penguji 1 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container-fluid" style="margin-top: 20px;">
+    <div class="row">
+        <!-- TABEL MAHASISWA -->
+        <div class="col-md-8">
+            <h5><strong>Mahasiswa Selanjutnya :</strong> Kelsea Griffiths - <strong>OC001X04220001</strong></h5>
+            <div style="max-height: 300px; overflow-y: auto;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Nomor Ujian</th>
+                            <th>Urutan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Kelsea Griffiths</td><td>OC001X04220001</td><td>1</td><td><strong>belum</strong></td></tr>
+                        <tr><td>2</td><td>Marion Villa</td><td>OC001X04220014</td><td>2</td><td><strong>belum</strong></td></tr>
+                        <tr><td>3</td><td>Storm Cabrera</td><td>OC001X04220013</td><td>3</td><td><strong>belum</strong></td></tr>
+                        <tr><td>4</td><td>Cassia O'Doherty</td><td>OC001X04220012</td><td>4</td><td><strong>belum</strong></td></tr>
+                        <tr><td>5</td><td>Zephaniah Lopez</td><td>OC001X04220011</td><td>5</td><td><strong>belum</strong></td></tr>
+                        <tr><td>6</td><td>Nama Lain</td><td>OC001X04220010</td><td>6</td><td><strong>belum</strong></td></tr>
+                        <tr><td>7</td><td>Nama Lain</td><td>OC001X04220009</td><td>7</td><td><strong>belum</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PANEL PENGUJI -->
+        <div class="col-md-4">
+            <!-- Card 1: Info Penguji -->
+            <div class="card">
+                <div class="row">
+                    <div class="col-xs-4 text-center">
+                        <p style="margin:0;">Foto Penguji</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <h5 style="margin-top:0;"><strong>STATION 1 - PSIKIATRI</strong></h5>
+                        <p style="margin: 0;">Penguji: <strong>DR. PENGUJI 1</strong></p>
+                        <p class="text-muted" style="margin: 5px 0;">14 Peserta</p>
+                        <button class="btn btn-xs btn-primary pull-right">PASIEN</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Kamera -->
+            <div class="card">
+                <div class="clearfix">
+                    <p class="pull-left"><strong>Arahkan QR Code Mahasiswa ke kamera</strong></p>
+                    <div class="pull-right">
+                        <span class="label-camera">CAMERA ON</span>
+                        <button class="btn btn-default btn-xs">ISI MANUAL</button>
+                    </div>
+                </div>
+
+                <p class="text-center" style="margin: 15px 0;">Foto Mahasiswa</p>
+                <p class="text-center">Nomor urut selanjutnya: <strong>1</strong></p>
+                <button class="btn btn-red btn-block">TIDAK HADIR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETAIL SOAL -->
+    <div class="card">
+        <div>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalPenilaian">LIHAT DETAIL SOAL</button>
+            <button class="btn btn-orange">HASIL PEMERIKSAAN TIDAK TAMPIL</button>
+        </div>
+
+        <hr>
+        <p><strong>Sistem Organ:</strong> Psikiatri</p>
+        <p><strong>Judul Kasus:</strong> Anemia hemolitik</p>
+        <p><strong>Instruksi untuk Kandidat:</strong></p>
+        <p><strong>SKENARIO KLINIK:</strong> Seorang laki-laki 40 tahun datang ke klinik dokter umum dengan keluhan nyeri pada sendi jari-jari kaki kiri dan kanan.</p>
+        <p><strong>TUGAS:</strong></p>
+        <ol>
+            <li>Lakukan anamnesis pada pasien!</li>
+            <li>Lakukan pemeriksaan fisik yang relevan pada pasien!</li>
+            <li>Tentukan pemeriksaan penunjang dan tanyakan hasilnya kepada penguji!</li>
+            <li>Tuliskan diagnosis dan 2 (dua) diagnosis banding</li>
+            <li>Tentukan tatalaksana farmakoterapi untuk terapi inisiasi awal</li>
+        </ol>
+    </div>
+</div>
+
+<!-- Modal Penilaian -->
+<div class="modal fade" id="modalPenilaian" tabindex="-1" role="dialog" aria-labelledby="modalPenilaianLabel">
+    <div class="modal-dialog" style="width: 90%; max-width: 1000px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Apakah Anda yakin dengan nilai ini?</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th><strong>Kompetensi Yang Dinilai</strong></th>
+                <th><strong>Bobot</strong></th>
+                <th><strong>Nilai</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Anamnesis</td><td>4</td><td>3</td></tr>
+              <tr><td>Pemeriksaan Fisik/Psikiatri</td><td>3</td><td>3</td></tr>
+              <tr><td>Interpretasi Data/Kemampuan Prosedural Pemeriksaan Penunjang</td><td>3</td><td>3</td></tr>
+              <tr><td>Penegakan Diagnosis dan Diagnosis Banding</td><td>3</td><td>3</td></tr>
+              <tr><td>Tatalaksana Farmakoterapi</td><td>3</td><td>3</td></tr>
+              <tr><td>Komunikasi dan Edukasi Pasien</td><td>2</td><td>3</td></tr>
+              <tr><td>Perilaku Profesional</td><td>1</td><td>3</td></tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2"><strong>Global Rating</strong></td>
+                <td><strong>Lulus</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
+          <button type="button" class="btn btn-success">YAKIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

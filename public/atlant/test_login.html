@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Penguji OSCE</title>
+
+  <!-- Bootstrap 3.3.0 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+  <!-- Font Awesome 4.1.0 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+  <style>
+    body {
+    background-image: url('img/loginbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* opsional agar tidak ikut scroll */
+}
+
+    .card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    .info-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-label {
+      font-weight: bold;
+      width: 130px;
+      display: inline-block;
+    }
+
+    .tab-content {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .btn-keluar {
+      background-color: #879eb7;
+      color: #fff;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .tabs .nav-tabs > li > a {
+      font-weight: bold;
+    }
+
+    .tabs .nav-tabs > li.active > a {
+      border-bottom: 2px solid #000;
+    }
+
+    .shadow-card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 card shadow-card">
+      <div class="row">
+        <!-- Kiri: Info Station -->
+        <div class="col-sm-6">
+          <div class="info-title">Info Station</div>
+          <p><span class="info-label">Ujian:</span> Ujian Demo OSCE</p>
+          <p><span class="info-label">Lokasi Ujian:</span> OC 001</p>
+          <p><span class="info-label">Kode Tempat:</span> OC001</p>
+          <p><span class="info-label">Sub Lokasi:</span> A</p>
+          <p><span class="info-label">Station:</span> Station 1 - Psikiatri</p>
+          <p><span class="info-label">Sesi:</span> 1</p>
+          <p><span class="info-label">Jam:</span> 08:00:00</p>
+          <button class="btn btn-keluar">KELUAR</button>
+        </div>
+
+        <!-- Kanan: Panel Tab -->
+        <!-- Panel Tab -->
+            <div class="col-sm-6 tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#scan" role="tab" data-toggle="tab">SCAN QRCODE</a></li>
+                <li><a href="#kode" role="tab" data-toggle="tab">KODE PENGUJI</a></li>
+                <li><a href="#penunjang" role="tab" data-toggle="tab">PENUNJANG</a></li>
+                </ul>
+                <div class="tab-content">
+                <div class="tab-pane fade in active" id="scan">
+                    <p>Silahkan Arahkan QR CODE Penguji</p>
+                    <p class="text-muted">(unknown)</p>
+                </div>
+                <div class="tab-pane fade" id="kode">
+                    <p>Masukkan kode penguji secara manual</p>
+                </div>
+                <div class="tab-pane fade" id="penunjang">
+                    <p>Informasi penunjang akan ditampilkan di sini</p>
+                </div>
+                </div>
+            </div>
+
+
+        <!--  akhri panel yab-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>

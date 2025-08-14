@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
+
+</head>
+
+
+<!-- Pastikan jQuery dan Summernote sudah terpasang -->
+
+<!-- Textarea untuk Summernote -->
+<textarea class="summernote"></textarea>
+<textarea class="summernote"></textarea>
+<textarea class="summernote"></textarea>
+
+<script>
+    $(document).ready(function() {
+        // Membuat tombol custom untuk Paste Tanpa Format
+
+
+        // Inisialisasi Summernote dengan Toolbar Custom
+        $('.summernote').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+                // Tambahkan tombol custom
+            ],
+            callbacks: {
+        onPaste: function (e) {
+            e.preventDefault();
+            var bufferText = (e.originalEvent || e).clipboardData.getData('text/plain');
+            document.execCommand('insertText', false, bufferText);
+        }
+    }
+        });
+    });
+    </script>
+</html>

@@ -1,0 +1,105 @@
+osce	sesi	    lokasi	    rotasi      Station
+nama	osce_id	    osce_id	    osce_id     sesi_id
+	    nama	    sesi_id	    sesi_id     template_id
+	    jml_lokasi	nama 	    lokasi_id   lokasi_id
+	    jml_rotasi		        nama        nama
+	    slug_sesi
+        tgl sesi
+
+
+        <?php
+function angkaKeHuruf($angka) {
+    // Menangani angka di bawah 27 (1-26 -> 'a' - 'z')
+    if ($angka >= 1 && $angka <= 26) {
+        return chr(96 + $angka); // chr(97) = 'a', chr(98) = 'b', ...
+    }
+
+    // Menangani angka di atas 26 (27 -> 'AA', 28 -> 'AB', ...)
+    $huruf = '';
+    while ($angka > 0) {
+        $angka--; // Mengurangi 1 agar mulai dari 0 (untuk konversi yang lebih tepat)
+        $huruf = chr($angka % 26 + 65) . $huruf; // chr(65) = 'A', chr(66) = 'B', ...
+        $angka = intdiv($angka, 26); // Pembagian dengan 26 untuk mencapai huruf kedua
+    }
+
+    return $huruf;
+}
+
+// Contoh penggunaan
+echo angkaKeHuruf(1);   // Output: A
+echo angkaKeHuruf(26);  // Output: Z
+echo angkaKeHuruf(27);  // Output: AA
+echo angkaKeHuruf(52);  // Output: AZ
+echo angkaKeHuruf(53);  // Output: BA
+echo angkaKeHuruf(702); // Output: ZZ
+echo angkaKeHuruf(703); // Output: AAA
+?>
+
+untuk soal
+1 sesi punya 14 station maksmimal
+jadi setelah sesi langsung isi station, termasuk station istirahat
+untuk lokasi buat copy station dari sesi dan tambahkan slug station di lokasi
+untuk rotasi di gunakan urutan station guna mahasiswa saja
+
+jadi Osce => sesi => station
+
+nanti di daftarkan mahasiswa tabel nya langsung
+osce semster x sesi 1 lokasi A Rotasi 1=> pilih mahasiswa
+osce smester x sesi 1 lokasi A Rotasi 2 => pilih mahasiswa
+
+
+
+dan kalo bisa di rotasi nya ada nama lengkap nya biar pencarian nya gampang. (kalo perlu ubah input pembuatan rotasi nya)
+
+edit peserta belum selesai-> menunggu pendaftaran peserta -> perlu save nya dan di tambahkan penpendaftaran id di pesertanya
+dan perlu di pikirkan untuk edit sesi, apakah perlu edit individual lokasi , rotasi dan data peserta, soal nya kalo perlu, barti musti bongkar fungsi buat dan edit sesi
+metode store pendaftaran sudah di buat
+
+sama print name tag peserta sudah di buat
+
+perlu di buat mekanisme supaya mahasiswa bisa lihat data nilai dan feedback setelah ujian
+
+perlu di fikirkan gimana kalo ujiannya di hapus dan sesi nya di hapus supaya mahasiswa tetap bisa akses data nilai dan feedback
+
+masuk session semuanya, mahasiwa id sudah dimasukan ke session, ky nya perlu yang lain ky pendaftaran id dah buat persiapan nilai dan feedback
+barti pendaftran id nya musti masuk ke tabel peserta, minimal id nya, terus jangan lupa kalo urutannya selesai mo gimana
+jangan lupa buat modal buat pengisian nilai dan feedback ky nya musti masuk session lagi dah. resiko nya kalo mati listrik, musti ngulang semuanya, atau di save ke data base yah..
+enak nya mah data base yah, untuk semua sesi saat ini di coba dulu kalo tiba mati, bisa enggak kebuka lagi  !!! bisa... tpi enggak tau kalo mati lampu
+biar muncul kuesioer dan rekap nilai yang auto popup
+buat list dah
+tabel di status peserta isi nya array, dimana key nya sama dengan station nya dan valuenya berisi status nya udah atau belum -> di comtroller osce.simpan penilaian
+di dashbord tampilan status yang sudah maka di hidden
+jika ada  session mhs_id, maka tabel akan hilang di ganti rubrik, scanner juga di blok di ganti foto dan data peserta ok
+perlu buat popup scan pasien standar ok ky nya
+perlu buat popup rubrik per tinjauan, modal nya satu isinya ganti ganti aja, gak tau gimana itu. beres ky nya
+
+btn tidak ada peserta barti cuma ngupdate session current_peserta
+
+harus di buat limit kalo cureent_peserta sejumlah station
+ps ability belum selesai, terus di data diri make string aja tah
+ps new perlu ada sex dan data diri, begitu pula update dan delete harus di sesuaikan
+
+perkembahan baru :
+- bagian materi
+pemeriksaan penunjang harus terpisah
+kemudian ada berisi nilai yang ada di soal dan nilai standar/rujukan  untuk anak dan untuk dewasa
+
+- bagian pemeiksaan penunjang mhs\
+mhs login ke pemeriksaan penunjang dengan qr mahasiswa
+mahasiswa milih (checklist) (maksimal 5 item) pemeriksaan penunjang
+tampil dengab tab
+1. pemeiksaan penunjang pilihan mahasiswa, jika ada interpretasi muncul input interpretasi, hidden jika enggak
+    - hasil lab dalam bentuk tabel dengan header: parameter, Hasil, satuan , Rujukan dewasa, Rujukan anak
+    - yang berubah hanya hasil,
+    - jika ada sub parameter contoh, darah rutin, sub paramater nya ada Hemoglobin, eritrosit, leukosit  dan trombosit maka musti di buat 1 persatu
+
+2 tab diagnosis, muncul jika ada diagnosis, isinya diagnosis dan 2 diagnosis banding
+
+3 tab terapi berisi input resep ada 4 kolom resep
+
+input bisa di taruh di db peserta,
+
+- di penguji
+ perlu tampil hasil interpretasim diagnosis dan resep => nunggu bentuk html dari dr dr kati (perlu klik atau tidak)
+
+

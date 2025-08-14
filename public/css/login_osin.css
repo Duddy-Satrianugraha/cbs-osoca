@@ -1,0 +1,67 @@
+body {
+    background-image: url('../img/loginbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* opsional agar tidak ikut scroll */
+    }
+
+    .card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    .info-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-label {
+      font-weight: bold;
+      width: 130px;
+      display: inline-block;
+    }
+
+    .tab-content {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .btn-keluar {
+      background-color: #879eb7;
+      color: #fff;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .btn-bahaya {
+      background-color: #db0909;
+      color: #fff;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .btn-berita {
+      background-color: #2b6f6d;
+      color: #fff;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .tabs .nav-tabs > li > a {
+      font-weight: bold;
+    }
+
+    .tabs .nav-tabs > li.active > a {
+      border-bottom: 2px solid #4803a8;
+    }
+
+    .shadow-card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
