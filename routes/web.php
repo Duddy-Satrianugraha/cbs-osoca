@@ -18,6 +18,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\TrmeController;
+use App\Http\Controllers\OtemplateController;
 use App\Http\Middleware\Mahasiswa;
 use App\Http\Middleware\Panitia;
 use App\Http\Middleware\Penguji;
@@ -47,9 +48,15 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::resource('/users', AdminController::class);
     Route::resource('/roles', RoleController::class);
     Route::get('/power/{id}', [PowerController::class, 'index'])->name('powerup');
-    Route::resource('/templates', TemplateController::class);
     Route::resource('/options', OptionController::class);
-    Route::get('/templates/rekamedik/{template}', [TemplateController::class, 'rekamedik'])->name('templates.rekamedik');
+    Route::resource('/templates', OtemplateController::class);
+    Route::get('/templates/soal/{otemplate}', [OtemplateController::class, 'soal'])->name('templates.soal');
+    Route::put('/templates/soal/{otemplate}', [OtemplateController::class, 'soal_update'])->name('templates.soal.update');
+    Route::get('/templates/mininote/{otemplate}', [OtemplateController::class, 'mininote'])->name('templates.mininotes');
+    Route::put('/templates/mininote/{otemplate}', [OtemplateController::class, 'mininote_update'])->name('templates.mininotes.update');
+    Route::get('/templates/rubrik/{otemplate}', [OtemplateController::class, 'rubrik'])->name('templates.rubrik');
+    Route::put('/templates/rubrik/{otemplate}', [OtemplateController::class, 'rubrik_update'])->name('templates.rubrik.update');
+
     Route::get('/templates/peserta/{template}', [TemplateController::class, 'peserta'])->name('templates.peserta');
     Route::put('/templates/peserta/{template}', [TemplateController::class, 'peserta_update'])->name('templates.peserta.update');
     Route::get('/templates/penguji/{template}', [TemplateController::class, 'penguji'])->name('templates.penguji');
@@ -57,8 +64,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/templates/del_pp/{template}', [TemplateController::class, 'del_pp'])->name('templates.del_pp');
     Route::get('/templates/pasien/{template}', [TemplateController::class, 'pasien'])->name('templates.pasien');
     Route::put('/templates/pasien/{template}', [TemplateController::class, 'pasien_update'])->name('templates.pasien.update');
-    Route::get('/templates/rubrik/{template}', [TemplateController::class, 'rubrik'])->name('templates.rubrik');
-    Route::put('/templates/rubrik/{template}', [TemplateController::class, 'rubrik_update'])->name('templates.rubrik.update');
+    
     Route::get('/copy/templates', [TemplateController::class, 'copy_template'])->name('templates.copy');
     Route::post('/copy/templates', [TemplateController::class, 'copy'])->name('templates.copy.store');
     Route::resource('/ujian', UjianController::class);
@@ -81,6 +87,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::resource('pasien', PasienController::class);
     Route::get('/kartu/ps/{id}', [PdfController::class, 'one_ps'])->name('kartu.ps');
     Route::resource('rmd', TrmeController::class);
+    
 });
 
 Route::prefix('mahasiswa')->middleware(['auth', Mahasiswa::class ])->name('mahasiswa.')->group( function (){

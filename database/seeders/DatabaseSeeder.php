@@ -34,5 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StationsTableSeeder::class);
         $this->call(PesertasTableSeeder::class);
         $this->call(PendaftaransTableSeeder::class);
+        $this->call(OtemplatesTableSeeder::class);
+        $this->call(OrubriksTableSeeder::class);
     }
 }
