@@ -73,10 +73,11 @@ class OtemplateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Otemplate $otemplate)
-    {
-        $temp = $otemplate->first()->rubriks()->get();
-        //dd($temp);
+    public function show($id)
+    { 
+        $otemplate = Otemplate::find($id);
+        $temp = $otemplate->rubrix()->get();
+      // dd($temp);
         $rubrik = [];
         foreach ($temp as $data) {
             $rubrik[] = [
@@ -93,7 +94,7 @@ class OtemplateController extends Controller
                 'bobot' => $data->bobot,
             ];
         }
-        $template = $otemplate->first();
+        $template = $otemplate;
         //dd($template);
         return view('admin.otemplate.show', compact('template', 'rubrik'));
     }
@@ -101,27 +102,27 @@ class OtemplateController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Otemplate $otemplate)
+    public function edit($id)
     {
-        $template = $otemplate->first();
-        Return view('admin.otemplate.edit', compact('template'));
+       $otemplate = Otemplate::find($id);
+        Return view('admin.otemplate.edit',['template'=>$otemplate]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Otemplate $otemplate)
+    public function update(Request $request, $id)
     {
          $validated =  $request->validate([
             'nama_template' => 'required|string|max:255',
-
             'nomor_soal' => 'required|string|max:255',
             'judul_soal' => 'required|string|max:255',
 
         ]);
+       // dd($validated);
         try {
             DB::beginTransaction();
-
+            $otemplate = Otemplate::find($id);
         $otemplate->update([
             'nama_template' => $validated['nama_template'],
             'nomor_station' => $validated['nomor_soal'],
@@ -143,26 +144,26 @@ class OtemplateController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Otemplate $otemplate)
-    {
-        $otemplate->first()->rubriks()->delete();
-        $otemplate->first()->delete();
+    public function destroy($id)
+    {   $otemplate= Otemplate::find($id);
+        $otemplate->rubriks()->delete();
+        $otemplate->delete();
         return redirect()->back()->with('msg', 'success-Data berhasil dihapus');
     }
 
-    public function soal(Otemplate $otemplate)
+    public function soal($id)
     {
-
+        $otemplate = Otemplate::find($id);
         return view('admin.otemplate.soal', compact('otemplate'));
     }
 
-    public function soal_update(Request $request, Otemplate $otemplate){
+    public function soal_update(Request $request, $id){
         //dd($template);
         $validated =  $request->validate([
             'soal' => 'required|string',
             'tugas_mhs' => 'required|string',
         ]);
-
+         $otemplate = Otemplate::find($id);
         $otemplate->update([
             'soal' => $validated['soal'],
             'tugas_mhs' => $validated['tugas_mhs'],
@@ -171,26 +172,28 @@ class OtemplateController extends Controller
         return back()->with('msg', 'success-Soal berhasil disimpan');
     }
 
-    public function mininote(Otemplate $otemplate)
+    public function mininote($id)
     {
-
+         $otemplate = Otemplate::find($id);
         return view('admin.otemplate.mininotes', compact('otemplate'));
     }
 
-    public function mininote_update(Request $request, Otemplate $otemplate){
+    public function mininote_update(Request $request, $id){
         //dd($request->all());
         $validated =  $request->validate([
             "mininotes" => "required|string",
         ]);
+        $otemplate = Otemplate::find($id);
         $otemplate->update($validated);
         return back()->with('msg', 'success-Mininotes berhasil disimpan');
 
     }
 
-    public function rubrik(Otemplate $otemplate)
+    public function rubrik($id)
     {
         //dd($template->rubriks()->get());
-        $temp = $otemplate->rubriks()->get();
+        $otemplate = Otemplate::find($id);
+        $temp = $otemplate->rubrix()->get();
         $rubrik = [];
 
         foreach ($temp as $data) {
@@ -213,7 +216,7 @@ class OtemplateController extends Controller
 
     }
 
-    public function rubrik_update(Request $request, Otemplate $otemplate){
+    public function rubrik_update(Request $request,$id){
         //dd($request->all());
         $request->validate([
             'id' => 'required|array',
@@ -256,5 +259,43 @@ class OtemplateController extends Controller
         return view('admin.otemplate.copy', compact('templates'));
     }
     public function copy(Request $request){
+            $request->validate([                
+                'old_id_template' => 'required|integer',
+                'nama_template' => 'required|string',
+            ]);
+            try{
+                DB::beginTransaction();
+                $old_template = Otemplate::find($request->old_id_template);
+                $new_template = Otemplate::create([
+                    'nama_template' => $request->nama_template,
+                    'user_id' => Auth::user()->id,
+                    'nomor_station' => $old_template->nomor_station,
+                    'judul_station' => $old_template->judul_station,
+                    'soal' => $old_template->soal,
+                    'tugas_mhs' => $old_template->tugas_mhs,
+                    'mininotes' => $old_template->mininotes,
+                ]);
+                $old_template->rubrix()->each(function($rubrik) use ($new_template){
+                    Orubrik::create([
+                        'otemplate_id' => $new_template->id,
+                        'urutan' => $rubrik->urutan,
+                        'name' => $rubrik->name,
+                        'Nilai_0' => $rubrik->Nilai_0,
+                        'Nilai_1' => $rubrik->Nilai_1,
+                        'Nilai_2' => $rubrik->Nilai_2,
+                        'Nilai_3' => $rubrik->Nilai_3,
+                        'aktif0' => $rubrik->aktif0,
+                        'aktif1' => $rubrik->aktif1,
+                        'aktif2' => $rubrik->aktif2,
+                        'aktif3' => $rubrik->aktif3,
+                        'bobot' => $rubrik->bobot,
+                    ]);
+                });
+                DB::commit();
+                return redirect()->back()->with('msg', 'success-Template  berhasil dicopy');
+            } catch (Exception $e) {
+                DB::rollBack();
+                return redirect()->back()->with('msg', 'danger-Template  gagal dicopy '.$e->getMessage());
+            }
     }
 }

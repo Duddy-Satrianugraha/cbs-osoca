@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Oujian extends Model
+class Ostation extends Model
 {
     protected $fillable = [
+        'oujian_id',
+        'urutan',
         'name',
-        'ta',
-        'tgl_ujian',
-        'jml_station',
-        'jml_sesi',
+        'qrstation',
+        'penguji_id',
     ];
 }

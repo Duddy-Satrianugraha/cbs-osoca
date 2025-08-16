@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <form class="form-horizontal" action="{{ route('admin.templates.update', $template->id) }}" method="POST">
+            <form class="form-horizontal" action="{{ route('admin.templates.update', $template) }}" method="POST">
                 @csrf
                 @method('put')
             <div class="panel panel-default">

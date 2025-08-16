@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('oujians', function (Blueprint $table) {
+        Schema::create('osesis', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('ta');
-             $table->string('jml_station');
-             $table->string('jml_sesi');
-             $table->string('tgl_ujian');
+            $table->foreignId('oujian_id')->constrained()->cascadeOnDelete();
+            $table->unsignedInteger('urutan');
+            $table->foreignId('otemplate_id')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('oujians');
+        Schema::dropIfExists('osesis');
     }
 };

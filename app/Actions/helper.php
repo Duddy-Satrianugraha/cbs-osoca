@@ -114,4 +114,16 @@ if (!function_exists('tgl_indo')) {
             return $result;
         }
     }
+if (!function_exists('numran')) {
+     function numran(int $length = 10): string
+            {
+                $characters = '0123456789';
+                $charactersLength = strlen($characters);
+                $randomString = '';
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString .= $characters[mt_rand(0, $charactersLength - 1)];
+                }
+                return $randomString;
+            }
+        }
 }

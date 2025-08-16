@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Otemplate extends Model
 {
      protected $guarded = [];
-     public function rubriks()
+
+     public function rubrix()
      {
-         return $this->hasMany(Orubrik::class);
+         return $this->hasMany(Orubrik::class, 'otemplate_id', 'id');
      }    
      
 }

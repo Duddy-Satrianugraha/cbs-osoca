@@ -36,5 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PendaftaransTableSeeder::class);
         $this->call(OtemplatesTableSeeder::class);
         $this->call(OrubriksTableSeeder::class);
+        $this->call(OujiansTableSeeder::class);
+        $this->call(OstationsTableSeeder::class);
+        $this->call(OsesisTableSeeder::class);
     }
 }
