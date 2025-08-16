@@ -13,4 +13,7 @@ class Oujian extends Model
         'jml_station',
         'jml_sesi',
     ];
+    public function sesi(){
+        return $this->hasMany(Osesi::class);
+    }
 }

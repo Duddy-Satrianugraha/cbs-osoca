@@ -11,4 +11,8 @@ class Osesi extends Model
         'urutan',
         'otemplate_id',
     ];  
+
+   public function oujian(){
+        return $this->belongsTo(Oujian::class);
+    }
 }

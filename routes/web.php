@@ -61,19 +61,21 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
      Route::get('/copy/templates', [OtemplateController::class, 'copy_template'])->name('templates.copy');
     Route::post('/copy/templates', [OtemplateController::class, 'copy'])->name('templates.copy.store');
 
-    Route::get('/templates/peserta/{template}', [TemplateController::class, 'peserta'])->name('templates.peserta');
-    Route::put('/templates/peserta/{template}', [TemplateController::class, 'peserta_update'])->name('templates.peserta.update');
-    Route::get('/templates/penguji/{template}', [TemplateController::class, 'penguji'])->name('templates.penguji');
-    Route::put('/templates/penguji/{template}', [TemplateController::class, 'penguji_update'])->name('templates.penguji.update');
-    Route::get('/templates/del_pp/{template}', [TemplateController::class, 'del_pp'])->name('templates.del_pp');
-    Route::get('/templates/pasien/{template}', [TemplateController::class, 'pasien'])->name('templates.pasien');
-    Route::put('/templates/pasien/{template}', [TemplateController::class, 'pasien_update'])->name('templates.pasien.update');
+    // Route::get('/templates/peserta/{template}', [TemplateController::class, 'peserta'])->name('templates.peserta');
+    // Route::put('/templates/peserta/{template}', [TemplateController::class, 'peserta_update'])->name('templates.peserta.update');
+    // Route::get('/templates/penguji/{template}', [TemplateController::class, 'penguji'])->name('templates.penguji');
+    // Route::put('/templates/penguji/{template}', [TemplateController::class, 'penguji_update'])->name('templates.penguji.update');
+    // Route::get('/templates/del_pp/{template}', [TemplateController::class, 'del_pp'])->name('templates.del_pp');
+    // Route::get('/templates/pasien/{template}', [TemplateController::class, 'pasien'])->name('templates.pasien');
+    // Route::put('/templates/pasien/{template}', [TemplateController::class, 'pasien_update'])->name('templates.pasien.update');
 
 
     Route::resource('/ujian', OujianController::class);
-    Route::resource('/station', StationController::class);
-    Route::resource('/sesi', SesiController::class)->except(['index']);
-    Route::get('/sesi/index/{id}', [SesiController::class, 'index'])->name('sesi.index');
+    Route::post('/sesi/store', [OujianController::class, 'sesi_store'])->name('sesi.store');
+
+    //Route::resource('/station', StationController::class);
+    //Route::resource('/sesi', SesiController::class)->except(['index']);
+    //Route::get('/sesi/index/{id}', [SesiController::class, 'index'])->name('sesi.index');
     Route::get('copy/sesi/{uid}',[SesiController::class, 'copy_sesi'])->name('sesi.copy');
     Route::post('copy/sesi/{uid}',[SesiController::class, 'copy'])->name('sesi.copy.store');
     //Route::resource('/peserta', PesertaController::class);

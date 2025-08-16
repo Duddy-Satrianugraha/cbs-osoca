@@ -43,14 +43,8 @@
         @can('materi')
         <li class="xn-title">Tim Materi</li>
         <li class="{{ \Request::is('admin/templates/*') || \Request::is('admin/templates') ? 'active' : ''  }}"><a href="{{ route('admin.templates.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Template ujian</span></a></li>
-        <li class="{{ \Request::is('admin/ujian/*') || \Request::is('admin/ujian') ? 'active' : ''  }}"><a href="{{ route('admin.ujian.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Ujian OSCE</span></a></li>
-         <li class="xn-openable">
-                    <a href="#"><span class="fa fa-gear"></span> settings</a>
-                    <ul>
-                        <li class="{{ \Request::is('admin/rmd/*') || \Request::is('admin/rmd') ? 'active' : ''  }}"><a href="{{ route('admin.rmd.index')}}"><span class="fa fa-align-center"></span>Rekamedik Digital</a></li>
-                        <li><a href="pages-timeline-simple.html"><span class="fa fa-align-justify"></span> Full Width</a></li>
-                    </ul>
-                </li>
+        <li class="{{ \Request::is('admin/ujian/*') || \Request::is('admin/ujian') ? 'active' : ''  }}"><a href="{{ route('admin.ujian.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Ujian OSOCA</span></a></li>
+         
         @endcan
         @can('admin')
         <li class="xn-title">Administrator</li>

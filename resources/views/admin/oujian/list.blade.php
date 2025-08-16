@@ -71,6 +71,8 @@
                                                     <td>
                                                          <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
                                                         <a class="badge badge-primary"> {{ $data->jml_sesi }} sesi</a>
+                                                        <a class="badge badge-success"> {{ $data->sesi()->whereNotNull('otemplate_id')->count() }} template</a>
+                                                       
                                                     </td>
                                                     <td>{{$data->tgl_ujian}}</td>
                                                     <td>
