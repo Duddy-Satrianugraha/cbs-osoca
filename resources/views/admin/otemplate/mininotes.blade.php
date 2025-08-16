@@ -47,12 +47,12 @@
                             <textarea class="form-control summernote_osin_pic" name="mininotes">{{$otemplate->mininotes}}</textarea>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="panel-footer">
 
                     <a  class="btn btn-default" href="{{ route('admin.templates.index') }}">Kembali</a>
-                    <button class="btn btn-primary pull-right" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">Submit</button>
                 </div>
             </div>
             </form>

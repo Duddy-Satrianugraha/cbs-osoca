@@ -377,8 +377,6 @@ class TemplateController extends Controller
         }
     }
     public function copy_template(){
-        //dd("template");
-
         $templates = Template::all();
         return view('admin.template.copy', compact('templates'));
     }

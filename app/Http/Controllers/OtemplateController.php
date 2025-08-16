@@ -78,7 +78,7 @@ class OtemplateController extends Controller
         $temp = $otemplate->first()->rubriks()->get();
         //dd($temp);
         $rubrik = [];
-        foreach ($temp as $data) {    
+        foreach ($temp as $data) {
             $rubrik[] = [
                 'id' => $data->id,
                 'name' => $data->name,
@@ -114,23 +114,23 @@ class OtemplateController extends Controller
     {
          $validated =  $request->validate([
             'nama_template' => 'required|string|max:255',
-            
+
             'nomor_soal' => 'required|string|max:255',
             'judul_soal' => 'required|string|max:255',
-           
+
         ]);
         try {
             DB::beginTransaction();
-            
+
         $otemplate->update([
             'nama_template' => $validated['nama_template'],
             'nomor_station' => $validated['nomor_soal'],
             'judul_station' => $validated['judul_soal'],
         ]);
 
-        
 
-          
+
+
             DB::commit();
             return redirect(route('admin.templates.index'))->with('msg', 'success-Data berhasil disimpan');
         } catch (Exception $e) {
@@ -145,13 +145,14 @@ class OtemplateController extends Controller
      */
     public function destroy(Otemplate $otemplate)
     {
-        $otemplate->delete();
+        $otemplate->first()->rubriks()->delete();
+        $otemplate->first()->delete();
         return redirect()->back()->with('msg', 'success-Data berhasil dihapus');
     }
 
     public function soal(Otemplate $otemplate)
-    {   
-        
+    {
+
         return view('admin.otemplate.soal', compact('otemplate'));
     }
 
@@ -171,8 +172,8 @@ class OtemplateController extends Controller
     }
 
     public function mininote(Otemplate $otemplate)
-    {   
-        
+    {
+
         return view('admin.otemplate.mininotes', compact('otemplate'));
     }
 
@@ -186,16 +187,13 @@ class OtemplateController extends Controller
 
     }
 
-
-
-
     public function rubrik(Otemplate $otemplate)
     {
         //dd($template->rubriks()->get());
         $temp = $otemplate->rubriks()->get();
         $rubrik = [];
 
-        foreach ($temp as $data) { 
+        foreach ($temp as $data) {
             $rubrik[] = [
                 'id' => $data->id,
                 'komp' => $data->name,
@@ -251,5 +249,12 @@ class OtemplateController extends Controller
             DB::rollBack();
             return redirect()->back()->with('msg', 'danger-Data gagal disimpan '.$e->getMessage());
         }
+    }
+
+     public function copy_template(){
+        $templates = Otemplate::all();
+        return view('admin.otemplate.copy', compact('templates'));
+    }
+    public function copy(Request $request){
     }
 }

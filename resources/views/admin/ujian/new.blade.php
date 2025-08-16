@@ -54,14 +54,6 @@
                         </div>
 
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 col-xs-12 control-label">berikan kuesioner ? </label>
-                        <div class="col-md-8 col-xs-12">
-                                <label class="check"><input type="checkbox" class="icheckbox" name='quesioner' value="ya" /> <span></span> ya</label> <br/>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="panel-footer">
 

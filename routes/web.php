@@ -56,6 +56,8 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::put('/templates/mininote/{otemplate}', [OtemplateController::class, 'mininote_update'])->name('templates.mininotes.update');
     Route::get('/templates/rubrik/{otemplate}', [OtemplateController::class, 'rubrik'])->name('templates.rubrik');
     Route::put('/templates/rubrik/{otemplate}', [OtemplateController::class, 'rubrik_update'])->name('templates.rubrik.update');
+     Route::get('/copy/templates', [OtemplateController::class, 'copy_template'])->name('templates.copy');
+    Route::post('/copy/templates', [OtemplateController::class, 'copy'])->name('templates.copy.store');
 
     Route::get('/templates/peserta/{template}', [TemplateController::class, 'peserta'])->name('templates.peserta');
     Route::put('/templates/peserta/{template}', [TemplateController::class, 'peserta_update'])->name('templates.peserta.update');
@@ -64,9 +66,8 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/templates/del_pp/{template}', [TemplateController::class, 'del_pp'])->name('templates.del_pp');
     Route::get('/templates/pasien/{template}', [TemplateController::class, 'pasien'])->name('templates.pasien');
     Route::put('/templates/pasien/{template}', [TemplateController::class, 'pasien_update'])->name('templates.pasien.update');
-    
-    Route::get('/copy/templates', [TemplateController::class, 'copy_template'])->name('templates.copy');
-    Route::post('/copy/templates', [TemplateController::class, 'copy'])->name('templates.copy.store');
+
+
     Route::resource('/ujian', UjianController::class);
     Route::resource('/station', StationController::class);
     Route::resource('/sesi', SesiController::class)->except(['index']);
@@ -87,7 +88,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::resource('pasien', PasienController::class);
     Route::get('/kartu/ps/{id}', [PdfController::class, 'one_ps'])->name('kartu.ps');
     Route::resource('rmd', TrmeController::class);
-    
+
 });
 
 Route::prefix('mahasiswa')->middleware(['auth', Mahasiswa::class ])->name('mahasiswa.')->group( function (){
