@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -31,8 +32,9 @@ class AdminController extends Controller
      */
     public function create()
     {
+        $team = Team::all();
         $roles = Role::whereNot( 'u_id', 99 )->get();
-        return view('admin.user.new', compact('roles'));
+        return view('admin.user.new', compact('roles', 'team'));
     }
 
     /**
@@ -57,6 +59,7 @@ class AdminController extends Controller
                 Rule::unique(User::class),
             ],
             'roles' => ['required', 'array'],
+            'teams' => ['required', 'string'],
 
             'password' => ['required', 'string', Password::default(), 'confirmed'],
         ]);
@@ -71,6 +74,7 @@ class AdminController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
         $user->roles()->attach($validated['roles']);
+        $user->teams()->attach($validated['teams']);
         return redirect()->back()->with('msg', 'success-User created');
     }
 
@@ -87,8 +91,9 @@ class AdminController extends Controller
      */
     public function edit(User  $user)
     {
+         $team = Team::all();
         $roles = Role::whereNot( 'u_id', 99 )->get();
-        return view('admin.user.edit', compact('user', 'roles'));
+        return view('admin.user.edit', compact('user', 'roles', 'team'));
     }
 
     /**
@@ -108,10 +113,12 @@ class AdminController extends Controller
             ],
 
             'roles' => ['required', 'array'],
+            'teams' => ['required', 'string'],
         ]);
     try{
             DB::beginTransaction();
         $user->roles()->sync($validated['roles']);
+        $user->teams()->sync($validated['teams']);
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],

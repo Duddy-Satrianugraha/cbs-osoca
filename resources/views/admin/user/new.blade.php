@@ -95,6 +95,17 @@
 
                     </div>
                 </div>
+                 <div class="form-group">
+                    <label class="col-md-3 col-xs-12 control-label">Team (hanya untuk Materi)</label>
+                    <div class="col-md-6 col-xs-12">
+                        <select name="teams" class="form-control">
+                            <option value="">Select Team</option>
+                            @foreach ($team as $t)
+                            <option value="{{ $t->tu_id}}">{{ $t->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                 </div>
 
             </div>
             <div class="panel-footer">

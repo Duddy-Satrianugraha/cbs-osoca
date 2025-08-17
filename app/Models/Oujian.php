@@ -16,4 +16,8 @@ class Oujian extends Model
     public function sesi(){
         return $this->hasMany(Osesi::class);
     }
+
+    public function peserta(){
+        return $this->hasMany(Opeserta::class);
+    }
 }

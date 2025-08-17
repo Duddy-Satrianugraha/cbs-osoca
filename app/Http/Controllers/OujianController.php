@@ -6,6 +6,7 @@ use App\Models\Oujian;
 use App\Models\Ostation;
 use App\Models\Otemplate;
 use App\Models\Osesi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -13,15 +14,27 @@ use Exception;
 class OujianController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      */
      public function index(Request $request)
     {
         $search = $request->query('search');
 
-        $ujian = Oujian::when($search, function ($query, $search) {
-            return $query->where('name', 'like', '%' . $search . '%');
-        })->paginate(10);
+        // Ambil 1 team pertama milik user (atau null)
+        $team = Auth::user()?->teams()->first();
+
+        // Ambil daftar user id dalam team tsb (Collection kosong jika null)
+        $userIds = $team?->users()->pluck('users.id') ?? collect();
+
+        $ujian = Oujian::query()
+            ->when($search, function ($q, $s) {
+                return $q->where('name', 'like', "%{$s}%");
+            })
+            ->when($userIds->isNotEmpty(), function ($q) use ($userIds) {
+                return $q->whereIn('user_id', $userIds);
+            })
+            ->paginate(10);
+
         return view('admin.oujian.list', compact('ujian', 'search'));
 
     }
@@ -53,6 +66,7 @@ class OujianController extends Controller
             'tgl_ujian' => $validated['tgl_ujian'],
             'jml_station' => $validated['jml_station'],
             'jml_sesi' => $validated['jml_sesi'],
+            'user_id' => Auth::user()->id,
         ]);
          for ($x = 1; $x <= $validated['jml_station']; $x++) {
                 $oustation = Ostation::create([
@@ -83,7 +97,17 @@ class OujianController extends Controller
      */
     public function show($id)
     {
-        $otemplate = Otemplate::all();
+        // Ambil 1 team pertama milik user (atau null)
+        $team = Auth::user()?->teams()->first();
+
+        // Ambil daftar user id dalam team tsb (Collection kosong jika null)
+        $userIds = $team?->users()->pluck('users.id') ?? collect();
+
+        $otemplate = Otemplate::query()
+        ->when($userIds->isNotEmpty(), function ($q) use ($userIds) {
+                return $q->whereIn('user_id', $userIds);
+            })->get();
+        
         $osesi = Osesi::where('oujian_id', $id)->get();
         $oujian = Oujian::find($id);
         return view('admin.oujian.slist', compact('osesi', 'otemplate', 'oujian'));
@@ -118,6 +142,7 @@ class OujianController extends Controller
             'tgl_ujian' => $validated['tgl_ujian'],
             'jml_station' => $validated['jml_station'],
             'jml_sesi' => $validated['jml_sesi'],
+            'user_id' => Auth::user()->id,
         ]);
         return redirect()->back()->with('msg', 'success-Data berhasil disimpan');
     }
@@ -142,6 +167,7 @@ class OujianController extends Controller
                 'tgl_ujian'   => $validated['tgl_ujian'],
                 'jml_station' => $validated['jml_station'],
                 'jml_sesi'    => $validated['jml_sesi'],
+                'user_id'     => Auth::user()->id,
             ]);
 
             /**
@@ -242,4 +268,6 @@ class OujianController extends Controller
             return redirect()->back()->with('msg', 'danger-Sesi gagal disimpan '.$e->getMessage());
         }
     }
+
+    
 }

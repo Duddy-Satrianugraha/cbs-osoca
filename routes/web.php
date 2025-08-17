@@ -12,6 +12,7 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\StationController;
+use App\Http\Controllers\OpesertaController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\RotationController;
 use App\Http\Controllers\PdfController;
@@ -72,6 +73,10 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
 
     Route::resource('/ujian', OujianController::class);
     Route::post('/sesi/store', [OujianController::class, 'sesi_store'])->name('sesi.store');
+    Route::resource('/peserta', OpesertaController::class)->except(['create']);
+    Route::get('/peserta/{uid}/baru',[OpesertaController::class, 'create'])->name('peserta.create');
+    Route::get('/peserta/{uid}/upload',[OpesertaController::class, 'upload'])->name('peserta.upload');
+    //Route::get('/peserta',[OujianController::class, 'listujian'])->name('daftar.peserta');
 
     //Route::resource('/station', StationController::class);
     //Route::resource('/sesi', SesiController::class)->except(['index']);

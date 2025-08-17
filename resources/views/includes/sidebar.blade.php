@@ -47,8 +47,9 @@
          
         @endcan
         @can('admin')
+        
         <li class="xn-title">Administrator</li>
-        <li class="{{ \Request::is('admin/rotasi/*') || \Request::is('admin/rotasi') ? 'active' : ''  }}"><a href="{{ route('admin.rotasi.index')}}"><span class="fa fa-users"></span><span class="xn-text"> Peserta</span> </a></li>
+        <li class="{{ \Request::is('admin/peserta/*') || \Request::is('admin/peserta') ? 'active' : ''  }}"><a href="{{ route('admin.peserta.index')}}"><span class="fa fa-users"></span><span class="xn-text"> Peserta</span> </a></li>
         <li class="{{ \Request::is('admin/lokasi/*') || \Request::is('admin/lokasi') ? 'active' : ''  }}"><a href="{{ route('admin.lokasi.index')}}"><span class="fa fa-globe"></span><span class="xn-text"> Kartu Station</span> </a></li>
         @endcan
         @can('mhs')

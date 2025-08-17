@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Otemplate;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Orubrik;
+use App\Models\Team;
 use Exception;
 
 class OtemplateController extends Controller
@@ -15,13 +17,28 @@ class OtemplateController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $search = $request->query('search');
-        $templates = Otemplate::when($search, function ($query, $search) {
-            return $query->where('nama_template', 'like', '%' . $search . '%');
-        })->paginate(10);
+    {   
+            $search = $request->query('search');
+
+        // Ambil 1 team pertama milik user (atau null)
+        $team = Auth::user()?->teams()->first();
+
+        // Ambil daftar user id dalam team tsb (Collection kosong jika null)
+        $userIds = $team?->users()->pluck('users.id') ?? collect();
+
+        $templates = Otemplate::query()
+            ->when($search, function ($q, $s) {
+                return $q->where('nama_template', 'like', "%{$s}%");
+            })
+            // jika user punya team → filter berdasarkan user_id anggota team
+            ->when($userIds->isNotEmpty(), function ($q) use ($userIds) {
+                return $q->whereIn('user_id', $userIds);
+            })
+            ->paginate(10);
           return view('admin.otemplate.list', compact('templates', 'search'));
     }
+
+   
     /**
      * Show the form for creating a new resource.
      */
@@ -255,7 +272,17 @@ class OtemplateController extends Controller
     }
 
      public function copy_template(){
-        $templates = Otemplate::all();
+         // Ambil 1 team pertama milik user (atau null)
+        $team = Auth::user()?->teams()->first();
+
+        // Ambil daftar user id dalam team tsb (Collection kosong jika null)
+        $userIds = $team?->users()->pluck('users.id') ?? collect();
+
+        $templates = Otemplate::query()->when($userIds->isNotEmpty(), function ($q) use ($userIds) {
+                return $q->whereIn('user_id', $userIds);
+            })
+            ->get();
+        
         return view('admin.otemplate.copy', compact('templates'));
     }
     public function copy(Request $request){

@@ -23,6 +23,7 @@ class OujiansTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'name' => 'Osoca Semester 4',
+                'user_id' => 5,
                 'ta' => '2025/2026',
                 'jml_station' => '20',
                 'jml_sesi' => '11',
