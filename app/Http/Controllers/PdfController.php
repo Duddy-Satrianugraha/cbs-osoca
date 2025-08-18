@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Sesi;
 use App\Models\Soal;
 use App\Models\Rotation;
+use App\Models\Opeserta;
 use App\Models\User;
+use App\Models\Oujian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -98,4 +100,27 @@ class PdfController extends Controller
 
         // return view('penguji.pdf.nametag', compact('user'));
     }
+
+     public function listpeserta($uid)
+    {
+        $pesertas = Opeserta::where('oujian_id', $uid)->get();
+        $ujian = Oujian::find($uid);
+        $stations = collect();
+        foreach ($pesertas as $data) {
+            $peserta = new \stdClass; // Atau bisa pakai array jika lebih nyaman
+            $peserta->ujian = $ujian->name ?? null;
+            $peserta->sesi = $data->sesi ?? null;
+            $peserta->station = $data->station ?? null;
+            $peserta->name = $data->name;
+            $peserta->npm = $data->npm;
+            $peserta->qrpeserta = $data->qrpeserta;
+            $stations->push($peserta);
+        }
+        //dd($stations);
+       $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.pdf.listpeserta', compact('stations'))
+        ->setPaper('A4', 'portrait');
+        return $pdf->stream('kartu_peserta_'.$ujian->name.'.pdf');
+        //return view('admin.pdf.station', compact('stations'));
+    }
+
 }

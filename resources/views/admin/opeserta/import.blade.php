@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <form class="form-horizontal" action="{{ route('admin.peserta.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ route('admin.peserta.store_upload') }}" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="uid" value="{{ $ujian->id }}">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -35,6 +35,7 @@
                 </ul>
             </div>
             <div class="panel-body">
+               
             </div>
             <div class="panel-body form-group-separated">
                     @csrf

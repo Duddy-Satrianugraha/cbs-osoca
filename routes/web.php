@@ -76,6 +76,8 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::resource('/peserta', OpesertaController::class)->except(['create']);
     Route::get('/peserta/{uid}/baru',[OpesertaController::class, 'create'])->name('peserta.create');
     Route::get('/peserta/{uid}/upload',[OpesertaController::class, 'upload'])->name('peserta.upload');
+    Route::post('/peserta/upload',[OpesertaController::class, 'store_upload'])->name('peserta.store_upload');
+    Route::get('/kartu/peserta/{uid}', [PdfController::class, 'listpeserta'])->name('pdf.peserta');
     //Route::get('/peserta',[OujianController::class, 'listujian'])->name('daftar.peserta');
 
     //Route::resource('/station', StationController::class);
@@ -93,7 +95,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::put('/rotasi/{rotation}', [RotationController::class, 'update'])->name('rotasi.update');
     Route::resource('lokasi', LocationController::class);
     Route::get('/kartu/station/{sesi}', [PdfController::class, 'station'])->name('pdf.station');
-    Route::get('/kartu/peserta/{rotasi}', [PdfController::class, 'peserta'])->name('pdf.peserta');
+    //Route::get('/kartu/peserta/{rotasi}', [PdfController::class, 'peserta'])->name('pdf.peserta');
     Route::resource('pasien', PasienController::class);
     Route::get('/kartu/ps/{id}', [PdfController::class, 'one_ps'])->name('kartu.ps');
     Route::resource('rmd', TrmeController::class);

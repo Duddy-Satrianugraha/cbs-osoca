@@ -69,14 +69,16 @@
                                                     <td class="text-center">{{$i}}</td>
                                                     <td>{{$data->name}} ({{$data->ta}})</td>
                                                     <td>
-                                                         <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
+                                                        <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
                                                         <a class="badge badge-primary"> {{ $data->jml_sesi }} sesi</a>
+                                                        <a class="badge badge-success"> {{ $data->peserta->count() }} peserta</a>
                                                         
                                                        
                                                     </td>
                                                     <td>{{$data->tgl_ujian}}</td>
                                                     <td>
                                                         <a href="{{ route("admin.peserta.show", $data->id)}}" class="btn btn-info btn-sm"><span class="fa fa-search"></span>Daftar Peserta</a>
+                                                        <a href="{{ route('admin.pdf.peserta', $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-print"></span> Cetak Kartu Peserta</a>
                                                         
                                                     </td>
                                                 </tr>

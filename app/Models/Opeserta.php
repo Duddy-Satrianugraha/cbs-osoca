@@ -12,6 +12,7 @@ class Opeserta extends Model
         'npm',
         'station',
         'sesi',
+        'qrpeserta',
     ];
 
     public function oujian(){

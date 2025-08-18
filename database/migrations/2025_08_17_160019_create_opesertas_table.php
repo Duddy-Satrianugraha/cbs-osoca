@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('oujian_id');
             $table->string('name');
             $table->string('npm');
+            $table->string('qrpeserta');
             $table->integer('station');
             $table->integer('sesi');
             $table->timestamps();
