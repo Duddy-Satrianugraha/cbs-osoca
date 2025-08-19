@@ -66,8 +66,7 @@
                         <h2 class="title">Kartu Station {{ $station->ujian }}</h2>
                         <div class="card">
                             <div class="left">
-                                <h3><strong> {{ $station->sesi }}</strong> <br>
-                                <strong> {{ $station->lokasi }} </strong></h4>
+                               
                                 <h2><strong> Station {{ $station->urutan }} </strong></h3>
                             </div>
                             <div class="right">

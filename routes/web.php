@@ -78,6 +78,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/peserta/{uid}/upload',[OpesertaController::class, 'upload'])->name('peserta.upload');
     Route::post('/peserta/upload',[OpesertaController::class, 'store_upload'])->name('peserta.store_upload');
     Route::get('/kartu/peserta/{uid}', [PdfController::class, 'listpeserta'])->name('pdf.peserta');
+    Route::get('/kartu/station/{uid}', [PdfController::class, 'station'])->name('pdf.station');
     //Route::get('/peserta',[OujianController::class, 'listujian'])->name('daftar.peserta');
 
     //Route::resource('/station', StationController::class);

@@ -6,6 +6,7 @@ use App\Models\Sesi;
 use App\Models\Soal;
 use App\Models\Rotation;
 use App\Models\Opeserta;
+use App\Models\Ostation;
 use App\Models\User;
 use App\Models\Oujian;
 use Illuminate\Http\Request;
@@ -13,7 +14,28 @@ use Illuminate\Support\Facades\Auth;
 
 class PdfController extends Controller
 {
-    public function station(Sesi $sesi)
+    public function station($uid)
+    {
+        $ujian = Oujian::find($uid);
+        $soal = Ostation::where('oujian_id', $uid)->get();
+        $stations = collect();
+
+        foreach ($soal as $data) {
+            $station = new \stdClass; // Atau bisa pakai array jika lebih nyaman
+            $station->ujian = $ujian->name ?? null;
+            $station->station = $data->name ?? null;
+            $station->urutan = $data->urutan;
+            $station->slug = $data->qrstation;
+            $stations->push($station);
+        }
+        //dd($stations);
+       $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.pdf.station', compact('stations'))
+        ->setPaper('A4', 'portrait');
+        return $pdf->stream('kartu_station_'.$ujian->name.'.pdf');
+        //return view('admin.pdf.station', compact('stations'));
+    }
+
+    public function stationX(Sesi $sesi)
     {
         $soal = Soal::where('sesi_id', $sesi->id)->get();
         $stations = collect();
