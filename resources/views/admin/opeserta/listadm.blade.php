@@ -80,7 +80,7 @@
                                                         <a href="{{ route("admin.peserta.show", $data->id)}}" class="btn btn-info btn-sm"><span class="fa fa-search"></span>Daftar Peserta</a>
                                                         <a href="{{ route('admin.pdf.peserta', $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-print"></span> Cetak Kartu Peserta</a>
                                                         
-                                                    </td>pdf.station
+                                                    </td>
                                                 </tr>
                                                 @php $i++;@endphp
                                                 @endforeach

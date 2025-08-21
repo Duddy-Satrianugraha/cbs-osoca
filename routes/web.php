@@ -84,22 +84,22 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     //Route::resource('/station', StationController::class);
     //Route::resource('/sesi', SesiController::class)->except(['index']);
     //Route::get('/sesi/index/{id}', [SesiController::class, 'index'])->name('sesi.index');
-    Route::get('copy/sesi/{uid}',[SesiController::class, 'copy_sesi'])->name('sesi.copy');
-    Route::post('copy/sesi/{uid}',[SesiController::class, 'copy'])->name('sesi.copy.store');
+   // Route::get('copy/sesi/{uid}',[SesiController::class, 'copy_sesi'])->name('sesi.copy');
+    //Route::post('copy/sesi/{uid}',[SesiController::class, 'copy'])->name('sesi.copy.store');
     //Route::resource('/peserta', PesertaController::class);
-    Route::get('/rotasi', [RotationController::class, 'index'])->name('rotasi.index');
-    Route::get('/act/ujian/{ujian}', [RotationController::class, 'open'])->name('act.ujian.open');
-    Route::get('/deact/ujian/{ujian}', [RotationController::class, 'close'])->name('act.ujian.close');
+    //Route::get('/rotasi', [RotationController::class, 'index'])->name('rotasi.index');
+    //Route::get('/act/ujian/{ujian}', [RotationController::class, 'open'])->name('act.ujian.open');
+    //Route::get('/deact/ujian/{ujian}', [RotationController::class, 'close'])->name('act.ujian.close');
     //Route::get('/peserta/{ujian}', [RotationController::class, 'show'])->name('peserta.rotasi')->middleware(['auth']);
-    Route::get('/rotasi/{ujian}', [RotationController::class, 'show'])->name('rotasi.show');
-    Route::get('/rotasi/{rotation}/edit', [RotationController::class, 'edit'])->name('rotasi.edit');
-    Route::put('/rotasi/{rotation}', [RotationController::class, 'update'])->name('rotasi.update');
-    Route::resource('lokasi', LocationController::class);
-    Route::get('/kartu/station/{sesi}', [PdfController::class, 'station'])->name('pdf.station');
+    //Route::get('/rotasi/{ujian}', [RotationController::class, 'show'])->name('rotasi.show');
+    //Route::get('/rotasi/{rotation}/edit', [RotationController::class, 'edit'])->name('rotasi.edit');
+   //Route::put('/rotasi/{rotation}', [RotationController::class, 'update'])->name('rotasi.update');
+   // Route::resource('lokasi', LocationController::class);
+    //Route::get('/kartu/station/{sesi}', [PdfController::class, 'station'])->name('pdf.station');
     //Route::get('/kartu/peserta/{rotasi}', [PdfController::class, 'peserta'])->name('pdf.peserta');
-    Route::resource('pasien', PasienController::class);
-    Route::get('/kartu/ps/{id}', [PdfController::class, 'one_ps'])->name('kartu.ps');
-    Route::resource('rmd', TrmeController::class);
+    //Route::resource('pasien', PasienController::class);
+   // Route::get('/kartu/ps/{id}', [PdfController::class, 'one_ps'])->name('kartu.ps');
+    //Route::resource('rmd', TrmeController::class);
 
 });
 
