@@ -61,7 +61,7 @@
                 <p><span class="info-label">Penguji:  {{$data['station']->nama_penguji}}</span> </p>
                 <div class="info-title">Silahkan Arahkan Qr Code Peserta Ujian</div>
                  <!-- hidden station_slug -->
-                 <form action="{{ route('osoca.scan')}}" method="post" class="form-horizontal" id="form-scan">
+                 <form action="{{ route('osoca.mhs.chek')}}" method="post" class="form-horizontal" id="form-scan">
                 @csrf
                <input type="hidden" name="sesi-qr" id="sesi-qr"  value=""> 
                 <div class="card" style="width: 100%; max-width: 500px; height: 300px; margin: 0 auto; margin-bottom: 20px; padding: 4px;">

@@ -40,5 +40,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OujiansTableSeeder::class);
         $this->call(OstationsTableSeeder::class);
         $this->call(OsesisTableSeeder::class);
+        $this->call(OpesertasTableSeeder::class);
     }
 }

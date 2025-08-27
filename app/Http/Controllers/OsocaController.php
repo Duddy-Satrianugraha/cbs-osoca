@@ -12,8 +12,10 @@ class OsocaController extends Controller
     private function data_osoca(){
        // dd(session()->all());
         $ujian = Oujian::find(session('Osoca'));
-        $station = Ostation::find(session('Station'));
-        $mhs = Opeserta::where('oujian_id', $ujian->id)->where('station', $station->id)->orderBy('sesi', 'ASC')->get();
+        //dd($ujian);
+        $station = Ostation::where("oujian_id",$ujian->id)->where("urutan",session('Station'))->first();
+        //dd($station);
+        $mhs = Opeserta::where('oujian_id', $ujian->id)->where('station', $station->urutan)->orderBy('sesi', 'ASC')->get();
         $sesi = $station->current;
         $data = compact('ujian', 'sesi','station', 'mhs');
         return $data;
@@ -30,7 +32,8 @@ class OsocaController extends Controller
         return view('osoca.sesi', compact('data'));
     }
 
-    public function sesi(Request $request)
+    public function mhs_check(Request $request)
     {
+        dd($request->all());
     }
 }
