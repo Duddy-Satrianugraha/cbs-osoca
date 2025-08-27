@@ -70,7 +70,7 @@
 
                 </form>
                   <br>
-            <a href="#" class="btn btn-bahaya">KELUAR</a>
+            <a href="{{ route('osoca.logout')}}" class="btn btn-bahaya">KELUAR</a>
 
             </div>
 

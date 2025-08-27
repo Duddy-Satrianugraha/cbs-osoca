@@ -140,6 +140,7 @@ Route::prefix('osce')->middleware([Osce::class])->name('osce.')->group( function
 });
 
 Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( function (){
+    Route::get('/logout', [OsocaController::class, 'logout'])->name('logout');
     Route::get('/mhs', [OsocaController::class, 'mhs'])->name('mhs.login');
     Route::post('/mhs', [OsceController::class, 'chek_mhs'])->name('mhs.chek');
     Route::get('/penunjang', [OsceController::class, 'penunjang'])->name('penunjang');
@@ -155,5 +156,6 @@ Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( funct
     Route::post('/penilaian', [OsceController::class, 'penilaian'])->name('penilaian.store');
     Route::post('/pasien', [OsceController::class, 'pasien'])->name('pasien');
     Route::post('/tidak_hadir', [OsceController::class, 'tidak_hadir'])->name('tidak.hadir');
+
 });
 

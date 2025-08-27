@@ -19,6 +19,11 @@ class OsocaController extends Controller
         return $data;
     }
 
+     public function logout(){
+        session()->flush();
+        return redirect(route('osoca.login'));
+    }
+
       public function mhs()
     {
         $data = $this->data_osoca();
