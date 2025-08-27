@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashbordController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Osce\OsceController;
+use App\Http\Controllers\OsocaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileContoller;
 use App\Http\Controllers\PowerController;
@@ -25,21 +26,24 @@ use App\Http\Middleware\Mahasiswa;
 use App\Http\Middleware\Panitia;
 use App\Http\Middleware\Penguji;
 use App\Http\Middleware\Osce;
+use App\Http\Middleware\Osoca;
 use App\Http\Middleware\Ps;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 Route::get('/html', function () {
-    return view('osce.dashbord');
+    return view('osoca.sesi');
 });
 
-Route::get('/login/ps', [DashbordController::class, 'pslogin'])->name('ps.login');
-Route::get('/register/ps', [DashbordController::class, 'psregister'])->name('ps.register');
+//Route::get('/login/ps', [DashbordController::class, 'pslogin'])->name('ps.login');
+//Route::get('/register/ps', [DashbordController::class, 'psregister'])->name('ps.register');
 Route::get('/login/penguji', [DashbordController::class, 'login'])->name('penguji.login');
 Route::get('/register/penguji', [DashbordController::class, 'register'])->name('penguji.register');
 Route::get('/login/osce', [DashbordController::class, 'osce'])->name('osce.login');
 Route::post('/scan/osce', [DashbordController::class, 'scan'])->name('osce.scan');
+Route::get('/login/osoca', [DashbordController::class, 'osoca'])->name('osoca.login');
+Route::post('/scan/osoca', [DashbordController::class, 'oscan'])->name('osoca.scan');
 
 Route::get('/dashbord', [DashbordController::class, 'index'])->middleware(['auth', ])->name('dashbord');
 Route::get('/admin/power/destroy',[PowerController::class, 'destroy'])->name('admin.powerdown');
@@ -79,6 +83,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::post('/peserta/upload',[OpesertaController::class, 'store_upload'])->name('peserta.store_upload');
     Route::get('/kartu/peserta/{uid}', [PdfController::class, 'listpeserta'])->name('pdf.peserta');
     Route::get('/kartu/station/{uid}', [PdfController::class, 'station'])->name('pdf.station');
+   
     //Route::get('/peserta',[OujianController::class, 'listujian'])->name('daftar.peserta');
 
     //Route::resource('/station', StationController::class);
@@ -129,6 +134,24 @@ Route::prefix('osce')->middleware([Osce::class])->name('osce.')->group( function
     Route::get('/',[OsceController::class, 'ujian'])->name('index');
     Route::post('/show/penunjang', [OsceController::class, 'showPenunjang'])->name('showing.penunjang');
     Route::post('/mhs', [OsceController::class, 'mhs'])->name('mhs');
+    Route::post('/penilaian', [OsceController::class, 'penilaian'])->name('penilaian.store');
+    Route::post('/pasien', [OsceController::class, 'pasien'])->name('pasien');
+    Route::post('/tidak_hadir', [OsceController::class, 'tidak_hadir'])->name('tidak.hadir');
+});
+
+Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( function (){
+    Route::get('/mhs', [OsocaController::class, 'mhs'])->name('mhs.login');
+    Route::post('/mhs', [OsceController::class, 'chek_mhs'])->name('mhs.chek');
+    Route::get('/penunjang', [OsceController::class, 'penunjang'])->name('penunjang');
+    Route::get('/penunjang/status', [OsceController::class, 'penunjangStatus'])->name('show.penunjang');
+    Route::get('/logout', [OsceController::class, 'logout'])->name('logout');
+    Route::get('/ujian', [OsceController::class, 'ujian'])->name('ujian');
+    Route::get('/ujian/rotasi/{id}', [OsceController::class, 'ujian_rotasi'])->name('ujian.rotasi');
+    Route::get('/rotasi', [OsceController::class, 'rotasi'])->name('rotasi');
+    Route::get('/template', [OsceController::class, 'template'])->name('template');
+    Route::get('/',[OsceController::class, 'ujian'])->name('index');
+    Route::post('/show/penunjang', [OsceController::class, 'showPenunjang'])->name('showing.penunjang');
+   // Route::post('/mhs', [OsceController::class, 'mhs'])->name('mhs');
     Route::post('/penilaian', [OsceController::class, 'penilaian'])->name('penilaian.store');
     Route::post('/pasien', [OsceController::class, 'pasien'])->name('pasien');
     Route::post('/tidak_hadir', [OsceController::class, 'tidak_hadir'])->name('tidak.hadir');

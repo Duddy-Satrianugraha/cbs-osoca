@@ -21,102 +21,57 @@ class OsesisTableSeeder extends Seeder
         \DB::table('osesis')->insert(array (
             0 => 
             array (
-                'id' => 1,
-                'oujian_id' => 1,
+                'id' => 15,
+                'oujian_id' => 3,
                 'urutan' => 1,
                 'otemplate_id' => 1,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
+                'created_at' => '2025-08-27 01:14:55',
+                'updated_at' => '2025-08-27 01:15:15',
             ),
             1 => 
             array (
-                'id' => 2,
-                'oujian_id' => 1,
+                'id' => 16,
+                'oujian_id' => 3,
                 'urutan' => 2,
-                'otemplate_id' => 2,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
+                'otemplate_id' => 7,
+                'created_at' => '2025-08-27 01:14:55',
+                'updated_at' => '2025-08-27 03:18:46',
             ),
             2 => 
             array (
-                'id' => 3,
-                'oujian_id' => 1,
+                'id' => 17,
+                'oujian_id' => 3,
                 'urutan' => 3,
-                'otemplate_id' => 3,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
+                'otemplate_id' => 8,
+                'created_at' => '2025-08-27 01:14:55',
+                'updated_at' => '2025-08-27 03:18:46',
             ),
             3 => 
             array (
-                'id' => 4,
-                'oujian_id' => 1,
+                'id' => 18,
+                'oujian_id' => 3,
                 'urutan' => 4,
-                'otemplate_id' => 4,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
+                'otemplate_id' => 9,
+                'created_at' => '2025-08-27 01:14:55',
+                'updated_at' => '2025-08-27 03:18:46',
             ),
             4 => 
             array (
-                'id' => 5,
-                'oujian_id' => 1,
+                'id' => 19,
+                'oujian_id' => 3,
                 'urutan' => 5,
-                'otemplate_id' => 5,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
+                'otemplate_id' => 10,
+                'created_at' => '2025-08-27 01:14:55',
+                'updated_at' => '2025-08-27 03:18:46',
             ),
             5 => 
             array (
-                'id' => 6,
-                'oujian_id' => 1,
+                'id' => 20,
+                'oujian_id' => 3,
                 'urutan' => 6,
-                'otemplate_id' => 6,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
-            ),
-            6 => 
-            array (
-                'id' => 7,
-                'oujian_id' => 1,
-                'urutan' => 7,
-                'otemplate_id' => 4,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
-            ),
-            7 => 
-            array (
-                'id' => 8,
-                'oujian_id' => 1,
-                'urutan' => 8,
-                'otemplate_id' => 5,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
-            ),
-            8 => 
-            array (
-                'id' => 9,
-                'oujian_id' => 1,
-                'urutan' => 9,
-                'otemplate_id' => NULL,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
-            ),
-            9 => 
-            array (
-                'id' => 10,
-                'oujian_id' => 1,
-                'urutan' => 10,
-                'otemplate_id' => NULL,
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 12:38:15',
-            ),
-            10 => 
-            array (
-                'id' => 14,
-                'oujian_id' => 1,
-                'urutan' => 11,
-                'otemplate_id' => NULL,
-                'created_at' => '2025-08-16 13:17:25',
-                'updated_at' => '2025-08-16 13:17:25',
+                'otemplate_id' => 11,
+                'created_at' => '2025-08-27 01:14:55',
+                'updated_at' => '2025-08-27 03:18:46',
             ),
         ));
         

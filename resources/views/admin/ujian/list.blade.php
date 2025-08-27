@@ -74,6 +74,7 @@
                                                         <a class="badge badge-primary"> {{ $data->locations()->count() }} lokasi</a>
                                                         <a class="badge badge-success"> {{ $data->rotations()->count() }} rotasi</a>
                                                         <a class="badge badge-danger"> {{ $peserta }} Peserta</a>
+                                                         
 
                                                     </td>
                                                     <td>{{$data->created_at}}</td>

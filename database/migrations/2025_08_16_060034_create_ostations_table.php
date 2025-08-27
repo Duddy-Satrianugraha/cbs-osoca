@@ -17,7 +17,9 @@ return new class extends Migration
             $table->unsignedInteger('urutan');
             $table->string('name');
             $table->string('qrstation');
-            $table->foreignId('penguji_id')->nullable();
+            $table->string('nama_penguji')->nullable();
+            $table->integer('current')->default(1);
+            $table->integer('next')->default(2);
             $table->timestamps();
         });
     }

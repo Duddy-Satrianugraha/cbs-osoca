@@ -50,17 +50,9 @@
         
         <li class="xn-title">Administrator</li>
         <li class="{{ \Request::is('admin/peserta/*') || \Request::is('admin/peserta') ? 'active' : ''  }}"><a href="{{ route('admin.peserta.index')}}"><span class="fa fa-users"></span><span class="xn-text"> Peserta</span> </a></li>
-        <li class="{{ \Request::is('admin/lokasi/*') || \Request::is('admin/lokasi') ? 'active' : ''  }}"><a href="{{ route('admin.lokasi.index')}}"><span class="fa fa-globe"></span><span class="xn-text"> Kartu Station</span> </a></li>
+        
         @endcan
-        @can('mhs')
-        <li class="xn-title">Mahasiswa</li>
-        <li class="{{ \Request::is('mahasiswa/pendaftaran/*') || \Request::is('mahasiswa/pendaftaran') ? 'active' : ''  }}"><a href="{{ Route('mahasiswa.pendaftaran.index')}}"><span class="fa fa-check-square-o"></span><span class="xn-text">Daftar OSCE</span> </a></li>
-        @endcan
-        @can('pps')
-        <li class="xn-title">Pelatih Pasien Standar</li>
-        <li class="{{ \Request::is('admin/pasien/*') || \Request::is('admin/pasien') ? 'active' : ''  }}"><a href="{{ Route('admin.pasien.index')}}"><span class="fa fa-users"></span><span class="xn-text">Pasien Standar</span> </a></li>
-        <li class="{{ \Request::is('admin/options/*') || \Request::is('admin/options') ? 'active' : ''  }}"><a href="{{ Route('admin.options.create')}}"><span class="fa fa-users"></span><span class="xn-text">PS Ability</span> </a></li>
-        @endcan
+       
         @can('ultraman')
         <li class="xn-title">Nav Level</li>
         <li class="xn-openable ">

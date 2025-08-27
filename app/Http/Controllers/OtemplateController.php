@@ -163,7 +163,7 @@ class OtemplateController extends Controller
      */
     public function destroy($id)
     {   $otemplate= Otemplate::find($id);
-        $otemplate->rubriks()->delete();
+        $otemplate->rubrix()->delete();
         $otemplate->delete();
         return redirect()->back()->with('msg', 'success-Data berhasil dihapus');
     }

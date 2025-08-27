@@ -42,7 +42,7 @@
 @endsection
 
 @section('links')
-<a href="{{ route('penguji.login')}}">Penguji</a> |
+<a href="{{ route('penguji.login')}}">CBS-OSOCA</a> |
 @endsection
 
 @section('javascript')

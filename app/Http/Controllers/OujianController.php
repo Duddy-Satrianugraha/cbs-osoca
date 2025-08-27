@@ -43,6 +43,7 @@ class OujianController extends Controller
      */
     public function create()
     {
+        //dd( Auth::user()->id);
         return view('admin.oujian.new');
     }
 
@@ -74,7 +75,7 @@ class OujianController extends Controller
                     'urutan' => $x,
                     'name' => 'station '.$x,
                     'qrstation' => numran(10).$oujian->id.$x,
-                    'penguji_id' => null,
+                    'nama_penguji' => null,
                 ]);
                 }
         for ($x = 1; $x <= $validated['jml_sesi']; $x++) {
@@ -88,7 +89,7 @@ class OujianController extends Controller
         return redirect(route('admin.ujian.index'))->with('msg', 'success-Data berhasil disimpan');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect(route('admin.ujian.index'))->with('msg', 'danger-Data gagal disimpan'.$e->getMessage());
+            return redirect(route('admin.ujian.index'))->with('msg', 'danger-Data gagal disimpan '.$e->getMessage());
         }
     }
 
@@ -241,9 +242,14 @@ class OujianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Oujian $oujian)
+    public function destroy($id)
     {
         
+        $oujian = Oujian::find($id);
+        Osesi::where('oujian_id', $oujian->id)->delete();
+        Ostation::where('oujian_id', $oujian->id)->delete();
+        $oujian->delete();
+        return redirect()->back()->with('msg', 'success-Data berhasil dihapus');
     }
 
     public function sesi_store(Request $request){

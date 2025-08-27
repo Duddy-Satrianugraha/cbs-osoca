@@ -154,7 +154,7 @@ class OsceController extends Controller
             //dd($soal->tmps);
             return response()->json([
                 'status' => $soal->tmps,
-            ]);
+            ]); 
         }
 
     public function template()

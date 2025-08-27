@@ -126,4 +126,28 @@ if (!function_exists('numran')) {
                 return $randomString;
             }
         }
+
+if (!function_exists('salam')) {
+        /**
+         * Mengembalikan salam sesuai waktu sekarang atau waktu tertentu
+         *
+         * @param  \DateTime|string|null $time
+         * @return string
+         */
+        function salam($time = null)
+            {
+                $time = $time ? \Carbon\Carbon::parse($time) : now();
+                $hour = $time->format('H');
+
+                if ($hour >= 5 && $hour < 11) {
+                    return "Selamat Pagi";
+                } elseif ($hour >= 11 && $hour < 15) {
+                    return "Selamat Siang";
+                } elseif ($hour >= 15 && $hour < 18) {
+                    return "Selamat Sore";
+                } else {
+                    return "Selamat Malam";
+                }
+            }
+        }
 }

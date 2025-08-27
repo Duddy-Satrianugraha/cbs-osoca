@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Soal;
+use App\Models\Ostation;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,12 +66,6 @@ class DashbordController extends Controller
     public function destroy(string $id)
     {
         //
-    }Public function pslogin(){
-        return view('ps.auth.login');
-    }
-
-    Public function psregister(){
-        return view('ps.auth.register');
     }
 
     Public function login(){
@@ -81,13 +76,16 @@ class DashbordController extends Controller
         return view('penguji.auth.register');
     }
 
-    public function osce(){
-        return view('osce.auth.login');
+    
+    public function osoca(){
+        return view('osoca.login');
     }
-    public function scan(Request $request){
+    
+    public function oscan(Request $request){
         //dd($request);
         $request->validate([
-            'soal_slug' => 'required',
+            'soal_slug' => ['required','numeric'],
+            'name' => 'required',
             'captcha' => [
             'required','numeric',
             function ($attribute, $value, $fail) {
@@ -98,18 +96,19 @@ class DashbordController extends Controller
         ],
         ]);
         $soal_slug = $request->soal_slug;
-        $soal = Soal::where('slug', $soal_slug)->first();
+        $soal = Ostation::where('qrstation', $soal_slug)->first();
         if($soal){
+            $soal->nama_penguji = $request->name;
+            $soal->save();
             session([
-                'Osce' => $soal->id,
-                'ujian_id' => $soal->ujian_id ?? null,
-                'sesi_id' => $soal->sesi_id ?? null,
-                'lokasi_id' => $soal->location_id ?? null,
-                'station_id' => $soal->station_id ?? null,
+                'Osoca' => $soal->oujian_id,
+                'Station' => $soal->urutan ?? null,
+                'current' => $soal->current ?? null,
+                'next' => $soal->next ?? null,
             ]);
-            return redirect(route('osce.penguji.login'))->with('success', 'Station ditemukan silahkan scan kartu Penguji');
+            return redirect(route('osoca.mhs.login'))->with('success', 'Station ditemukan silahkan scan kartu Penguji');
         } else {
-            return redirect(route('osce.login'))->with('msg', 'danger-Unable to find code');
+            return redirect(route('osoca.login'))->with('msg', 'danger-Unable to find code');
         }
     }
 }

@@ -42,7 +42,7 @@
                         <label class="col-md-2 col-xs-12 control-label">Nama Ujian</label>
                         <div class="col-md-8 col-xs-12">
                             <input type="text" class="form-control" name="name" value="{{ old('Name') }}"/>
-                            <small class="text">Pilih yang anda mudah ingat |Tidak di tampilkan pada penguji</small>
+                            <small class="text">contoh OSOCA sementer 4</small>
                         </div>
 
                     </div>

@@ -12,6 +12,7 @@ class Oujian extends Model
         'tgl_ujian',
         'jml_station',
         'jml_sesi',
+        'user_id',
     ];
     public function sesi(){
         return $this->hasMany(Osesi::class);

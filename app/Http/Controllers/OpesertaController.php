@@ -124,9 +124,10 @@ class OpesertaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Opeserta $opeserta)
+    public function destroy($id)
     {
-        //
+        Opeserta::find($id)->delete();
+        return redirect()->back()->with('msg', 'success-Data berhasil dihapus');
     }
 
     public function upload($uid)
@@ -159,13 +160,16 @@ class OpesertaController extends Controller
          $pesertaarray = [];
          foreach ($dataPeserta[0] as $key=>$row) {
             if($key >= 1){
+                
+                if ($row->filter(fn($val) => !is_null($val) && $val !== '')->isEmpty()) {
+                        continue;
+                    }
+                    
                  $npm     = trim((string)($row[2] ?? ''));
                  $station = $row[3] ?? null;
                 $sesi    = $row[4] ?? null;
 
-                if (count(array_filter($row, fn($val) => !is_null($val) && $val !== '')) === 0) {
-                        continue;
-                    }
+               
 
                 if (!ctype_digit((string)$station) || !ctype_digit((string)$sesi)) {
                     return back()->withErrors([
@@ -187,12 +191,12 @@ class OpesertaController extends Controller
                 ];
             }   
          }
-         Opeserta::insert($pesertaarray);
-
+        
          if (count($pesertaarray)) {
         Opeserta::insert($pesertaarray);
         }
-         return redirect()->back()->with('msg', 'success-Import selesai. '
+        
+         return redirect(route('admin.peserta.show',$request->uid))->with('msg', 'success-Import selesai. '
         .count($pesertaarray).' baris baru dimasukkan, '
         .count($existing).' baris dilewati (duplikat/kosong).');
     }

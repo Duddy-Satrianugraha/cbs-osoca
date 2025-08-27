@@ -21,15 +21,15 @@ class OujiansTableSeeder extends Seeder
         \DB::table('oujians')->insert(array (
             0 => 
             array (
-                'id' => 1,
-                'name' => 'Osoca Semester 4',
-                'user_id' => 5,
+                'id' => 3,
+                'name' => 'Osoca Semester 6',
                 'ta' => '2025/2026',
-                'jml_station' => '20',
-                'jml_sesi' => '11',
-                'tgl_ujian' => '2025-08-25',
-                'created_at' => '2025-08-16 06:33:54',
-                'updated_at' => '2025-08-16 06:33:54',
+                'jml_station' => '5',
+                'jml_sesi' => '6',
+                'tgl_ujian' => '2025-08-11',
+                'user_id' => 5,
+                'created_at' => '2025-08-27 01:14:55',
+                'updated_at' => '2025-08-27 01:18:47',
             ),
         ));
         
