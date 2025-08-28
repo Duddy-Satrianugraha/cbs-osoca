@@ -9,7 +9,7 @@
    <ul class="breadcrumb">
     <li ><a href="{{ route('dashbord')}}">Dashboard</a></li>
     <li ><a href="{{ route('admin.templates.index')}}">daftar template</a></li>
-        <li class="active">Template {{ $template->nama_template }}</li>
+        <li class="active">Template {{ $template->nama_template }}</li> 
 </ul>
 <!-- END BREADCRUMB -->
 @endsection

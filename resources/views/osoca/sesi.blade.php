@@ -26,13 +26,9 @@
                               <tr>
                                 <td>{{ $datamhs->sesi }}</td>
                                 <td>{{ $datamhs->name }}</td>
-                                <td>@if($data['sesi'] == $datamhs->sesi)
-                                    <span class="label label-warning">
-                                        <i class="fa fa-minus-square-o"></i> Menunggu scan Qr
-                                    </span>
-                                    @elseif( $data['sesi'] > $datamhs->sesi)
+                                <td>@if($datamhs->status)
                                     <span class="label label-success">
-                                        <i class="fa fa-check"></i> telah diuji
+                                        <i class="fa fa-check"></i> Telah diuji
                                     </span>
                                     @else
                                     <span class="label label-info">

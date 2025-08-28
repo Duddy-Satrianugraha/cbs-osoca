@@ -78,6 +78,13 @@ class DashbordController extends Controller
 
     
     public function osoca(){
+        if(session()->has('Osoca')){
+            return redirect(route('osoca.mhs.login'))->with('msg', 'danger-Selamat datang kembali dok,Silahkan scan kartu peserta');
+        }
+         if (session()->has('Peserta')) {
+                return redirect(route('osoca.ujian'))->with('msg', 'success-Selamat datang kembali dok, Selamat menguji peserta');
+            }
+
         return view('osoca.login');
     }
     

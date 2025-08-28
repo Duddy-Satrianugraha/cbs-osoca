@@ -28,8 +28,20 @@ class OsocaController extends Controller
         return redirect(route('osoca.login'));
     }
 
+    public function tolist(){
+        session()->forget('Sesi');
+        session()->forget('Peserta');
+        return redirect(route('osoca.mhs.login'));
+    }
+
       public function mhs()
     {
+         if (!session()->has('Osoca')) {
+                return redirect(route('osoca.login'))->with('msg', 'danger-Silahkan scan kartu station');
+            }
+          if (session()->has('Peserta')) {
+                return redirect(route('osoca.ujian'))->with('msg', 'success-Selamat menguji peserta');
+            }
         $data = $this->data_osoca();
         return view('osoca.sesi', compact('data'));
     }
@@ -46,13 +58,52 @@ class OsocaController extends Controller
             return redirect(route('osoca.mhs.login'))->with('msg','danger-Peserta salah masuk Ruangan atau tidak terdaftar');
         }
 
-        if($peserta->sesi != session('current')){
-            return redirect(route('osoca.mhs.login'))->with('msg','danger-Peserta Tidak Sesuai Urutan');
-        }
-        dd($peserta);
-        $sesi = Osesi::where('oujian_id', $peserta->oujian_id)->where('urutan', $peserta->sesi)->first();
-        $template = Otemplate::find($sesi->otemplate_id);
-        $rubrik = $template->rubrix;
-        dd($request->all());
+        $sesi = Osesi::where('oujian_id', $peserta->oujian_id)->where('urutan', session('current'))->first();
+         session([
+                'Sesi' => $sesi->id,
+                'Peserta' => $peserta->id,
+            ]);
+      Return redirect(route('osoca.ujian'));
     }
+
+    public function ujian(){
+        if (!session()->has('Osoca')) {
+                return redirect(route('osoca.login'))->with('msg', 'danger-Silahkan scan kartu station');
+            }
+            if (!session()->has('Peserta')) {
+                return redirect(route('osoca.mhs.login'))->with('msg', 'danger-Silahkan scan kartu Peserta');
+            }
+
+            $sesi = Osesi::find(session('Sesi'));
+            $peserta = Opeserta::find(session('Peserta'));
+            $otemplate = Otemplate::find($sesi->otemplate_id);
+           
+            $osodata = $this->data_osoca();
+           
+                $temp = $otemplate->rubrix()->get();
+            // dd($temp);
+                $rubrik = [];
+                foreach ($temp as $data) {
+                    $rubrik[] = [
+                        'id' => $data->id,
+                        'name' => $data->name,
+                        'nilai_0' => $data->Nilai_0,
+                        'nilai_1' => $data->Nilai_1,
+                        'nilai_2' => $data->Nilai_2,
+                        'nilai_3' => $data->Nilai_3,
+                        'aktif0' => $data->aktif0,
+                        'aktif1' => $data->aktif1,
+                        'aktif2' => $data->aktif2,
+                        'aktif3' => $data->aktif3,
+                        'bobot' => $data->bobot,
+                    ];
+                }
+                $template = $otemplate;
+            return view('osoca.ujian', compact('osodata', 'rubrik', 'peserta', 'template', 'sesi'));
+        
+        //dd(session()->all());
+
+
+    }
+
 }

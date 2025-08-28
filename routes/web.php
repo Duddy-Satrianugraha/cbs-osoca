@@ -141,8 +141,10 @@ Route::prefix('ps')->middleware(['auth', Ps::class ])->name('ps.')->group( funct
 
 Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( function (){
     Route::get('/logout', [OsocaController::class, 'logout'])->name('logout');
+    Route::get('/tolist', [OsocaController::class, 'tolist'])->name('tolist');
     Route::get('/mhs', [OsocaController::class, 'mhs'])->name('mhs.login');
     Route::post('/mhs', [OsocaController::class, 'mhs_check'])->name('mhs.chek');
+    Route::get('/ujian', [OsocaController::class, 'ujian'])->name('ujian');
    
 
 });
