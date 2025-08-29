@@ -145,6 +145,10 @@ Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( funct
     Route::get('/mhs', [OsocaController::class, 'mhs'])->name('mhs.login');
     Route::post('/mhs', [OsocaController::class, 'mhs_check'])->name('mhs.chek');
     Route::get('/ujian', [OsocaController::class, 'ujian'])->name('ujian');
+    Route::get('/template', [OsocaController::class, 'template'])->name('template');
+    Route::post('/penilaian', [OsocaController::class, 'penilaian'])->name('penilaian.store');
+    Route::post('/tidak_hadir', [OsceController::class, 'tidak_hadir'])->name('tidak.hadir');
+
    
 
 });

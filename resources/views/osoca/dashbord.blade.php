@@ -1,123 +1,29 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard Penguji OSOCA</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
+@extends('layouts.cbs')
 
-        .top-bar {
-            background-color: #ffffff;
-            border-bottom: 1px solid #dee2e6;
-            padding: 10px 20px;
-        }
+@section('css')
 
-        .top-bar .logo {
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #333;
-        }
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+<link rel="stylesheet" href="{{ asset('css/toastr/toastr.min.css') }}" />
 
-        .top-bar .center-info {
-            text-align: center;
-            font-size: 14px;
-        }
+@endsection
 
-        .top-bar .user-info {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
+@section('judul')
+<div class="col-xs-4 text-center">
+    <strong>SELAMAT DATANG DI {{strtoupper( $osodata['ujian']->name) }} {{ strtoupper($osodata['ujian']->ta) }}</strong><br>
+    <small>Tanggal : {{ tgl_indo($osodata['ujian']->tgl_ujian) }}</small>
+</div>
+@endsection
 
-        .top-bar .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 10px;
-        }
+@section('penguji')
 
-        .status-belum {
-            color: gray;
-            font-weight: bold;
-        }
-
-        .btn-pasien {
-            font-size: 0.75rem;
-            padding: 4px 8px;
-        }
-
-        .card-profile img {
-            width: 100%;
-            max-height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .btn-tidak-hadir {
-            background-color: #ff4d4f;
-            color: white;
-        }
-
-        .detail-soal {
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .bg-orange {
-            background-color: #fd7e14;
-            color: white;
-        }
-
-        .dropdown-menu-right {
-            right: 0;
-            left: auto;
-        }
-
-        @media (max-width: 768px) {
-            .top-bar .center-info {
-                font-size: 12px;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="{{ asset('css/toastr/toastr.min.css') }}" />
-</head>
-<body>
-
-<!-- HEADER -->
-<div class="top-bar container-fluid d-flex justify-content-between align-items-center">
-    <div class="logo">UJIAN OSOCA</div>
-    <div class="center-info flex-grow-1 text-center">
-        <strong>SELAMAT DATANG DI {{strtoupper( $osodata['ujian']->name) }} {{ strtoupper($osodata['ujian']->ta) }}</strong><br>
-       Tanggal : {{ tgl_indo($osodata['ujian']->tgl_ujian) }}
-        
-    </div>
-    <div class="user-info">
-        <div class="dropdown">
-            <a class="dropdown-toggle text-dark" href="#" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="dropdown-toggle text-dark" href="#" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ $osodata['station']->nama_penguji }}
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{{ route('osoca.tolist')}}">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
+@endsection
 
-<!-- ISI HALAMAN -->
-<div class="container-fluid mt-3">
-    <div class="row">
-        <!-- Tabel Mahasiswa -->
-        <div class="col-lg-8 col-md-7 mb-4">
-            <h6>Rubrik Soal {{$template->judul_station}}</h6>
-
-            
-              
-                <div style="max-height: 340px; overflow-y: auto;">
+@section('mhs')
+<div class="col-md-8">
+    <div style="max-height: 340px; overflow-y: auto;">
     <table class="table table-borderless">
         <thead>
             <tr>
@@ -157,72 +63,58 @@
         </tbody>
     </table>
     </div>
-             
+</div>
+@endsection
+
+@section('info-penguji')
+<div class="card">
+    <div class="row">
+        <div class="col-xs-4 text-center">
+                    <img src="{{ asset('img/mduser.jpg')}}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
+        </div>
+        <div class="col-xs-8">
+            <h5 style="margin-top:0;"><strong>{{ $osodata['station']->name}} - {{$template->judul_station}}</strong></h5>
+            <p style="margin: 0;">Penguji: <strong>{{ $osodata['station']->nama_penguji }}</strong></p>
+            <p class="text-muted" style="margin: 5px 0;">{{ $osodata['mhs']->count()}} Peserta</p>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('info-mhs')
+<div class="card">
+    <div class="row">
+        
+        <div class="col-xs-12">
+            
+            <h5 style="margin-top:0;">Nama :<strong> {{$peserta->name}}</strong></h5>
+            <p style="margin: 0;">Npm: <strong>{{ $peserta->npm}}</strong></p>
+            <p class="text-muted" style="margin: 5px 0;"> template  : <strong>{{ session('current') ?? "--" }}</strong> </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 text-center">
+
+                <button  class="btn btn-red btn-sm btn-block" data-toggle="modal" data-target="#modalNoPesert">TIDAK HADIR <i class="fa fa-sign-out"></i></button>
 
 
         </div>
 
-        <!-- Info Penguji -->
-        <div class="col-lg-4 col-md-5 mb-4">
-            <!-- Card 1: Info Station dengan Foto di Kiri -->
-            <div class="card mb-3">
-                <div class="card-body d-flex">
-                    
+        <div class="col-xs-8 "><button class="btn btn-warning btn-sm  pull-right" data-toggle="modal" data-target="#modalRekap">@if($pol) SELESAIKAN ROTASI <i class="fa  fa-arrow-right"></i>  @else MAHASISWA SELANJUTNYA <i class="fa  fa-arrow-right"></i> @endif</button></div>
+    </div>
+</div>
 
-                    <!-- Informasi Station + Tombol -->
-                    <div class="flex-grow-1 w-100">
-                        <!-- Baris atas: Judul + tombol -->
-                        <div class="d-flex justify-content-between align-items-start mb-1">
-                            <h6 class="text-uppercase font-weight-bold mb-0">STATION: {{ $osodata['station']->name}} - {{$template->judul_station}}</h6>
-                        </div>
+@endsection
 
-                        <!-- Detail info -->
-                        <p class="mb-1">Penguji: <strong>{{ $osodata['station']->nama_penguji }}</strong></p>
-                        <p class="text-muted mb-0">{{ $osodata['mhs']->count()}} Peserta</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Card 2: Kamera dan Aksi -->
-            <div class="card">
-                <div class="card-body">
-                    <!-- Baris atas: Teks kiri dan kontrol kanan -->
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <p class="mb-0 font-weight-bold">Peserta Ujian:</p>
-                        <div class="d-flex align-items-center">
-                            
-                        </div>
-                    </div>
-
-                    <!-- Gambar mahasiswa -->
-                    <div class="text-center mb-3">
-                        <H4 class="text-center">
-                            {{$peserta->name}} <br>
-                            {{ $peserta->npm}} <br>
-                        </H4>
-                    </div>
-
-                    <!-- Nomor urut dan tombol -->
-                    <div class="text-center">
-                        <p class="mb-2">Nomor urut selanjutnya: <strong>2</strong></p>
-                        <button class="btn btn-danger btn-block">TIDAK HADIR</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+@section('detail-soal')
+<div class="card">
+    <div>
+        <a href="{{ route('osoca.template') }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">LIHAT DETAIL SOAL</a>
     </div>
 
-    <!-- Detail Soal -->
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="mb-3">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalPenilaian">LIHAT DETAIL SOAL</button>
-                
-            </div>
-            <div class="detail-soal">
-                <div class="table-responsive">
+    <hr>
+    <div class="panel-body">
+                        <div class="table-responsive">
                                         <table class="table ">
                                             <thead>
                                                 <tr>
@@ -316,57 +208,70 @@
                                         </table>
 
                                     </div>
-            </div>
-        </div>
+
     </div>
 </div>
+@endsection
 
-<!-- Modal Penilaian -->
-<div class="modal fade" id="modalPenilaian" tabindex="-1" role="dialog" aria-labelledby="modalPenilaianLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+@section('modal')
+{{-- modal rekap --}}
+<div class="modal fade" id="modalRekap" tabindex="-1" role="dialog" aria-labelledby="modalRekapLabel">
+    <div class="modal-dialog" style="width: 90%; max-width: 1000px;">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Apakah Anda yakin dengan nilai ini?</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> Pastikan semua butir penilaian telah diisi, Apakah Anda yakin dengan nilai ini?</h4>
         </div>
         <div class="modal-body">
           <table class="table table-bordered">
-            <thead class="thead-light">
+            <thead>
               <tr>
-                <th>Kompetensi Yang Dinilai</th>
-                <th>Bobot</th>
-                <th>Nilai</th>
+                <th><strong>Kompetensi Yang Dinilai</strong></th>
+                <th><strong>Bobot</strong></th>
+                <th><strong>Nilai</strong></th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Anamnesis</td><td>4</td><td>3</td></tr>
-              <tr><td>Pemeriksaan Fisik/Psikiatri</td><td>3</td><td>3</td></tr>
-              <tr><td>Interpretasi Data/Kemampuan Prosedural Pemeriksaan Penunjang</td><td>3</td><td>3</td></tr>
-              <tr><td>Penegakan Diagnosis dan Diagnosis Banding</td><td>3</td><td>3</td></tr>
-              <tr><td>Tatalaksana Farmakoterapi</td><td>3</td><td>3</td></tr>
-              <tr><td>Komunikasi dan Edukasi Pasien</td><td>2</td><td>3</td></tr>
-              <tr><td>Perilaku Profesional</td><td>1</td><td>3</td></tr>
+                @foreach ($rubrik as $index => $data)
+                <tr id="trow_{{$loop->iteration}}">
+                    <td><strong>{{$data['name']}}</strong>
+                    </td>
+                    <td >
+                        <div id="mbobot{{$data['id']}}" style="display: none;">{{$data['bobot']}}</div>
+                    </td>
+                    <td id="mnilaiRubrik{{$data['id']}}">
+                        --
+                    </td>
+
+                </tr>
+                @endforeach
             </tbody>
             <tfoot>
-              <tr>
-                <td colspan="2"><strong>Global Rating</strong></td>
-                <td><strong>Lulus</strong></td>
-              </tr>
             </tfoot>
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
-          <button type="button" class="btn btn-success">YAKIN</button>
+
+
+          <form id="submitPenilaianForm" method="POST" action="{{ route('osoca.penilaian.store') }}" >
+            @csrf
+            <input type="hidden" name="penilaian" id="penilaianHiddenInput">
+            <input type="hidden" name="feedback" id="feedbackHiddenInput">
+            <input type="hidden" name="next" value="{{ session('next') }}">
+            <input type="hidden" name="peserta_id" value="{{ $peserta->id }}">
+            <input type="hidden" name="limit" value="{{ $pol}}">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
+                <button type="submit" class="btn btn-success">YAKIN</button>
+        </form>
+
+
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Modal: penilaiann -->
-  @foreach ($rubrik as $index => $data)
+{{-- modal rekap end --}}
+{{-- modal penilaian --}}
+@foreach ($rubrik as $index => $data)
 <div class="modal fade" id="modalPenilaian{{$data['id']}}" tabindex="-1" role="dialog" aria-labelledby="modalPenilaian{{$data['id']}}Label">
     <div class="modal-dialog" style="width: 90%; max-width: 1000px;">
       <div class="modal-content">
@@ -385,10 +290,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td><input type="radio" name="pilihan" value="3" data-id ="{{$data['id']}}"/> </td><td>3</td><td>{!! $data['nilai_3'] !!}</td></tr>
-              <tr><td><input type="radio" name="pilihan" value="2" data-id ="{{$data['id']}}"/> </td><td>2</td><td>{!! $data['nilai_2'] !!}</td></tr>
-              <tr><td><input type="radio" name="pilihan" value="1" data-id ="{{$data['id']}}"/> </td><td>1</td><td>{!! $data['nilai_1'] !!}</td></tr>
-              <tr><td><input type="radio" name="pilihan" value="0" data-id ="{{$data['id']}}"/> </td><td>0</td><td>{!! $data['nilai_0'] !!}</td></tr>
+              <tr><td>
+                <label class="btn btn-primary"><input type="radio" name="pilihan" value="3" data-id ="{{$data['id']}}"/> Pilih</label> </td><td style="text-align: center;"><strong>3</strong></td><td>{!! $data['nilai_3'] !!}</td></tr>
+              <tr><td> <label class="btn btn-primary"><input type= "radio" name="pilihan" value="2" data-id ="{{$data['id']}}"/> Pilih</label> </td><td style="text-align: center;"><strong>2</strong></td><td>{!! $data['nilai_2'] !!}</td></tr>
+              <tr><td> <label class="btn btn-primary"> <input type="radio" name="pilihan" value="1" data-id ="{{$data['id']}}"/> Pilih</label> </td><td style="text-align: center;"><strong>1</strong></td><td>{!! $data['nilai_1'] !!}</td></tr>
+              <tr><td> <label class="btn btn-primary"> <input type="radio" name="pilihan" value="0" data-id ="{{$data['id']}}"/> Pilih</label> </td><td style="text-align: center;"><strong>0</strong></td><td>{!! $data['nilai_0'] !!}</td></tr>
             </tbody>
 
           </table>
@@ -401,8 +307,44 @@
     </div>
   </div>
   @endforeach
-  <!-- Modal: feedback -->
-   <div class="modal fade" id="modalFeedback" tabindex="-1" role="dialog" aria-labelledby="modalFeedbackLabel">
+ <!-- Modal global rating -->
+
+   <!-- Modal No Peserta -->
+
+   <div class="modal fade" id="modalNoPesert" tabindex="-1" role="dialog" aria-labelledby="modalNoPesertLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+
+        <!-- Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Peserta Tidak Hadir</h4>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-body">
+           
+            <h3>Apakah anda yakin Tidak ada peserta ? </h3>
+           
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer">
+            <form id="submitTidakHadir" method="POST" action="{{ route('osoca.tidak.hadir') }}" >
+                @csrf
+                <input type="hidden" name="next" value="{{ session('current_peserta') }}">
+                <input type="hidden" name="peserta_id" value="{{ $peserta->id }}">
+                <input type="hidden" name="limit" value="{{ $pol}}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</button>
+                <button type="submit" class="btn btn-red btn-sm">YAKIN</button>
+            </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  {{-- modal feedback --}}
+  <div class="modal fade" id="modalFeedback" tabindex="-1" role="dialog" aria-labelledby="modalFeedbackLabel">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
@@ -435,13 +377,17 @@ Masukan:
       </div>
     </div>
   </div>
+{{-- modal penilaian end --}}
 
 
-<!-- Bootstrap JS + FontAwesome (untuk ikon tanda tanya) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/a2e0e6b415.js" crossorigin="anonymous"></script>
+  @endsection
+
+@section('script')
 <script type="text/javascript" src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/osce_ujian.js') }}"></script>
-</body>
-</html>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
+<script type="text/javascript" src="{{ asset('js/osoca_ujian.js') }}"></script>
+
+
+
+@endsection

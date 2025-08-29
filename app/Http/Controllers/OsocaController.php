@@ -99,11 +99,21 @@ class OsocaController extends Controller
                     ];
                 }
                 $template = $otemplate;
-            return view('osoca.ujian', compact('osodata', 'rubrik', 'peserta', 'template', 'sesi'));
+                $pol = $osodata['mhs']->count() == session('current');
+            return view('osoca.dashbord', compact('osodata', 'rubrik', 'peserta', 'template', 'sesi', 'pol'));
         
         //dd(session()->all());
 
 
     }
+       
+    public function penilaian(Request $request){
+        //dd(session()->all());
+        dd($request->all());
 
+        $penilaian = json_decode($request->penilaian, true);
+        $feedback = $request->feedback;
+        $globalRating = json_decode($request->globalRating, true);
+        $next = $request->next + 1; //buat update session current_peserta
+    }
 }

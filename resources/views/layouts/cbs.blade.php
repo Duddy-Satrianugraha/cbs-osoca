@@ -3,7 +3,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
-    <title>{{ config('app.name', 'Arap') }}</title>
+    <title>{{ config('app.name', 'CBS-OSOCA') }}</title>
 
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/bootstrap/bootstrap.min.css')}}"/>
   <!-- Font Awesome 4.1.0 -->
@@ -24,7 +24,7 @@
             <div class="dropdown">
                 @yield('penguji')
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="{{route('osce.logout')}}">Logout</a></li>
+                    <li><a href="{{ route('osoca.tolist')}}">Logout</a></li>
                 </ul>
             </div>
         </div>
