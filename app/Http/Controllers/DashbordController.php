@@ -105,8 +105,10 @@ class DashbordController extends Controller
         $soal_slug = $request->soal_slug;
         $soal = Ostation::where('qrstation', $soal_slug)->first();
         if($soal){
+            if(is_null($soal->nama_penguji)) {
             $soal->nama_penguji = $request->name;
             $soal->save();
+            }
             session([
                 'Osoca' => $soal->oujian_id,
                 'Station' => $soal->urutan ?? null,

@@ -99,7 +99,8 @@ class OsocaController extends Controller
                     ];
                 }
                 $template = $otemplate;
-                $pol = $osodata['mhs']->count() == session('current');
+                $pol = ($osodata['mhs']->count() == $osodata['mhs']->where('status', true)->count());
+                
             return view('osoca.dashbord', compact('osodata', 'rubrik', 'peserta', 'template', 'sesi', 'pol'));
         
         //dd(session()->all());

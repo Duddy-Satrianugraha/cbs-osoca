@@ -63,10 +63,9 @@
             <tr>
                 @foreach($row as $station)
                     <td>
-                        <h2 class="title">Kartu Station {{ $station->ujian }}</h2>
+                        <h2 class="title">Kartu Penguji {{ $station->ujian }}</h2>
                         <div class="card">
                             <div class="left">
-                               
                                 <h2><strong> Station {{ $station->urutan }} </strong></h3>
                             </div>
                             <div class="right">

@@ -27,6 +27,11 @@ body {
       width: 130px;
       display: inline-block;
     }
+    .info-label2 {
+      font-weight: bold;
+      
+      display: inline-block;
+    }
 
     .tab-content {
       margin-top: 20px;

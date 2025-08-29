@@ -53,8 +53,8 @@
             <div class="col-sm-6">
               <div class="info-title">UJIAN OSOCA {{$data['ujian']->name}}</div>
             
-                <p><span class="info-label">Station: {{$data['station']->name}} </span> </p>
-                <p><span class="info-label">Penguji:  {{$data['station']->nama_penguji}}</span> </p>
+                <p><span class="info-label2">Station: {{$data['station']->name}} </span> </p>
+                <p><span class="info-label2">Penguji:  {{$data['station']->nama_penguji}}</span> </p>
                 <div class="info-title">Silahkan Arahkan Qr Code Peserta Ujian</div>
                  <!-- hidden station_slug -->
                  <form action="{{ route('osoca.mhs.chek')}}" method="post" class="form-horizontal" id="form-scan">

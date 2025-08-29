@@ -70,7 +70,7 @@
                                     <strong> Nama : </strong> {{ $station->name }}<br>
                                 </h4>
                                 <h2><strong> Station {{ $station->station }}</strong> <br>
-                                    <strong> Urutan {{ $station->sesi }}</strong>
+                                    
                                 </h2>
                                 
                                 
