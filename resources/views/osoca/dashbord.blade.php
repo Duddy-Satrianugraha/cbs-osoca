@@ -16,8 +16,9 @@
 
 @section('penguji')
 
-                <a class="dropdown-toggle text-dark" href="#" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ $osodata['station']->nama_penguji }}
+            <a class="dropdown-toggle" href="#"  data-toggle="dropdown" >
+              <span><img src="{{ asset('img/mduser.jpg')  }}" alt="avatar" class="logo" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;"></span>
+                
             </a>
 @endsection
 
@@ -258,8 +259,9 @@
             <input type="hidden" name="penilaian" id="penilaianHiddenInput">
             <input type="hidden" name="feedback" id="feedbackHiddenInput">
             <input type="hidden" name="next" value="{{ session('next') }}">
+            <input type="hidden" name="ujian_id" value="{{ session('Osoca') }}">
             <input type="hidden" name="peserta_id" value="{{ $peserta->id }}">
-            <input type="hidden" name="limit" value="{{ $pol}}">
+            <input type="hidden" name="template_id" value="{{ $template->id }}">
             <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
                 <button type="submit" class="btn btn-success">YAKIN</button>
         </form>
@@ -330,14 +332,10 @@
 
         <!-- Footer -->
         <div class="modal-footer">
-            <form id="submitTidakHadir" method="POST" action="{{ route('osoca.tidak.hadir') }}" >
-                @csrf
-                <input type="hidden" name="next" value="{{ session('current_peserta') }}">
-                <input type="hidden" name="peserta_id" value="{{ $peserta->id }}">
-                <input type="hidden" name="limit" value="{{ $pol}}">
-                <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</button>
-                <button type="submit" class="btn btn-red btn-sm">YAKIN</button>
-            </form>
+            <form id="submitTidakHadir" method="POST" action="#" >
+            </form> 
+            <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</button>
+            <a href="{{ route('osoca.tolist')}}" class="btn btn-red btn-sm">YAKIN</a>
         </div>
 
       </div>

@@ -77,9 +77,17 @@
                                 <input type="text" name='tgl_ujian' class="form-control datepicker" value="{{ $ujian->tgl_ujian }}">
                             </div>
                             <span class="help-block">Pilih Tanggal pelaksanaan OSOCA</span>
+                        </div>  
+                    </div>
+                   <div class="form-group">
+                        <label class="col-md-2 col-xs-12 control-label">Remediasi?</label>
+                        <div class="col-md-8 col-xs-12">
+                            <label class="check">
+                                <input type="checkbox" class="icheckbox" name="rmd" id="use_rmd_checkbox" @if($ujian->remedial) checked @endif value=1 />
+                                <span></span> iya
+                            </label>
                         </div>
                     </div>
-                   
                 </div>
                 <div class="panel-footer">
 

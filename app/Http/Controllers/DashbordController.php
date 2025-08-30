@@ -94,7 +94,7 @@ class DashbordController extends Controller
             'soal_slug' => ['required','numeric'],
             'name' => 'required',
             'captcha' => [
-            'required','numeric',
+            'required','numeric', 
             function ($attribute, $value, $fail) {
                 if (!verify_captcha($value)) {
                     $fail('Jawaban CAPTCHA salah Boss');

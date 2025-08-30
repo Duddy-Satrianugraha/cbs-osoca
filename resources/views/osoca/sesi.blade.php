@@ -54,6 +54,7 @@
               <div class="info-title">UJIAN OSOCA {{$data['ujian']->name}}</div>
             
                 <p><span class="info-label2">Station: {{$data['station']->name}} </span> </p>
+                <p><span class="info-label2">Sesi: {{ session('current')}}</span> </p>
                 <p><span class="info-label2">Penguji:  {{$data['station']->nama_penguji}}</span> </p>
                 <div class="info-title">Silahkan Arahkan Qr Code Peserta Ujian</div>
                  <!-- hidden station_slug -->

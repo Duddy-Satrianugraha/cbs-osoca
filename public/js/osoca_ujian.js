@@ -1,6 +1,6 @@
 let penilaianSementara = {};
 let penilaiangr ={};
-let penilaianfeedback = {};
+let penilaianfeedback = "";
 
 
 toastr.options = {
@@ -69,7 +69,11 @@ $('#FeedbackForm').on('submit', function (e) {
 });
 
 $('#submitPenilaianForm').on('submit', function (e) {
-    
+    if (!penilaianfeedback.trim()) {
+        e.preventDefault();
+        toastr.error('Feedback wajib diisi!');
+        return false;
+    }
 
     $('#penilaianHiddenInput').val(JSON.stringify(penilaianSementara));
     $('#feedbackHiddenInput').val(penilaianfeedback);

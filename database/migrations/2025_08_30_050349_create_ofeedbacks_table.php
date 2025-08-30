@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('oujians', function (Blueprint $table) {
+        Schema::create('ofeedbacks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('ta');
-             $table->string('jml_station');
-             $table->string('jml_sesi');
-             $table->string('tgl_ujian');
-             $table->foreignId('user_id');
-             $table->boolean('remedial')->default(false);
+            $table->foreignId('oujian_id');
+            $table->foreignId('station_id');
+            $table->foreignId('peserta_id');
+            $table->string('qrpeserta');
+            $table->string('nama');
+            $table->string('npm');
+            $table->text('feedback')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('oujians');
+        Schema::dropIfExists('ofeedbacks');
     }
 };
