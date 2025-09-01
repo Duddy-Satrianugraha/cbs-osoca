@@ -28,7 +28,7 @@
         </div>
         <div class="login-footer">
             <div class="pull-left">
-                &copy; 2026 OSIN
+                &copy; {{ date("Y")}} CBS-OSOCA
             </div>
             <div class="pull-right">
                 @yield('links')

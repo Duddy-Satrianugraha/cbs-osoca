@@ -13,7 +13,9 @@ class Opeserta extends Model
         'station',
         'sesi',
         'qrpeserta',
+        'status',
     ];
+    protected $casts = ['status' => 'boolean']; 
 
     public function oujian(){
         return $this->belongsTo(Oujian::class);

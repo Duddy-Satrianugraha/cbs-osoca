@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Onilai extends Model
 {
-    //
+    protected $fillable = [
+        'oujian_id','station_id','sesi_id','qrpeserta','nama','npm','skor','jumlah','nilai'
+        ];
 }

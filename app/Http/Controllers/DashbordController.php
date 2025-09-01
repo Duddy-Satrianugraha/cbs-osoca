@@ -97,7 +97,7 @@ class DashbordController extends Controller
             'required','numeric', 
             function ($attribute, $value, $fail) {
                 if (!verify_captcha($value)) {
-                    $fail('Jawaban CAPTCHA salah Boss');
+                    $fail('Jawaban CAPTCHA salah dok');
                 }
             },
         ],

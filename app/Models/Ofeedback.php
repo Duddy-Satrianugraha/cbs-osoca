@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ofeedback extends Model
 {
-    //
+    protected $fillable = [
+        'oujian_id','station_id','peserta_id','qrpeserta','nama','npm','feedback'
+    ];
 }

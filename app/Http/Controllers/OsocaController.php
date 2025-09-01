@@ -13,6 +13,7 @@ use App\Models\Ofeedback;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class OsocaController extends Controller
 {
@@ -144,7 +145,7 @@ class OsocaController extends Controller
         return view('osoca.template', compact('osodata', 'rubrik', 'template'));
     }
        
-    public function penilaian(Request $request){
+    public function penilaianX(Request $request){
        //dd($request->all());
 
         $jumlah = array_sum(json_decode($request->penilaian, true));
@@ -198,14 +199,14 @@ class OsocaController extends Controller
         $ofeedback->feedback = $feedback;
         $ofeedback->save();
         
-       
+        DB::commit();
 
         session()->forget('Sesi');
         session()->forget('Peserta');
         session(['current' => $next,
                  'next' => $next + 1,
                 ]);
-        DB::commit();
+       
         return redirect(route('osoca.mhs.login'))->with('msg', 'success-Data berhasil disimpan');
     } catch (Exception $e) {
         DB::rollBack();
@@ -214,9 +215,121 @@ class OsocaController extends Controller
                 ]);
         return redirect(route('osoca.ujian'))->with('msg', 'danger-Data gagal disimpan '.$e->getMessage()); 
         }
+  }
 
+  public function penilaian(Request $request)
+        {
+            // 1) Validasi
+            $validated = $request->validate([
+                'penilaian'   => ['required','string'], // JSON string
+                'feedback'    => ['nullable','string'],
+                'next'        => ['required','integer','min:0'],
+                'template_id' => ['required','integer','exists:otemplates,id'],
+            ]);
 
-        
+            // Decode & hitung
+            $arrPenilaian = json_decode($validated['penilaian'], true);
+            if (!is_array($arrPenilaian)) {
+                return back()->with('msg', 'danger-Format penilaian tidak valid');
+            }
+            // pastikan semua nilai numerik
+            $angka = array_map('floatval', $arrPenilaian);
+            $jumlah = array_sum($angka);
 
-    }
+            $ujian_id = session('Osoca');
+            if (!$ujian_id) {
+                return back()->with('msg', 'danger-Session ujian hilang');
+            }
+            $ujian = Oujian::find($ujian_id);
+            if (!$ujian) {
+                return back()->with('msg', 'danger-Ujian tidak ditemukan');
+            }
+
+            // Hitung rubrik (3 = skor maksimum per rubrik?)
+            $jmlRubrik = Orubrik::where('otemplate_id', $validated['template_id'])->count();
+            if ($jmlRubrik <= 0) {
+                return back()->with('msg', 'danger-Rubrik tidak tersedia');
+            }
+            $rubrikMax = $jmlRubrik * 3;
+            $pembagi   = 100 / $rubrikMax;
+            $mar       = $pembagi * $jumlah;
+
+            $mark = $ujian->remedial ? min($mar, 67) : $mar;
+            $mark = round($mark, 2);
+
+            try {
+                DB::transaction(function () use ($validated, $ujian_id, $ujian, $jumlah, $mark, $arrPenilaian) {
+                    // Ambil peserta dari session
+                    $pesertaId = session('Peserta');
+                    $sesiId    = session('Sesi');
+                    $stationUrutan = session('Station');
+
+                    if (!$pesertaId || !$sesiId || !$stationUrutan) {
+                        throw new \RuntimeException('Session peserta/sesi/station tidak lengkap');
+                    }
+
+                    $peserta = Opeserta::findOrFail($pesertaId);
+                    $peserta->update(['status' => true]);
+
+                    // Lock baris station agar aman dari race condition
+                    $station = Ostation::where('urutan', $stationUrutan)
+                        ->where('oujian_id', $ujian_id)
+                        ->lockForUpdate()
+                        ->firstOrFail();
+
+                    $station->current = $validated['next'];
+                    $station->next    = $validated['next'] + 1;
+                    $station->save();
+
+                    // Cegah duplikasi nilai untuk peserta-station yang sama
+                    $sudahAda = Onilai::where('oujian_id', $ujian_id)
+                        ->where('station_id', $station->id)
+                        ->where('qrpeserta', $peserta->qrpeserta)
+                        ->exists();
+
+                    if ($sudahAda) {
+                        throw new \RuntimeException('Nilai untuk peserta ini di station tersebut sudah ada.');
+                    }
+
+                    // Simpan nilai
+                    Onilai::create([
+                        'oujian_id'  => $ujian_id,
+                        'station_id' => $station->id,
+                        'sesi_id'    => $sesiId,
+                        'qrpeserta'  => $peserta->qrpeserta,
+                        'nama'       => $peserta->name,
+                        'npm'        => $peserta->npm,
+                        'skor'       => json_encode($arrPenilaian), // simpan JSON rapi
+                        'jumlah'     => $jumlah,
+                        'nilai'      => $mark,
+                    ]);
+
+                    // Simpan feedback (opsional: hanya jika ada isi)
+                    Ofeedback::create([
+                        'oujian_id'  => $ujian_id,
+                        'station_id' => $station->id,
+                        'peserta_id' => $peserta->id,
+                        'qrpeserta'  => $peserta->qrpeserta,
+                        'nama'       => $peserta->name,
+                        'npm'        => $peserta->npm,
+                        'feedback'   => $validated['feedback'] ?? null,
+                    ]);
+                });
+
+                // Session diubah setelah commit agar state konsisten
+                session()->forget(['Sesi','Peserta']);
+                session([
+                    'current' => $validated['next'],
+                    'next'    => $validated['next'] + 1,
+                ]);
+
+                return redirect()->route('osoca.mhs.login')
+                    ->with('msg', 'success-Data berhasil disimpan');
+
+            } catch (\Throwable $e) {
+                // JANGAN majukan sesi kalau gagal
+                return redirect()->route('osoca.ujian')
+                    ->with('msg', 'danger-Data gagal disimpan '.$e->getMessage());
+            }
+}
 }

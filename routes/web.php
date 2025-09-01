@@ -25,16 +25,19 @@ use App\Http\Controllers\OujianController;
 use App\Http\Middleware\Mahasiswa;
 use App\Http\Middleware\Panitia;
 use App\Http\Middleware\Penguji;
+use App\Http\Controllers\OfeedbackController;
 use App\Http\Middleware\Osce;
 use App\Http\Middleware\Osoca;
 use App\Http\Middleware\Ps;
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('oumpan.login');
 });
 Route::get('/html', function () {
-    return view('osoca.sesi');
+    return view('');
 });
+
+Route::post('/feedback', [OfeedbackController::class, 'chek_feed'])->name('feedback.chek');
 
 //Route::get('/login/ps', [DashbordController::class, 'pslogin'])->name('ps.login');
 //Route::get('/register/ps', [DashbordController::class, 'psregister'])->name('ps.register');
