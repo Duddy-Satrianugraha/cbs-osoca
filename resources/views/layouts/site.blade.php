@@ -33,7 +33,7 @@
             <div class="pull-right">
                 @yield('links')
 
-                <a href="#">FK UGJ</a>
+                <a href="{{ route('peserta.login')}}">FK UGJ</a> 
             </div>
         </div>
     </div>

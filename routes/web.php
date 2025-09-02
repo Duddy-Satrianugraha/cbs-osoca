@@ -18,11 +18,11 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\RotationController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PendaftaranController;
-use App\Http\Controllers\PasienController;
+use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\TrmeController;
 use App\Http\Controllers\OtemplateController;
 use App\Http\Controllers\OujianController;
-use App\Http\Middleware\Mahasiswa;
+use App\Http\Middleware\Peserta;
 use App\Http\Middleware\Panitia;
 use App\Http\Middleware\Penguji;
 use App\Http\Controllers\OfeedbackController;
@@ -30,7 +30,8 @@ use App\Http\Middleware\Osce;
 use App\Http\Middleware\Osoca;
 use App\Http\Middleware\Ps;
 
-Route::get('/', function () {
+Route::get('/', [DashbordController::class, 'osoca'])->name('osoca.login');
+Route::get('/feedback', function () {
     return view('oumpan.login');
 });
 Route::get('/html', function () {
@@ -43,10 +44,12 @@ Route::post('/feedback', [OfeedbackController::class, 'chek_feed'])->name('feedb
 //Route::get('/register/ps', [DashbordController::class, 'psregister'])->name('ps.register');
 Route::get('/login/penguji', [DashbordController::class, 'login'])->name('penguji.login');
 Route::get('/register/penguji', [DashbordController::class, 'register'])->name('penguji.register');
-Route::get('/login/osce', [DashbordController::class, 'osce'])->name('osce.login');
-Route::post('/scan/osce', [DashbordController::class, 'scan'])->name('osce.scan');
+// Route::get('/login/osce', [DashbordController::class, 'osce'])->name('osce.login');
+// Route::post('/scan/osce', [DashbordController::class, 'scan'])->name('osce.scan');
 Route::get('/login/osoca', [DashbordController::class, 'osoca'])->name('osoca.login');
 Route::post('/scan/osoca', [DashbordController::class, 'oscan'])->name('osoca.scan');
+Route::get('/login/peserta', [DashbordController::class, 'peserta'])->name('peserta.login');
+Route::post('/scan/peserta', [DashbordController::class, 'pscan'])->name('peserta.scan');
 
 Route::get('/dashbord', [DashbordController::class, 'index'])->middleware(['auth', ])->name('dashbord');
 Route::get('/admin/power/destroy',[PowerController::class, 'destroy'])->name('admin.powerdown');
@@ -86,7 +89,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::post('/peserta/upload',[OpesertaController::class, 'store_upload'])->name('peserta.store_upload');
     Route::get('/kartu/peserta/{uid}', [PdfController::class, 'listpeserta'])->name('pdf.peserta');
     Route::get('/kartu/station/{uid}', [PdfController::class, 'station'])->name('pdf.station');
-   
+
     //Route::get('/peserta',[OujianController::class, 'listujian'])->name('daftar.peserta');
 
     //Route::resource('/station', StationController::class);
@@ -111,18 +114,23 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
 
 });
 
-Route::prefix('mahasiswa')->middleware(['auth', Mahasiswa::class ])->name('mahasiswa.')->group( function (){
-    Route::resource('/pendaftaran', PendaftaranController::class);
-    Route::get('/nametag', [PdfController::class, 'mhs'])->name('nametag.cetak');
+Route::prefix('peserta')->middleware(Peserta::class)->name('peserta.')->group( function (){
+    Route::get('/', [PesertaController::class, 'soal'])->name('peserta.index');
 });
 
 
-Route::prefix('penguji')->middleware(['auth', Penguji::class ])->name('penguji.')->group( function (){
-    Route::get('/nametag', [PdfController::class, 'penguji'])->name('kartu.cetak');
-});
-Route::prefix('ps')->middleware(['auth', Ps::class ])->name('ps.')->group( function (){
-    Route::get('/nametag', [PdfController::class, 'ps'])->name('kartu.cetak');
-});
+// Route::prefix('mahasiswa')->middleware(['auth', Mahasiswa::class ])->name('mahasiswa.')->group( function (){
+//     Route::resource('/pendaftaran', PendaftaranController::class);
+//     Route::get('/nametag', [PdfController::class, 'mhs'])->name('nametag.cetak');
+// });
+
+
+// Route::prefix('penguji')->middleware(['auth', Penguji::class ])->name('penguji.')->group( function (){
+//     Route::get('/nametag', [PdfController::class, 'penguji'])->name('kartu.cetak');
+// });
+// Route::prefix('ps')->middleware(['auth', Ps::class ])->name('ps.')->group( function (){
+//     Route::get('/nametag', [PdfController::class, 'ps'])->name('kartu.cetak');
+// });
 
 // Route::prefix('osce')->middleware([Osce::class])->name('osce.')->group( function (){
 //     Route::get('/penguji', [OsceController::class, 'penguji'])->name('penguji.login');
@@ -151,8 +159,5 @@ Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( funct
     Route::get('/template', [OsocaController::class, 'template'])->name('template');
     Route::post('/penilaian', [OsocaController::class, 'penilaian'])->name('penilaian.store');
     Route::post('/tidak_hadir', [OsceController::class, 'tidak_hadir'])->name('tidak.hadir');
-
-   
-
 });
 

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Opeserta;
+use App\Models\Osesi;
 use Illuminate\Http\Request;
 use App\Models\Soal;
 use App\Models\Ostation;
+use App\Models\Otemplate;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,6 +71,33 @@ class DashbordController extends Controller
         //
     }
 
+    public function peserta(){
+        return view('peserta.login');
+    }
+
+    public function pscan(Request $request){
+        $request->validate([
+            'soal_slug' => ['required','numeric'],
+            'captcha' => [
+            'required','numeric',
+            function ($attribute, $value, $fail) {
+                if (!verify_captcha($value)) {
+                    $fail('Jawaban CAPTCHA salah dok');
+                }
+            },
+        ],
+        ]);
+
+        //dd($request->soal_slug);
+        $peserta = Opeserta::where('qrpeserta', $request->soal_slug)->firstorFail();
+        $station = Ostation::where('oujian_id', $peserta->oujian_id)->where('urutan', $peserta->station)->first();
+        //session([])
+        $sesi =  Osesi::where('oujian_id', $peserta->oujian_id)->where('urutan', $station->current)->first();
+        $template = Otemplate::find($sesi->otemplate_id);
+        dd($template);
+
+    }
+
     Public function login(){
         return view('penguji.auth.login');
     }
@@ -76,7 +106,7 @@ class DashbordController extends Controller
         return view('penguji.auth.register');
     }
 
-    
+
     public function osoca(){
         if(session()->has('Osoca')){
             return redirect(route('osoca.mhs.login'))->with('msg', 'danger-Selamat datang kembali dok,Silahkan scan kartu peserta');
@@ -87,14 +117,14 @@ class DashbordController extends Controller
 
         return view('osoca.login');
     }
-    
+
     public function oscan(Request $request){
         //dd($request);
         $request->validate([
             'soal_slug' => ['required','numeric'],
             'name' => 'required',
             'captcha' => [
-            'required','numeric', 
+            'required','numeric',
             function ($attribute, $value, $fail) {
                 if (!verify_captcha($value)) {
                     $fail('Jawaban CAPTCHA salah dok');

@@ -48,7 +48,7 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
-        mailpit:
+    mailpit:
         image: 'axllent/mailpit:latest'
         ports:
             - '${FORWARD_MAILPIT_PORT:-1025}:1025'
