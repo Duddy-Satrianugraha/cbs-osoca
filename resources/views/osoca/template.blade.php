@@ -18,7 +18,9 @@
 
             <a class="dropdown-toggle" href="#"  data-toggle="dropdown" >
               <span><img src="{{ asset('img/mduser.jpg')  }}" alt="avatar" class="logo" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;"></span>
-                
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="{{ route('osoca.tolist')}}">Logout</a></li>
+                </ul>
             </a>
 @endsection
 
@@ -26,7 +28,7 @@
 
 @section('detail-soal')
 <div class="card">
-   
+
     <hr>
     <div class="panel-body">
                         <div class="table-responsive">
@@ -49,22 +51,22 @@
                                                     <td>Judul Soal</td>
                                                     <td>{{$template->judul_station}}</td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td class="text-center">7 .</td>
                                                     <td>Skenario Klinik</td>
-                                                    <td>                                                   
-                                                         {!!$template->soal !!}  
+                                                    <td>
+                                                         {!!$template->soal !!}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">7 .</td>
                                                     <td>Tugas</td>
-                                                    <td>                           
+                                                    <td>
                                                          {!! $template->tugas_mhs !!}
                                                     </td>
                                                 </tr>
-                                              
+
                                                 <tr>
                                                     <td class="text-center" rowspan="2">8 .</td>
                                                     <td rowspan="2">Mininotes</td>
@@ -73,14 +75,14 @@
 
                                                     </td>
                                                 </tr>
-                                                
+
                                             </tbody>
                                         </table>
                                         <hr/>
                                         <div class="text-center">
                                             <h3>Rubrik Ujian</h3>
                                             <h4>{{$template->judul_station}}</h4>
-                                            
+
                                         </div>
                                         <table class="table table-bordered table-striped">
                                             <thead>
@@ -91,7 +93,7 @@
                                                     <th width="200">Nilai 1</th>
                                                     <th width="200">Nilai 2</th>
                                                     <th width="200">Nilai 3</th>
-                                                    
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -113,7 +115,7 @@
                                                     <td>
                                                        {!! $data['nilai_3'] !!}
                                                     </td>
-                                                   
+
                                                 </tr>
                                                 @endforeach
 

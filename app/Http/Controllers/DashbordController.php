@@ -71,12 +71,17 @@ class DashbordController extends Controller
         //
     }
 
+    public function login_peserta(Request $request){
+
+    }
+
     public function peserta(){
         return view('peserta.login');
     }
 
     public function pscan(Request $request){
-        $request->validate([
+
+       $request->validate([
             'soal_slug' => ['required','numeric'],
             'captcha' => [
             'required','numeric',
@@ -87,14 +92,18 @@ class DashbordController extends Controller
             },
         ],
         ]);
-
-        //dd($request->soal_slug);
-        $peserta = Opeserta::where('qrpeserta', $request->soal_slug)->firstorFail();
-        $station = Ostation::where('oujian_id', $peserta->oujian_id)->where('urutan', $peserta->station)->first();
-        //session([])
-        $sesi =  Osesi::where('oujian_id', $peserta->oujian_id)->where('urutan', $station->current)->first();
-        $template = Otemplate::find($sesi->otemplate_id);
-        dd($template);
+        $soal_slug = $request->soal_slug;
+        $soal = Ostation::where('qrstation', $soal_slug)->first();
+        if($soal){
+            session([
+                'oujian' => $soal->oujian_id,
+                'Station' => $soal->id ?? null,
+                'current' => $soal->current ?? null,
+            ]);
+            return redirect(route('peserta.index'))->with('success', 'Station ditemukan silahkan scan kartu Peserta');
+        } else {
+            return redirect(route('peserta.login'))->with('msg', 'danger-Unable to find code');
+        }
 
     }
 

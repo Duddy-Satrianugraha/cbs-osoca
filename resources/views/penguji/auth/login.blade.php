@@ -41,7 +41,7 @@
 @endsection
 
 @section('links')
-<a href="{{ url('/')}}">Feedback</a> |
+<a href="{{ url('/feedback')}}">Feedback</a> |
 <a href="{{ route('osoca.login')}}">OSOCA</a> |
 
 @endsection

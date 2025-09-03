@@ -30,12 +30,12 @@ use App\Http\Middleware\Osce;
 use App\Http\Middleware\Osoca;
 use App\Http\Middleware\Ps;
 
-Route::get('/', [DashbordController::class, 'osoca'])->name('osoca.login');
+
 Route::get('/feedback', function () {
     return view('oumpan.login');
 });
-Route::get('/html', function () {
-    return view('');
+Route::get('/', function () {
+    return redirect(route('penguji.login'));
 });
 
 Route::post('/feedback', [OfeedbackController::class, 'chek_feed'])->name('feedback.chek');
@@ -115,7 +115,11 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
 });
 
 Route::prefix('peserta')->middleware(Peserta::class)->name('peserta.')->group( function (){
-    Route::get('/', [PesertaController::class, 'soal'])->name('peserta.index');
+    Route::get('/', [PesertaController::class, 'check'])->name('index');
+    Route::get('/soal', [PesertaController::class, 'soal'])->name('soal');
+    Route::get('/tolist', [PesertaController::class, 'tolist'])->name('tolist');
+    Route::get('/logout', [PesertaController::class, 'logout'])->name('logout');
+    Route::post('/scan/soal', [PesertaController::class, 'scan'])->name('soal.scan');
 });
 
 

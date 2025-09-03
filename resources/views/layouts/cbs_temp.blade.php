@@ -23,9 +23,7 @@
         <div class="col-xs-4 text-right">
             <div class="dropdown">
                 @yield('penguji')
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="{{ route('osoca.tolist')}}">Logout</a></li>
-                </ul>
+                
             </div>
         </div>
     </div>

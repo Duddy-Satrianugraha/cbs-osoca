@@ -18,7 +18,7 @@
 
             <a class="dropdown-toggle" href="#"  data-toggle="dropdown" >
               <span><img src="{{ asset('img/mduser.jpg')  }}" alt="avatar" class="logo" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;"></span>
-                
+               
             </a>
 @endsection
 
@@ -55,7 +55,7 @@
 
             </tr>
             @endforeach
-            
+
             <tr><td></td>
                 <td></td>
                 <td id="feed"></td>
@@ -85,9 +85,9 @@
 @section('info-mhs')
 <div class="card">
     <div class="row">
-        
+
         <div class="col-xs-12">
-            
+
             <h5 style="margin-top:0;">Nama :<strong> {{$peserta->name}}</strong></h5>
             <p style="margin: 0;">Npm: <strong>{{ $peserta->npm}}</strong></p>
             <p class="text-muted" style="margin: 5px 0;"> template  : <strong>{{ session('current') ?? "--" }}</strong> </p>
@@ -135,22 +135,22 @@
                                                     <td>Judul Soal</td>
                                                     <td>{{$template->judul_station}}</td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td class="text-center">7 .</td>
                                                     <td>Skenario Klinik</td>
-                                                    <td>                                                   
-                                                         {!!$template->soal !!}  
+                                                    <td>
+                                                         {!!$template->soal !!}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">7 .</td>
                                                     <td>Tugas</td>
-                                                    <td>                           
+                                                    <td>
                                                          {!! $template->tugas_mhs !!}
                                                     </td>
                                                 </tr>
-                                              
+
                                                 <tr>
                                                     <td class="text-center" rowspan="2">8 .</td>
                                                     <td rowspan="2">Mininotes</td>
@@ -159,14 +159,14 @@
 
                                                     </td>
                                                 </tr>
-                                                
+
                                             </tbody>
                                         </table>
                                         <hr/>
                                         <div class="text-center">
                                             <h3>Rubrik Ujian</h3>
                                             <h4>{{$template->judul_station}}</h4>
-                                            
+
                                         </div>
                                         <table class="table table-bordered table-striped">
                                             <thead>
@@ -177,7 +177,7 @@
                                                     <th width="200">Nilai 1</th>
                                                     <th width="200">Nilai 2</th>
                                                     <th width="200">Nilai 3</th>
-                                                    
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -199,7 +199,7 @@
                                                     <td>
                                                        {!! $data['nilai_3'] !!}
                                                     </td>
-                                                   
+
                                                 </tr>
                                                 @endforeach
 
@@ -325,15 +325,15 @@
 
         <!-- Body -->
         <div class="modal-body">
-           
+
             <h3>Apakah anda yakin Tidak ada peserta ? </h3>
-           
+
         </div>
 
         <!-- Footer -->
         <div class="modal-footer">
             <form id="submitTidakHadir" method="POST" action="#" >
-            </form> 
+            </form>
             <button type="button" class="btn btn-default" data-dismiss="modal">TUTUP</button>
             <a href="{{ route('osoca.tolist')}}" class="btn btn-red btn-sm">YAKIN</a>
         </div>
