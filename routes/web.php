@@ -119,7 +119,7 @@ Route::prefix('peserta')->middleware(Peserta::class)->name('peserta.')->group( f
     Route::get('/soal', [PesertaController::class, 'soal'])->name('soal');
     Route::get('/tolist', [PesertaController::class, 'tolist'])->name('tolist');
     Route::get('/logout', [PesertaController::class, 'logout'])->name('logout');
-    Route::post('/scan/soal', [PesertaController::class, 'scan'])->name('soal.scan');
+    Route::post('/scan_soal', [PesertaController::class, 'scan'])->name('sscan');
 });
 
 

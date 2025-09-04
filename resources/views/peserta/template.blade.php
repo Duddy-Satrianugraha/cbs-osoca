@@ -28,7 +28,7 @@
 
 @section('detail-soal')
 <div class="card">
-    <a href="{{ route('peserta.tolist')}}" class="btn btn-danger">Logout</a>
+    <a href="{{ route('peserta.tolist')}}" class="btn btn-lg btn-danger">Logout</a>
     <div class="pull-right" style="font-size:20px; font-weight:bold;">
     <span id="timer">12:00</span>
 </div>
@@ -83,7 +83,7 @@
 @section('script')
 <script type="text/javascript">
 // durasi 12 menit dalam detik
-    let timeLeft = 10 * 60;
+    let timeLeft = 1 * 60;
 
     function updateTimer() {
         let minutes = Math.floor(timeLeft / 60);
@@ -97,7 +97,7 @@
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            window.location.href = "/login"; // URL redirect
+            window.location.href = "/peserta/tolist"; // URL redirect
         }
 
         timeLeft -= 1;

@@ -17,12 +17,12 @@
             <h4>Sesi {{ $station->current }} </h4>
             <h6>Soal akan tampil selama 10 Menit</h6>
 
-          <form action="{{ route('peserta.soal.scan')}}" method="post" class="form-horizontal" id="form-scan">
+          <form action="{{ route('peserta.sscan')}}" method="post" class="form-horizontal" id="form-scan">
             @csrf
             <!-- hidden station_slug -->
             <input type="hidden" name="soal_slug" id="soal-slug"  value="">
             </form>
-            <a href="{{ route('peserta.logout')}}" class="btn btn-bahaya">KELUAR</a>
+
            </div>
         </div>
 
@@ -33,7 +33,7 @@
                 <div class="card" style="width: 100%; max-width: 500px; height: 300px; margin: 0 auto; margin-bottom: 20px; padding: 4px;">
                     <video id="preview" style="width: 100%; height: 100%; object-fit: cover;"></video>
                 </div>
-
+                <a href="{{ route('peserta.logout')}}" class="pull-right" style="text-decoration: none; color:black; hover:black"> <small>2025 FK UGJ</small></a>
             </div>
 
 

@@ -36,18 +36,20 @@ class PesertaController extends Controller
             'soal_slug' => ['required','numeric'],
         ]);
         $soal_slug = $request->soal_slug;
-        $sesi = Osesi::where('oujian_id', session('oujian'))->where('urutan', session('current'))->first();
+        $station = Ostation::find(session('Station'));
+        $sesi = Osesi::where('oujian_id', session('oujian'))->where('urutan', $station->current)->first();
        // dd($sesi);
-        $peserta = Opeserta::where('qrpeserta', $soal_slug)->firstorFail();
+        $peserta = Opeserta::where('qrpeserta', $soal_slug)->where('status', 0)->first();
+
         if($peserta){
 
             session([
                 'osesi' => $sesi->id,
             ]);
 
-            return redirect(route('peserta.soal'))->with('success', 'Waktu untuk melihat soal adalah 12 menit');
+            return redirect(route('peserta.soal'))->with('success', 'Waktu untuk melihat soal adalah 10 menit');
         } else {
-            return redirect(route('peserta.index'))->with('msg', 'danger-Unable to find code');
+            return redirect(route('peserta.index'))->with('msg', 'danger-peserta telah di uji atau tidak terdaftar');
         }
     }
 
