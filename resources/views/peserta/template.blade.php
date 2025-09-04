@@ -83,7 +83,7 @@
 @section('script')
 <script type="text/javascript">
 // durasi 12 menit dalam detik
-    let timeLeft = 1 * 60;
+    let timeLeft = 10 * 60;
 
     function updateTimer() {
         let minutes = Math.floor(timeLeft / 60);

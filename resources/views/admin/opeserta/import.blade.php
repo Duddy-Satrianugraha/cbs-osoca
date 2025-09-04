@@ -35,7 +35,7 @@
                 </ul>
             </div>
             <div class="panel-body">
-               
+
             </div>
             <div class="panel-body form-group-separated">
                     @csrf
@@ -43,12 +43,11 @@
                     <label class="col-md-3 col-xs-12 control-label">
                         <P> <strong>Penduan Import Data Peserta</strong> </br>
                             <span class="fa fa-exclamation-triangle"> Station diisi hanya angka 1 sampai {{$ujian->jml_station}}</span> </br>
-                            <span class="fa fa-exclamation-triangle"> Urutan diisi hanya angka 1 sampai {{$ujian->jml_sesi}}</span></br>
                             <span class="fa fa-exclamation-triangle"> Format Excel harus sesuai dengan template </span></br>
                             <a href="{{ asset('doc/template-peserta-osoca.xlsx') }}" class="btn btn-primary btn-sm">Download Template</a></br>
                         </P>
                     </label>
-                    
+
                 </div>
 
                 <div class="form-group">
@@ -61,7 +60,7 @@
                     </div>
                 </div>
 
-                
+
 
             </div>
             <div class="panel-footer">

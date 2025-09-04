@@ -136,7 +136,7 @@ class OpesertaController extends Controller
         return view('admin.opeserta.import', compact('ujian'));
     }
 
-    public function store_upload(Request $request)
+    public function store_uploadX(Request $request)
     {
          $validated = $request->validate([
         'file' => ['required','file','mimes:xlsx,xls,csv','max:51200'],
@@ -160,16 +160,16 @@ class OpesertaController extends Controller
          $pesertaarray = [];
          foreach ($dataPeserta[0] as $key=>$row) {
             if($key >= 1){
-                
+
                 if ($row->filter(fn($val) => !is_null($val) && $val !== '')->isEmpty()) {
                         continue;
                     }
-                    
+
                  $npm     = trim((string)($row[2] ?? ''));
                  $station = $row[3] ?? null;
                 $sesi    = $row[4] ?? null;
 
-               
+
 
                 if (!ctype_digit((string)$station) || !ctype_digit((string)$sesi)) {
                     return back()->withErrors([
@@ -189,15 +189,118 @@ class OpesertaController extends Controller
                     'sesi' => $row['4'],
                     'qrpeserta' => numran(12),
                 ];
-            }   
+            }
          }
-        
+
          if (count($pesertaarray)) {
         Opeserta::insert($pesertaarray);
         }
-        
+
          return redirect(route('admin.peserta.show',$request->uid))->with('msg', 'success-Import selesai. '
         .count($pesertaarray).' baris baru dimasukkan, '
         .count($existing).' baris dilewati (duplikat/kosong).');
     }
+
+    public function store_upload(Request $request)
+        {
+            $validated = $request->validate([
+                'file' => ['required','file','mimes:xlsx,xls,csv','max:51200'],
+                'uid'  => ['required','integer','exists:oujians,id'],
+            ]);
+
+            // 1) Baca sheet pertama
+            $dataPeserta = Excel::toCollection(new ImportPeserta, $validated['file']);
+            $sheet = $dataPeserta[0] ?? collect();
+
+            // 2) Ambil daftar NPM dari file (kolom ke-3)
+            $npms = collect($sheet)
+                ->skip(1)   // lewati header
+                ->pluck(2)  // kolom ke-3 = npm (0-based)
+                ->filter()
+                ->all();
+
+            // 3) NPM yang sudah ada di DB (untuk oujian ini)
+            $existing = \App\Models\Opeserta::where('oujian_id', $validated['uid'])
+                ->whereIn('npm', $npms)
+                ->pluck('npm')
+                ->all();
+
+
+
+            // 5) Siapkan running counter per station
+            $running = []; // akan di-increment
+            $pesertaarray = [];
+            $skippedDuplicateInFile = 0;
+
+            // Untuk deteksi duplikat dalam file yang sama (bukan hanya DB)
+            $seenInThisImport = [];
+
+            foreach ($sheet as $key => $row) {
+                if ($key < 1) continue; // lewati header
+
+                // Lewati baris kosong total
+                if ($row->filter(fn($val) => !is_null($val) && $val !== '')->isEmpty()) {
+                    continue;
+                }
+
+                $nama    = trim((string)($row[1] ?? '')); // kolom ke-2
+                $npm     = trim((string)($row[2] ?? '')); // kolom ke-3
+                $station = $row[3] ?? null;               // kolom ke-4
+                // $row[4] (kolom sesi di file) DIABAIKAN
+
+                // Validasi minimal
+                if ($npm === '') {
+                    return back()->withErrors([
+                        'file' => "Baris ke-".($key+1).": NPM wajib diisi."
+                    ]);
+                }
+                if (!ctype_digit((string)$station)) {
+                    return back()->withErrors([
+                        'file' => "Baris ke-".($key+1).": kolom Station harus angka bilangan bulat."
+                    ]);
+                }
+                $station = (int)$station;
+
+                // Skip jika NPM sudah ada di DB
+                if (in_array($npm, $existing, true)) {
+                    continue;
+                }
+
+                // Skip jika NPM duplikat di file yang sama (baris sebelumnya)
+                if (isset($seenInThisImport[$npm])) {
+                    $skippedDuplicateInFile++;
+                    continue;
+                }
+                $seenInThisImport[$npm] = true;
+
+                // Tentukan sesi otomatis: lanjutkan dari max yang ada, atau mulai 1
+                $running[$station] = ($running[$station] ?? 0) + 1;
+                $sesi = $running[$station];
+
+                $pesertaarray[] = [
+                    'oujian_id'  => $validated['uid'],
+                    'name'       => $nama,
+                    'npm'        => $npm,
+                    'station'    => $station,
+                    'sesi'       => $sesi,        // <-- diisi otomatis
+                    'qrpeserta'  => numran(12),
+                ];
+            }
+
+            if (count($pesertaarray)) {
+                \App\Models\Opeserta::insert($pesertaarray);
+            }
+
+            $inserted = count($pesertaarray);
+            $skippedExisting = count($existing);
+
+            return redirect(route('admin.peserta.show', $validated['uid']))->with(
+                'msg',
+                'success-Import selesai. '
+                .$inserted.' baris baru dimasukkan, '
+                .$skippedExisting.' baris dilewati (duplikat di DB), '
+                .$skippedDuplicateInFile.' baris dilewati (duplikat di file).'
+            );
+        }
+
 }

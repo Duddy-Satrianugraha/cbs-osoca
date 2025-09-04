@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-10 col-md-offset-1 card shadow-card">
+    <div class="col-md-10 col-md-offset-1 card shadow-card " style="background-color: rgb(189, 168, 202);">
         @include('includes.osin_alert')
       <div class="row">
         <!-- Kiri: Info Station -->
@@ -19,7 +19,7 @@
             <h4>Selesaikan Captcha Berikut</h4>
         <!-- CAPTCHA -->
             <div class="form-group">
-                <label for="captcha" style="background-color: rgb(0, 19, 146); color: rgb(255, 255, 255); padding: 8px 12px; border-radius: 4px; display: inline-block;">
+                <label for="captcha" style="background-color: rgb(85, 4, 136); color: rgb(255, 255, 255); padding: 8px 12px; border-radius: 4px; display: inline-block;">
                     {{ generate_captcha() }}</label>
                     <br>
                 <input type="text" name="captcha" id="captcha" class="form-control" placeholder="Jawaban CAPTCHA" >

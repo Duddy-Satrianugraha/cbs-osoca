@@ -150,4 +150,30 @@ if (!function_exists('salam')) {
                 }
             }
         }
+
+if (!function_exists('feedparser')){
+            function feedparser($text){
+
+            // Bikin default hasil kosong
+            $result = [
+                'kelebihan' => '',
+                'kekurangan' => '',
+                'saran' => '',
+            ];
+
+            // Normalize line breaks
+            $text = str_replace(["\r\n", "\r"], "\n", $text);
+
+            // Gunakan regex untuk ambil bagian-bagian
+            preg_match('/Kelebihan\s*:\s*(.*?)\n(?=Kekurangan)/s', $text, $match1);
+            preg_match('/Kekurangan\s*:\s*(.*?)\n(?=Masukan|Saran)/s', $text, $match2);
+            preg_match('/(?:Masukan|Saran)\s*:\s*(.*)/s', $text, $match3);
+
+            $result['kelebihan'] = trim($match1[1] ?? '');
+            $result['kekurangan'] = trim($match2[1] ?? '');
+            $result['saran'] = trim($match3[1] ?? '');
+
+            return $result;
+        }
+        }
 }

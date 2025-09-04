@@ -13,7 +13,7 @@ class OfeedbackController extends Controller
       $request->validate([
             'soal_slug' => ['required','numeric'],
             'captcha' => [
-            'required','numeric', 
+            'required','numeric',
             function ($attribute, $value, $fail) {
                 if (!verify_captcha($value)) {
                     $fail('Jawaban CAPTCHA salah dok');
@@ -21,17 +21,19 @@ class OfeedbackController extends Controller
             },
         ],
         ]);
-        dd($request->all());
 
-        $mhs = Opeserta::where('soal_slug', $request->soal_slug)->first();
-        if(!$mhs->status){
-            return redirect(route('oumpan.login'))->with('msg', 'danger-Feedback peserta tidak di temukan');
+        $mhs = Opeserta::where('qrpeserta', $request->soal_slug)->first();
+        if(!$mhs || $mhs->status == 0){
+            return redirect(url('/feedback'))->with('msg', 'danger-Feedback peserta tidak di temukan');
         }
         $ujian = Oujian::find($mhs->oujian_id);
-        $ofeefback = Ofeedback::where('qrpeserta', $request->soal_slug)->first();
-
+        $ofe = Ofeedback::where('qrpeserta', $request->soal_slug)->first();
+        $feed = feedparser($ofe->feedback);
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('oumpan.station', compact('ujian', 'ofe', 'feed'))
+        ->setPaper('A4', 'portrait');
+        return $pdf->stream('Feedback_'.$ofe->npm.'.pdf');
         //balikin pdf feedback peserta dengankop
-        
+
 
     }
 }
