@@ -48,14 +48,14 @@
 
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 col-xs-12 control-label">Nomor Soal</label>
+                        <label class="col-md-2 col-xs-12 control-label">Nomor Kasus</label>
                         <div class="col-md-8 col-xs-12">
                             <input type="text" class="form-control" name="nomor_soal" value="{{ $template->nomor_station }}"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-2 col-xs-12 control-label">Judul Soal</label>
+                        <label class="col-md-2 col-xs-12 control-label">Judul Kasus</label>
                         <div class="col-md-8 col-xs-12">
                             <input type="text" class="form-control" name="judul_soal" value="{{ $template->judul_station }}"/>
                         </div>
