@@ -40,19 +40,23 @@
         <li class="xn-title">IT Administrator</li>
         <li class="{{ \Request::is('admin/users/*') || \Request::is('admin/users') ? 'active' : ''  }}"><a href="{{ route('admin.users.index')}}"><span class="fa fa-users"></span><span class="xn-text"> Users</span> </a></li>
         @endcan
+         @can('koc')
+        <li class="xn-title">KA OSOCA</li>
+        <li class="{{ \Request::is('admin/nilai/*') || \Request::is('admin/nilai') ? 'active' : ''  }}"><a href="{{ route('admin.nilai.index')}}"><span class="fa fa-check-square-o"></span><span class="xn-text"> Nilai</span> </a></li>
+        @endcan
         @can('materi')
         <li class="xn-title">Tim Materi</li>
         <li class="{{ \Request::is('admin/templates/*') || \Request::is('admin/templates') ? 'active' : ''  }}"><a href="{{ route('admin.templates.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Template ujian</span></a></li>
         <li class="{{ \Request::is('admin/ujian/*') || \Request::is('admin/ujian') ? 'active' : ''  }}"><a href="{{ route('admin.ujian.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Ujian OSOCA</span></a></li>
-         
+
         @endcan
         @can('admin')
-        
+
         <li class="xn-title">Administrator</li>
         <li class="{{ \Request::is('admin/peserta/*') || \Request::is('admin/peserta') ? 'active' : ''  }}"><a href="{{ route('admin.peserta.index')}}"><span class="fa fa-users"></span><span class="xn-text"> Peserta</span> </a></li>
-        
+
         @endcan
-       
+
         @can('ultraman')
         <li class="xn-title">Nav Level</li>
         <li class="xn-openable ">

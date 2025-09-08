@@ -18,7 +18,7 @@
 
             <a class="dropdown-toggle" href="#"  data-toggle="dropdown" >
               <span><img src="{{ asset('img/mduser.jpg')  }}" alt="avatar" class="logo" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;"></span>
-               
+
             </a>
 @endsection
 
@@ -96,7 +96,7 @@
     <div class="row">
         <div class="col-xs-4 text-center">
 
-                <button  class="btn btn-red btn-sm btn-block" data-toggle="modal" data-target="#modalNoPesert">TIDAK HADIR <i class="fa fa-sign-out"></i></button>
+                
 
 
         </div>

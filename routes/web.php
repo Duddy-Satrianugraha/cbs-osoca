@@ -8,7 +8,7 @@ use App\Http\Controllers\OsocaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileContoller;
 use App\Http\Controllers\PowerController;
-use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\SesiController;
@@ -90,6 +90,8 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/kartu/peserta/{uid}', [PdfController::class, 'listpeserta'])->name('pdf.peserta');
     Route::get('/kartu/station/{uid}', [PdfController::class, 'station'])->name('pdf.station');
 
+    Route::resource('/nilai', NilaiController::class);
+
     //Route::get('/peserta',[OujianController::class, 'listujian'])->name('daftar.peserta');
 
     //Route::resource('/station', StationController::class);
@@ -162,6 +164,5 @@ Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( funct
     Route::get('/ujian', [OsocaController::class, 'ujian'])->name('ujian');
     Route::get('/template', [OsocaController::class, 'template'])->name('template');
     Route::post('/penilaian', [OsocaController::class, 'penilaian'])->name('penilaian.store');
-    Route::post('/tidak_hadir', [OsceController::class, 'tidak_hadir'])->name('tidak.hadir');
 });
 

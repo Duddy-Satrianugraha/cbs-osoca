@@ -15,9 +15,15 @@ class Opeserta extends Model
         'qrpeserta',
         'status',
     ];
-    protected $casts = ['status' => 'boolean']; 
+    protected $casts = ['status' => 'boolean'];
 
     public function oujian(){
         return $this->belongsTo(Oujian::class);
+    }
+    public function nilai(){
+        return $this->hasOne(Onilai::class, 'peserta_id');
+    }
+    public function feedback(){
+        return $this->hasOne(Ofeedback::class, 'peserta_id');
     }
 }

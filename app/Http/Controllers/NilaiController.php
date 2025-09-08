@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Nilai;
+use App\Models\Opeserta;
+use App\Models\Oujian;
 use Illuminate\Http\Request;
 
 class NilaiController extends Controller
@@ -10,9 +11,16 @@ class NilaiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+         $search = $request->query('search');
+        $list = Oujian::query()
+            ->when($search, function ($q, $s) {
+                return $q->where('name', 'like', "%{$s}%");
+            })
+            ->paginate(10);
+
+        return view('admin.onilai.list', compact('list'));
     }
 
     /**
@@ -34,11 +42,33 @@ class NilaiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Nilai $nilai)
+    public function show($uid)
     {
-        //
-    }
+         $search = request('search');
 
+    $peserta = Opeserta::query()
+        ->where('oujian_id', $uid) // filter ujian dulu
+        ->when($search, function ($q) use ($search) {
+            $s = trim($search);
+
+            // Contoh: jika input numerik, ikutkan opsi exact match ke NPM
+            $q->where(function ($qq) use ($s) {
+                $qq->where('name', 'like', "%{$s}%")
+                   ->orWhere('npm', 'like', "%{$s}%");
+
+                if (ctype_digit($s)) {
+                    $qq->orWhere('npm', $s); // optional exact match
+                }
+            });
+        })
+        ->orderBy('id')
+        ->paginate(40)
+        ->appends(['search' => $search]); // agar nilai search ikut di pagination links
+
+    $ujian = Oujian::findOrFail($uid);
+
+    return view('admin.onilai.listu', compact('peserta', 'ujian', 'search'));
+    }
     /**
      * Show the form for editing the specified resource.
      */

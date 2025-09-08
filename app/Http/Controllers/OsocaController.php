@@ -86,9 +86,9 @@ class OsocaController extends Controller
             $sesi = Osesi::find(session('Sesi'));
             $peserta = Opeserta::find(session('Peserta'));
             $otemplate = Otemplate::find($sesi->otemplate_id);
-           
+
             $osodata = $this->data_osoca();
-           
+
                 $temp = $otemplate->rubrix()->get();
             // dd($temp);
                 $rubrik = [];
@@ -109,20 +109,20 @@ class OsocaController extends Controller
                 }
                 $template = $otemplate;
                 $pol = ($osodata['mhs']->count() == $osodata['mhs']->where('status', true)->count());
-                
+
             return view('osoca.dashbord', compact('osodata', 'rubrik', 'peserta', 'template', 'sesi', 'pol'));
-        
+
         //dd(session()->all());
 
 
     }
-    
+
     public function template(){
         $sesi = Osesi::find(session('Sesi'));
             $otemplate = Otemplate::find($sesi->otemplate_id);
-           
+
             $osodata = $this->data_osoca();
-           
+
                 $temp = $otemplate->rubrix()->get();
             // dd($temp);
                 $rubrik = [];
@@ -144,7 +144,7 @@ class OsocaController extends Controller
                 $template = $otemplate;
         return view('osoca.template', compact('osodata', 'rubrik', 'template'));
     }
-       
+
     public function penilaianX(Request $request){
        //dd($request->all());
 
@@ -188,7 +188,7 @@ class OsocaController extends Controller
         $nilai->jumlah = $jumlah;
         $nilai->nilai = $mark;
         $nilai->save();
-   
+
         $ofeedback = New Ofeedback;
         $ofeedback->oujian_id = $ujian_id;
         $ofeedback->station_id = $station->id;
@@ -198,7 +198,7 @@ class OsocaController extends Controller
         $ofeedback->npm = $peserta->npm;
         $ofeedback->feedback = $feedback;
         $ofeedback->save();
-        
+
         DB::commit();
 
         session()->forget('Sesi');
@@ -206,14 +206,14 @@ class OsocaController extends Controller
         session(['current' => $next,
                  'next' => $next + 1,
                 ]);
-       
+
         return redirect(route('osoca.mhs.login'))->with('msg', 'success-Data berhasil disimpan');
     } catch (Exception $e) {
         DB::rollBack();
         session(['current' => $next - 1,
                  'next' => $next,
                 ]);
-        return redirect(route('osoca.ujian'))->with('msg', 'danger-Data gagal disimpan '.$e->getMessage()); 
+        return redirect(route('osoca.ujian'))->with('msg', 'danger-Data gagal disimpan '.$e->getMessage());
         }
   }
 
@@ -296,6 +296,7 @@ class OsocaController extends Controller
                         'oujian_id'  => $ujian_id,
                         'station_id' => $station->id,
                         'sesi_id'    => $sesiId,
+                        'peserta_id' => $peserta->id,
                         'qrpeserta'  => $peserta->qrpeserta,
                         'nama'       => $peserta->name,
                         'npm'        => $peserta->npm,

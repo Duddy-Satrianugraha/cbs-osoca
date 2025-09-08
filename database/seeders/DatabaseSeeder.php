@@ -26,20 +26,12 @@ class DatabaseSeeder extends Seeder
         $this->call(OptionSeeder::class);
          $this->call(OtemplatesTableSeeder::class);
          $this->call(OrubriksTableSeeder::class);
-         $this->call(OujiansTableSeeder::class);
-         $this->call(OstationsTableSeeder::class);
-         $this->call(OsesisTableSeeder::class);
-         $this->call(OpesertasTableSeeder::class);
+        // $this->call(OujiansTableSeeder::class);
+        // $this->call(OstationsTableSeeder::class);
+        // $this->call(OsesisTableSeeder::class);
+        // $this->call(OpesertasTableSeeder::class);
 
-        //$this->call(TemplatesTableSeeder::class);
-        //$this->call(RubriksTableSeeder::class);
-        //$this->call(UjiansTableSeeder::class);
-        //$this->call(SesisTableSeeder::class);
-        //$this->call(LocationsTableSeeder::class);
-        //$this->call(SoalsTableSeeder::class);
-        //$this->call(RotationsTableSeeder::class);
-        //$this->call(StationsTableSeeder::class);
-        //$this->call(PesertasTableSeeder::class);
-        //$this->call(PendaftaransTableSeeder::class);
+        $this->call(OnilaisTableSeeder::class);
+        $this->call(OfeedbacksTableSeeder::class);
     }
 }
