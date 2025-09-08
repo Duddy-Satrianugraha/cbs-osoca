@@ -72,24 +72,29 @@ class NilaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Nilai $nilai)
+    public function edit($id)
     {
-        //
+        $peserta = Opeserta::find($id);
+        $ujian = $peserta->oujian;
+        $nilai = $peserta->nilai;
+        return view('admin.onilai.edit', compact('peserta', 'ujian', 'nilai'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Nilai $nilai)
+    public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Nilai $nilai)
+    public function destroy($id)
     {
-        //
+        $peserta = Opeserta::find($id);
+        $peserta->nilai->delete();
+        return redirect(route('admin.nilai.show', $peserta->oujian_id))->with('msg', 'success-Data Nilai berhasil dihapus');
     }
 }

@@ -93,8 +93,8 @@
                                                     <td>{{$data->nilai->jumlah ?? 0}}</td>
                                                     <td><strong>{{$data->nilai->nilai ?? 0}}</strong></td>
                                                     <td>
-                                                        <a href="{{ route("admin.peserta.edit", $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-pencil"></span>Edit</a>
-                                                        <form id="del-temp-{{$data->id}}" action="{{ route('admin.peserta.destroy', $data->id)}}" method="POST" style="display: inline;">
+                                                        <a href="{{ route("admin.nilai.edit", $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-pencil"></span>Edit</a>
+                                                        <form id="del-temp-{{$data->id}}" action="{{ route('admin.nilai.destroy', $data->id)}}" method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus ujian ini?');"><span class="fa fa-times"> Hapus</span></button>
