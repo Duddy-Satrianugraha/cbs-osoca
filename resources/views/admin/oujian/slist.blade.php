@@ -27,7 +27,7 @@
             <form class="form-horizontal" action="{{ route('admin.sesi.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="ujian_id" value="{{  $oujian->id }}">
-               
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>Daftar</strong> Sesi</h3>
@@ -60,7 +60,7 @@
                                     <span class="help-block">pilih Template</span>
                                 </div>
                             </div>
-                                
+
                             @endforeach
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                 <div class="panel-footer">
 
                     <a  class="btn btn-default" href="{{ route('admin.ujian.index') }}">Kembali</a>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">Simpan</button>
                 </div>
             </div>
             </form>

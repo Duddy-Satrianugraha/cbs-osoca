@@ -63,10 +63,14 @@
             <tr>
                 @foreach($row as $station)
                     <td>
+                        <img src="{{ public_path('img/logo_fkugj.jpg')}}" style="width: 300px";>
                         <h2 class="title">Kartu Penguji {{ $station->ujian }}</h2>
                         <div class="card">
                             <div class="left">
-                                <h2><strong> Station {{ $station->urutan }} </strong></h3>
+                                <h2><strong> Station : {{ $station->urutan }} </strong></h2>
+                                    @if(!is_null($station->nama_penguji))
+                                <h3><strong> Penguji : {{ $station->nama_penguji }} </strong></h3>
+                                    @endif
                             </div>
                             <div class="right">
                                 <div class="qrcode">

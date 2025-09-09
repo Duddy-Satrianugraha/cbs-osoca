@@ -64,18 +64,18 @@
                 @foreach($row as $station)
                     <td>
                         <img src="{{ public_path('img/logo_fkugj.jpg')}}" style="width: 300px";>
-                        
-                        <h2 class="title">Kartu Peserta {{ $station->ujian }}</h2> 
+
+                        <h2 class="title">Kartu Peserta {{ $station->ujian }}</h2>
                         <div class="card">
                             <div class="left">
                                 <h3><strong> NPM : </strong> {{ $station->npm }}<br>
                                     <strong> Nama : </strong> {{ $station->name }}<br>
                                 </h4>
                                 <h2><strong> Station {{ $station->station }}</strong> <br>
-                                    
+
                                 </h2>
-                                
-                                
+
+
                             </div>
                             <div class="right">
                                 <div class="qrcode">

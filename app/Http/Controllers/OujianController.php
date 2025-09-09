@@ -14,7 +14,7 @@ use Exception;
 class OujianController extends Controller
 {
     /**
-     * Display a listing of the resource. 
+     * Display a listing of the resource.
      */
      public function index(Request $request)
     {
@@ -54,7 +54,7 @@ class OujianController extends Controller
     {
         $validated =  $request->validate([
             'name' => 'required|string|max:255',
-            'tahun_akademik' => 'required|string|max:255',  
+            'tahun_akademik' => 'required|string|max:255',
             'tgl_ujian' => 'required|date',
             'jml_station' => 'required|integer',
             'jml_sesi' => 'required|integer',
@@ -86,7 +86,7 @@ class OujianController extends Controller
                 'otemplate_id' => null,
             ]);
         }
-        DB::commit();   
+        DB::commit();
         return redirect(route('admin.ujian.index'))->with('msg', 'success-Data berhasil disimpan');
         } catch (Exception $e) {
             DB::rollBack();
@@ -109,7 +109,7 @@ class OujianController extends Controller
         ->when($userIds->isNotEmpty(), function ($q) use ($userIds) {
                 return $q->whereIn('user_id', $userIds);
             })->get();
-        
+
         $osesi = Osesi::where('oujian_id', $id)->get();
         $oujian = Oujian::find($id);
         return view('admin.oujian.slist', compact('osesi', 'otemplate', 'oujian'));
@@ -246,7 +246,7 @@ class OujianController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $oujian = Oujian::find($id);
         Osesi::where('oujian_id', $oujian->id)->delete();
         Ostation::where('oujian_id', $oujian->id)->delete();
@@ -258,10 +258,10 @@ class OujianController extends Controller
         $request->validate([
             'ujian_id' => 'required|integer',
             'sesi' => 'required|array',
-        ]); 
+        ]);
         try{
             DB::beginTransaction();
-        
+
         $oujian = Oujian::find($request->ujian_id);
         foreach($request->sesi as $key => $value){
             $osesi = Osesi::find($key)->update([
@@ -277,5 +277,35 @@ class OujianController extends Controller
         }
     }
 
-    
+    public function penguji($id)
+    {
+        $ostation = Ostation::where('oujian_id', $id)->get();
+        $oujian = Oujian::find($id);
+        return view('admin.oujian.plist', compact('ostation', 'oujian'));
+    }
+
+    public function penguji_store(Request $request){
+        //dd($request->all());
+        $request->validate([
+            'ujian_id' => 'required|integer',
+            'station' => 'required|array',
+        ]);
+        try{
+            DB::beginTransaction();
+
+
+            foreach($request->station as $key => $value){
+                $ostation = Ostation::find($key);
+                $ostation->nama_penguji = $value;
+                $ostation->save();
+            }
+            DB::commit();
+            return redirect()->back()->with('msg', 'success-Penguji tiap station berhasil disimpan');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('msg', 'danger-Simpan penguji gagal karena '.$e->getMessage());
+        }
+    }
+
 }

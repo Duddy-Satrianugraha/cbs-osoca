@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Opeserta;
 use App\Models\Osesi;
 use Illuminate\Http\Request;
-use App\Models\Soal;
+use App\Models\Oujian;
 use App\Models\Ostation;
-use App\Models\Otemplate;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,8 +18,12 @@ class DashbordController extends Controller
      */
     public function index()
     {
-           // dd(session()->get('power'));
-        return view('start');
+           $ujian = Oujian::all();
+           $sesi = Osesi::all();
+           $station = Ostation::all();
+           $peserta = Opeserta::all();
+           $penguji = Ostation::whereNotNull('nama_penguji')->get();
+        return view('start', compact('ujian', 'sesi', 'station', 'peserta','penguji'));
     }
 
     /**

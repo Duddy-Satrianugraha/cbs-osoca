@@ -24,6 +24,7 @@ class PdfController extends Controller
             $station = new \stdClass; // Atau bisa pakai array jika lebih nyaman
             $station->ujian = $ujian->name ?? null;
             $station->station = $data->name ?? null;
+            $station->nama_penguji = $data->nama_penguji ?? null;
             $station->urutan = $data->urutan;
             $station->slug = $data->qrstation;
             $stations->push($station);

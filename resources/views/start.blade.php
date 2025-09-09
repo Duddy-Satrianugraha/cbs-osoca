@@ -24,17 +24,17 @@
                 <div>
                     <div class="widget-title">Jumlah</div>
                     <div class="widget-subtitle">Ujian</div>
-                    <div class="widget-int">6</div>
+                    <div class="widget-int">{{count($ujian)}}</div>
                 </div>
                 <div>
                     <div class="widget-title">Jumlah</div>
                     <div class="widget-subtitle">Sesi</div>
-                    <div class="widget-int">48</div>
+                    <div class="widget-int">{{count($sesi)}}</div>
                 </div>
                 <div>
                     <div class="widget-title">Jumlah</div>
                     <div class="widget-subtitle">Station</div>
-                    <div class="widget-int">672</div>
+                    <div class="widget-int">{{count($station)}}</div>
                 </div>
             </div>
             <div class="widget-controls">
@@ -52,7 +52,7 @@
                 <span class="fa fa-user-md"></span>
             </div>
             <div class="widget-data">
-                <div class="widget-int num-count">75</div>
+                <div class="widget-int num-count">{{count($penguji)}}</div>
                 <div class="widget-title">penguji</div>
                 <div class="widget-subtitle">terdaftar pada OSIN</div>
             </div>
@@ -70,9 +70,9 @@
                 <span class="fa fa-user"></span>
             </div>
             <div class="widget-data">
-                <div class="widget-int num-count">375</div>
+                <div class="widget-int num-count">{{count($peserta)}}</div>
                 <div class="widget-title">Mahasiswa</div>
-                <div class="widget-subtitle">terdaftar pada OSIN</div>
+                <div class="widget-subtitle">terdaftar pada CBS-OSOCA</div>
             </div>
             <div class="widget-controls">
                 <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>

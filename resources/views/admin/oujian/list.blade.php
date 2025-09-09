@@ -57,7 +57,7 @@
                                                 <tr>
                                                     <th width="50">Nomor</th>
                                                     <th>Nama Ujian</th>
-                                                    <th width="400">Parameter</th>
+                                                    <th>Parameter</th>
                                                     <th width="200">tanggal</th>
                                                     <th width="300">actions</th>
                                                 </tr>
@@ -70,14 +70,17 @@
                                                     <td>{{$data->name}} ({{$data->ta}})</td>
                                                     <td>
                                                          <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
+                                                         <a href="{{ route('admin.sesi.penguji', $data->id)}}" class="btn btn-sm btn-danger"> {{ $data->stations()->whereNotNull('nama_penguji')->count() }} penguji</a>
                                                         <a class="badge badge-primary"> {{ $data->jml_sesi }} sesi</a>
-                                                        <a class="badge badge-success"> {{ $data->sesis()->whereNotNull('otemplate_id')->count() }} template</a>
-                                                        <a href="{{ route('admin.pdf.station', $data->id)}}" class="badge badge-danger badge-sm"><span class="fa fa-print"></span> Cetak Kartu Station</a>
+                                                        <a href="{{ route("admin.ujian.show", $data->id)}}" class="btn btn-sm btn-success"> {{ $data->sesis()->whereNotNull('otemplate_id')->count() }} template</a>
+
 
                                                     </td>
                                                     <td>{{$data->tgl_ujian}}</td>
                                                     <td>
-                                                        <a href="{{ route("admin.ujian.show", $data->id)}}" class="btn btn-info btn-sm"><span class="fa fa-search"></span>Lihat Sesi</a>
+                                                        @if($data->stations()->whereNotNull('nama_penguji')->count() > 0)
+                                                        <a href="{{ route('admin.pdf.station', $data->id)}}" class="btn btn-sm btn-danger"><span class="fa fa-print"></span> Cetak Kartu Penguji</a>
+                                                        @endif
                                                          <a href="{{ route("admin.ujian.edit", $data->id)}}" class="btn btn-warning btn-rounded btn-sm"><span class="fa fa-pencil"></span></a>
                                                         <form id="del-temp-{{$data->id}}" action="{{ route('admin.ujian.destroy', $data->id)}}" method="POST" style="display: inline;">
                                                             @csrf
