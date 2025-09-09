@@ -91,6 +91,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/kartu/station/{uid}', [PdfController::class, 'station'])->name('pdf.station');
 
     Route::resource('/nilai', NilaiController::class);
+    Route::get('/export/nilai/{uid}', [NilaiController::class, 'export'])->name('export.nilai');
 
     //Route::get('/peserta',[OujianController::class, 'listujian'])->name('daftar.peserta');
 

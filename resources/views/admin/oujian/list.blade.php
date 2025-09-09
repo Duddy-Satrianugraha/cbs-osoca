@@ -71,9 +71,9 @@
                                                     <td>
                                                          <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
                                                         <a class="badge badge-primary"> {{ $data->jml_sesi }} sesi</a>
-                                                        <a class="badge badge-success"> {{ $data->sesi()->whereNotNull('otemplate_id')->count() }} template</a>
+                                                        <a class="badge badge-success"> {{ $data->sesis()->whereNotNull('otemplate_id')->count() }} template</a>
                                                         <a href="{{ route('admin.pdf.station', $data->id)}}" class="badge badge-danger badge-sm"><span class="fa fa-print"></span> Cetak Kartu Station</a>
-                                                       
+
                                                     </td>
                                                     <td>{{$data->tgl_ujian}}</td>
                                                     <td>

@@ -31,7 +31,7 @@
                                     <h3 class="panel-title">List peserta Ujian</h3>
 
 
-                                  <form action="{{ route('admin.peserta.show', $ujian->id) }}" method="GET" class="row">
+                                  <form action="{{ route('admin.nilai.show', $ujian->id) }}" method="GET" class="row">
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <div class="input-group-addon">
@@ -42,7 +42,7 @@
                                                 value="{{ request('search') }}">
                                             <div class="input-group-btn">
                                                 <button class="btn btn-primary">Search</button>
-                                                <a href="{{ route('admin.peserta.show', $ujian->id) }}" class="btn btn-default">Clear</a>
+                                                <a href="{{ route('admin.nilai.show', $ujian->id) }}" class="btn btn-default">Clear</a>
                                             </div>
                                         </div>
                                     </div>
@@ -50,8 +50,8 @@
 
                                     <ul class="panel-controls">
                                             <li><a href="{{ route('admin.pdf.peserta', $ujian->id)}}" class="panel-add"><span class="fa fa-print"></span></a></li>
-                                            <li><a href="{{ route('admin.peserta.upload', $ujian->id)}}" class="panel-add"><span class="fa fa-upload"></span></a></li>
-                                            <li><a href="{{ route('admin.peserta.create', $ujian->id)}}" class="panel-add"><span class="fa fa-plus"></span></a></li>
+                                            <li><a href="{{ route('admin.export.nilai', $ujian->id)}}" class="panel-add"><span class="fa fa-download"></span></a></li>
+
 
                                     </ul>
                                 </div>
@@ -62,9 +62,8 @@
                                             <thead>
                                                 <tr>
                                                     <th width="50">Nomor</th>
-
-                                                    <th width="100">Station</th>
                                                     <th >Nama</th>
+                                                    <th width="100">Station</th>
                                                     <th width="80">skor 1</th>
                                                     <th width="80">skor 2</th>
                                                     <th width="20">jumlah</th>
@@ -80,13 +79,13 @@
                                                     $da = json_decode($data->nilai->skor);
                                                 }
                                                 else{
-                                                    $da = [0,0];
+                                                    $da = ["-","-"];
                                                 }
                                                 @endphp
                                                 <tr id="trow_{{$i}}">
                                                     <td class="text-center">{{$i}}</td>
-                                                    <td>Skenario {{$data->sesi}}</td>
                                                     <td>{{$data->name}} </br> {{$data->npm}}</td>
+                                                     <td>Skenario {{$data->sesi}}</td>
                                                     @foreach($da as $key => $value)
                                                     <td>{{ $value?? '-' }}</td>
                                                     @endforeach

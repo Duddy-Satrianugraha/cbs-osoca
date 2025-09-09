@@ -14,8 +14,14 @@ class Oujian extends Model
         'jml_sesi',
         'user_id',
     ];
-    public function sesi(){
-        return $this->hasMany(Osesi::class);
+    public function stations()
+    {
+        return $this->hasMany(Ostation::class, 'oujian_id');
+    }
+
+    public function sesis()
+    {
+        return $this->hasMany(Osesi::class, 'oujian_id');
     }
 
     public function peserta(){

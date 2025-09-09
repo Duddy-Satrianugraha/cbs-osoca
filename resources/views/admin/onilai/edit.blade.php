@@ -39,7 +39,7 @@
                 @method('put')
                     @csrf
                     <input type="hidden" name="peserta_id" value="{{ $peserta->id }}">
-                    <input type="hidden" name="nilai_id" value="{{ $nilai->id ?? 0 }}">
+                    <input type="hidden" name="nilai_id" value="{{ $nilai->id ?? null }}">
                 <div class="form-group">
                     <label class="col-md-3 col-xs-12 control-label">Nama</label>
                     <div class="col-md-6 col-xs-12">
@@ -83,8 +83,8 @@
                                         <label class="col-md-3 col-xs-12 control-label">Skor {{ $i }}</label>
                                         <div class="col-md-6 col-xs-12">
                                             <select name="skor[]" class="form-control skor-select">
-
                                                  <option value="">-- pilih skor --</option>
+                                                <option value="0" {{ (string)$value === '0' ? 'selected' : '' }}>0</option>
                                                 <option value="1" {{ (string)$value === '1' ? 'selected' : '' }}>1</option>
                                                 <option value="2" {{ (string)$value === '2' ? 'selected' : '' }}>2</option>
                                                 <option value="3" {{ (string)$value === '3' ? 'selected' : '' }}>3</option>
@@ -104,18 +104,6 @@
                         </div>
                     </div>
                 </div>
-                 <div class="form-group">
-                    <label class="col-md-3 col-xs-12 control-label">Nilai</label>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="fa fa-users"></span></span>
-                            <input type="text" class="form-control" value="{{ $nilai->nilai ?? 0 }}" readonly/>
-                        </div>
-                    </div>
-                </div>
-
-
-
 
             </div>
             <div class="panel-footer">

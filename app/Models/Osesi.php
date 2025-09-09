@@ -10,9 +10,14 @@ class Osesi extends Model
         'oujian_id',
         'urutan',
         'otemplate_id',
-    ];  
+    ];
 
    public function oujian(){
         return $this->belongsTo(Oujian::class);
+    }
+
+    public function otemplate()
+    {
+        return $this->belongsTo(Otemplate::class, 'otemplate_id');
     }
 }
