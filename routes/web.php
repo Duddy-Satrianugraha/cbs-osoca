@@ -66,8 +66,6 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::post('/copy/templates', [OtemplateController::class, 'copy'])->name('templates.copy.store');
     Route::resource('/ujian', OujianController::class);
     Route::post('/sesi/store', [OujianController::class, 'sesi_store'])->name('sesi.store');
-    Route::get('/sesi/penguji/{id}', [OujianController::class, 'penguji'])->name('sesi.penguji');
-    Route::post('/sesi/penguji/store', [OujianController::class, 'penguji_store'])->name('sesi.penguji.store');
     Route::resource('/peserta', OpesertaController::class)->except(['create']);
     Route::get('/peserta/{uid}/baru',[OpesertaController::class, 'create'])->name('peserta.create');
     Route::get('/peserta/{uid}/upload',[OpesertaController::class, 'upload'])->name('peserta.upload');
@@ -78,6 +76,8 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/export/nilai/{uid}', [NilaiController::class, 'export'])->name('export.nilai');
 
     Route::resource('/penguji', OpengujiController::class);
+    Route::post('/print/penguji', [OpengujiController::class, 'print'])->name('penguji.print');
+    Route::post('/massdelete/penguji', [OpengujiController::class, 'massDelete'])->name('penguji.massdelete');
 });
 
 Route::prefix('peserta')->middleware(Peserta::class)->name('peserta.')->group( function (){
@@ -91,6 +91,8 @@ Route::prefix('peserta')->middleware(Peserta::class)->name('peserta.')->group( f
 Route::prefix('osoca')->middleware([Osoca::class])->name('osoca.')->group( function (){
     Route::get('/logout', [OsocaController::class, 'logout'])->name('logout');
     Route::get('/tolist', [OsocaController::class, 'tolist'])->name('tolist');
+    Route::get('/penguji', [OsocaController::class, 'penguji'])->name('penguji.login');
+    Route::post('/penguji', [OsocaController::class, 'penguji_check'])->name('penguji.chek');
     Route::get('/mhs', [OsocaController::class, 'mhs'])->name('mhs.login');
     Route::post('/mhs', [OsocaController::class, 'mhs_check'])->name('mhs.chek');
     Route::get('/ujian', [OsocaController::class, 'ujian'])->name('ujian');

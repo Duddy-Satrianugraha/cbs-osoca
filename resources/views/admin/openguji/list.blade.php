@@ -46,7 +46,6 @@
                                         </div>
                                     </div>
                                 </form>
-
                                     <ul class="panel-controls">
                                             <li><a href="#" class="panel-add"><span class="fa fa-print"></span></a></li>
                                             <li><a href="#" class="panel-add"><span class="fa fa-plus"></span></a></li>
@@ -54,33 +53,45 @@
                                     </ul>
                                 </div>
                                 <div class="panel-body">
+                                   <form id="form-penguji" method="POST">
+                                            @csrf
+                                           <div style="margin-bottom:10px;">
+                                                <button type="submit" formaction="{{ route('admin.penguji.print') }}" formmethod="POST" target="_blank" class="btn btn-success">
+                                                    <i class="fa fa-print"></i> Cetak Kartu
+                                                </button>
 
-                                    <div class="table-responsive">
+                                                <button type="submit" formaction="{{ route('admin.penguji.massdelete') }}" formmethod="POST" class="btn btn-danger"
+                                                    onclick="return confirm('Yakin ingin menghapus penguji terpilih?');">
+                                                    <i class="fa fa-trash"></i> Hapus Terpilih
+                                                </button>
+                                            </div>
+                                    <div class="table-responsive mt-2">
                                         <table class="table table-bordered table-striped table-actions">
                                             <thead>
                                                 <tr>
+                                                    <th width="30">
+                                                    <input type="checkbox" id="checkAll"> <!-- Pilih semua -->
+                                                </th>
                                                     <th width="50">Nomor</th>
-
-                                                    <th width="200">Nama</th>
+                                                    <th >Nama</th>
                                                     <th width="200"> NIK</th>
-                                                    <th width="300">actions</th>
+                                                    <th width="100">actions</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
                                                 @php $i =  1;@endphp
                                                 @foreach ($penguji as $data)
                                                 <tr id="trow_{{$i}}">
+                                                    <td class="text-center">
+                                                        <input type="checkbox" name="penguji_id[]" value="{{ $data->id }}">
+                                                    </td>
                                                     <td class="text-center">{{$i}}</td>
                                                     <td> {{$data->nama}}</td>
                                                     <td> {{$data->nik}}</td>
 
                                                     <td>
-                                                        <a href="{{ route("admin.peserta.edit", $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-pencil"></span>Edit</a>
-                                                        <form id="del-temp-{{$data->id}}" action="{{ route('admin.peserta.destroy', $data->id)}}" method="POST" style="display: inline;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus ujian ini?');"><span class="fa fa-times"> Hapus</span></button>
-                                                        </form>
+                                                        <a href="{{ route("admin.penguji.edit", $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-pencil"></span>Edit</a>
                                                     </td>
                                                 </tr>
                                                 @php $i++;@endphp
@@ -91,7 +102,7 @@
                                         {{ $penguji->appends(['search' => request('search')])->links() }}
 
                                     </div>
-
+                                    </form>
                                 </div>
 
 
@@ -111,5 +122,10 @@
 @endsection
 
 @section('javascript')
-
+<script>
+    document.getElementById('checkAll').addEventListener('change', function(e) {
+        let checkboxes = document.querySelectorAll('input[name="penguji_id[]"]');
+        checkboxes.forEach(cb => cb.checked = e.target.checked);
+    });
+</script>
 @endsection

@@ -123,7 +123,10 @@ class DashbordController extends Controller
 
     public function osoca(){
         if(session()->has('Osoca')){
-            return redirect(route('osoca.mhs.login'))->with('msg', 'danger-Selamat datang kembali dok,Silahkan scan kartu peserta');
+            return redirect(route('osoca.penguji.login'))->with('msg', 'success-Selamat datang kembali dok,Silahkan scan kartu penguji');
+        }
+        if (session()->has('Penguji')) {
+            return redirect(route('osoca.mhs.login'))->with('msg', 'success-Selamat datang kembali dok, Selamat menguji peserta');
         }
          if (session()->has('Peserta')) {
                 return redirect(route('osoca.ujian'))->with('msg', 'success-Selamat datang kembali dok, Selamat menguji peserta');
@@ -136,7 +139,6 @@ class DashbordController extends Controller
         //dd($request);
         $request->validate([
             'soal_slug' => ['required','numeric'],
-            'name' => 'required',
             'captcha' => [
             'required','numeric',
             function ($attribute, $value, $fail) {
@@ -149,17 +151,13 @@ class DashbordController extends Controller
         $soal_slug = $request->soal_slug;
         $soal = Ostation::where('qrstation', $soal_slug)->first();
         if($soal){
-            if(is_null($soal->nama_penguji)) {
-            $soal->nama_penguji = $request->name;
-            $soal->save();
-            }
             session([
                 'Osoca' => $soal->oujian_id,
                 'Station' => $soal->urutan ?? null,
                 'current' => $soal->current ?? null,
                 'next' => $soal->next ?? null,
             ]);
-            return redirect(route('osoca.mhs.login'))->with('success', 'Station ditemukan silahkan scan kartu Penguji');
+            return redirect(route('osoca.penguji.login'))->with('msg', 'success-Selamat datang dok,Silahkan scan kartu penguji');
         } else {
             return redirect(route('osoca.login'))->with('msg', 'danger-Unable to find code');
         }

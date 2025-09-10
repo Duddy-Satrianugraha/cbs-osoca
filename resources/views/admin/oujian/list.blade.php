@@ -70,7 +70,6 @@
                                                     <td>{{$data->name}} ({{$data->ta}})</td>
                                                     <td>
                                                          <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
-                                                         <a href="{{ route('admin.sesi.penguji', $data->id)}}" class="btn btn-sm btn-danger"> {{ $data->stations()->whereNotNull('nama_penguji')->count() }} penguji</a>
                                                         <a class="badge badge-primary"> {{ $data->jml_sesi }} sesi</a>
                                                         <a href="{{ route("admin.ujian.show", $data->id)}}" class="btn btn-sm btn-success"> {{ $data->sesis()->whereNotNull('otemplate_id')->count() }} template</a>
 
@@ -78,9 +77,6 @@
                                                     </td>
                                                     <td>{{$data->tgl_ujian}}</td>
                                                     <td>
-                                                        @if($data->stations()->whereNotNull('nama_penguji')->count() > 0)
-                                                        <a href="{{ route('admin.pdf.station', $data->id)}}" class="btn btn-sm btn-danger"><span class="fa fa-print"></span> Cetak Kartu Penguji</a>
-                                                        @endif
                                                          <a href="{{ route("admin.ujian.edit", $data->id)}}" class="btn btn-warning btn-rounded btn-sm"><span class="fa fa-pencil"></span></a>
                                                         <form id="del-temp-{{$data->id}}" action="{{ route('admin.ujian.destroy', $data->id)}}" method="POST" style="display: inline;">
                                                             @csrf

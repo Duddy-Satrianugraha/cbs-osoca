@@ -277,35 +277,5 @@ class OujianController extends Controller
         }
     }
 
-    public function penguji($id)
-    {
-        $ostation = Ostation::where('oujian_id', $id)->get();
-        $oujian = Oujian::find($id);
-        return view('admin.oujian.plist', compact('ostation', 'oujian'));
-    }
-
-    public function penguji_store(Request $request){
-        //dd($request->all());
-        $request->validate([
-            'ujian_id' => 'required|integer',
-            'station' => 'required|array',
-        ]);
-        try{
-            DB::beginTransaction();
-
-
-            foreach($request->station as $key => $value){
-                $ostation = Ostation::find($key);
-                $ostation->nama_penguji = $value;
-                $ostation->save();
-            }
-            DB::commit();
-            return redirect()->back()->with('msg', 'success-Penguji tiap station berhasil disimpan');
-
-        } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('msg', 'danger-Simpan penguji gagal karena '.$e->getMessage());
-        }
-    }
 
 }

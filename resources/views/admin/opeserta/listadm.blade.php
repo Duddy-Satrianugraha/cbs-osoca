@@ -67,12 +67,15 @@
                                                 @foreach ($ujian as $data)
                                                 <tr id="trow_{{$i}}">
                                                     <td class="text-center">{{$i}}</td>
-                                                    <td>{{$data->name}} ({{$data->ta}})</td>
+                                                    <td>{{$data->name}} ({{$data->ta}})
+                                                        <a href="{{ route('admin.pdf.station', $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-print"></span> Cetak Kartu station</a>
+
+                                                    </td>
                                                     <td>
                                                         <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
                                                         <a class="badge badge-primary"> {{ $data->jml_sesi }} sesi</a>
                                                         <a class="badge badge-success"> {{ $data->peserta->count() }} peserta</a>
-                                                        
+
 
                                                     </td>
                                                     <td>{{$data->tgl_ujian}}</td>

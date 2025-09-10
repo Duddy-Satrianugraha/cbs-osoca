@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Opeserta;
 use App\Models\Oujian;
 use App\Models\Ostation;
+use App\Models\Openguji;
 use App\Models\Osesi;
 use App\Models\Otemplate;
 use App\Models\Onilai;
@@ -39,6 +40,46 @@ class OsocaController extends Controller
         session()->forget('Peserta');
         return redirect(route('osoca.mhs.login'));
     }
+
+    public function tostation(){
+        session()->forget('Penguji');
+        session()->forget('Sesi');
+        session()->forget('Peserta');
+        return redirect(route('osoca.penguji.login'));
+
+    }
+
+    Public function penguji(){
+        if(session()->has('Penguji')){
+            return redirect(route('osoca.mhs.login'))->with('msg', 'success-Selamat datang kembali dok,Silahkan scan kartu peserta');
+        }
+         if (session()->has('Peserta')) {
+                return redirect(route('osoca.ujian'))->with('msg', 'success-Selamat datang kembali dok, Selamat menguji peserta');
+            }
+            $data = $this->data_osoca();
+            //dd($data);
+        return view('osoca.penguji', compact('data'));
+    }
+
+    Public function penguji_check(Request $request){
+        $request->validate([
+            'soal_slug' => ['required','numeric'],
+
+        ]);
+        $qr_penguji = $request->soal_slug;
+        $penguji = Openguji::where('qr_penguji', $qr_penguji)->first();
+        $osoca = $this->data_osoca();
+        $osoca['station'] ->penguji_id = $penguji->id;
+        $osoca['station'] ->nama_penguji = $penguji->nama;
+        $osoca['station'] ->save();
+        if($penguji){
+            session([
+                'Penguji' => $penguji->id,
+            ]);
+            return redirect(route('osoca.mhs.login'))->with('msg', 'success-Selamat datang dok, Selamat menguji');
+        }
+    }
+
 
       public function mhs()
     {
@@ -78,6 +119,9 @@ class OsocaController extends Controller
     public function ujian(){
         if (!session()->has('Osoca')) {
                 return redirect(route('osoca.login'))->with('msg', 'danger-Silahkan scan kartu station');
+            }
+            if (!session()->has('Penguji')) {
+                return redirect(route('osoca.penguji.login'))->with('msg', 'danger-Silahkan scan kartu penguji');
             }
             if (!session()->has('Peserta')) {
                 return redirect(route('osoca.mhs.login'))->with('msg', 'danger-Silahkan scan kartu Peserta');

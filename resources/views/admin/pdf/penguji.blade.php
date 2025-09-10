@@ -57,29 +57,22 @@
 </head>
 <body>
 
-@foreach($stations->chunk(6) as $chunk)
+@foreach($pengujis->chunk(6) as $chunk)
     <table>
         @foreach($chunk->chunk(2) as $row)
             <tr>
-                @foreach($row as $station)
+                @foreach($row as $penguji)
                     <td>
                         <img src="{{ public_path('img/logo_fkugj.jpg')}}" style="width: 300px";>
-
-                        <h2 class="title">Kartu Peserta {{ $station->ujian }}</h2>
+                        <h2 class="title">Kartu Penguji OSOCA</h2>
                         <div class="card">
                             <div class="left">
-                                <h3><strong> NPM : </strong> {{ $station->npm }}<br>
-                                    <strong> Nama : </strong> {{ $station->name }}<br>
-                                </h4>
-                                <h2><strong> Station {{ $station->station }}</strong> <br>
-
-                                </h2>
-
-
+                                <h2><strong> Nama : {{ $penguji->nama }} </strong></h2>
+                                 <h3><strong> NIK : {{ $penguji->nik }} </strong></h3>
                             </div>
                             <div class="right">
                                 <div class="qrcode">
-                                    <img src="data:image/png;base64,{{ base64_encode(QrCode::format('png')->size(150)->generate($station->qrpeserta)) }}" alt="QR Code">
+                                    <img src="data:image/png;base64,{{ base64_encode(QrCode::format('png')->size(150)->generate($penguji->qr_penguji)) }}" alt="QR Code">
                                 </div>
                             </div>
                         </div>

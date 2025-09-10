@@ -40,7 +40,7 @@ class OpengujiController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.openguji.new');
     }
 
     /**
@@ -48,7 +48,17 @@ class OpengujiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|max:255',
+        ]);
+        $qr = numran(15);
+        $penguji = Openguji::create([
+            'nama' => $request->nama,
+            'nik' => $request->nik,
+            'qr_penguji' => $qr,
+        ]);
+        return redirect(route('admin.penguji.index'))->with('msg', 'success-Data berhasil disimpan');
     }
 
     /**
@@ -62,24 +72,53 @@ class OpengujiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Openguji $openguji)
+    public function edit($id)
     {
-        //
+        $penguji = Openguji::findOrFail($id);
+        return view('admin.openguji.edit', compact('penguji'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Openguji $openguji)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|max:255',
+        ]);
+        $penguji = Openguji::findOrFail($id);
+        $penguji->update([
+            'nama' => $request->nama,
+            'nik' => $request->nik,
+        ]);
+        return redirect()->back()->with('msg', 'success-Data berhasil disimpan');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Openguji $openguji)
-    {
-        //
-    }
+    public function print(Request $request)
+        {
+            //dd($request);
+            $ids = $request->penguji_id; // array id penguji terpilih
+            if (!$ids) {
+                return back()->with('error', 'Silakan pilih minimal satu penguji.');
+            }
+
+            $pengujis = Openguji::whereIn('id', $ids)->get();
+           // dd($pengujis);
+           $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.pdf.penguji', compact('pengujis'))
+            ->setPaper('A4', 'portrait');
+            return $pdf->stream('kartu_penguji.pdf');
+        }
+
+    public function massDelete(Request $request)
+        {
+            $ids = $request->penguji_id;
+            if (!$ids) {
+                return back()->with('error', 'Silakan pilih minimal satu penguji.');
+            }
+
+            Openguji::whereIn('id', $ids)->delete();
+
+            return back()->with('success', 'Penguji terpilih berhasil dihapus.');
+        }
 }
