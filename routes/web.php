@@ -11,7 +11,7 @@ use App\Http\Controllers\PowerController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\OpesertaController;
-
+use App\Http\Controllers\OpengujiController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PesertaController;
 
@@ -30,7 +30,7 @@ Route::get('/feedback', function () {
     return view('oumpan.login');
 });
 Route::get('/', function () {
-    return redirect(route('penguji.login'));
+    return view('auth.login');
 });
 
 Route::post('/feedback', [OfeedbackController::class, 'chek_feed'])->name('feedback.chek');
@@ -76,6 +76,8 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/kartu/station/{uid}', [PdfController::class, 'station'])->name('pdf.station');
     Route::resource('/nilai', NilaiController::class);
     Route::get('/export/nilai/{uid}', [NilaiController::class, 'export'])->name('export.nilai');
+
+    Route::resource('/penguji', OpengujiController::class);
 });
 
 Route::prefix('peserta')->middleware(Peserta::class)->name('peserta.')->group( function (){

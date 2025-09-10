@@ -6,12 +6,12 @@
 
 @section('content')
 
-        <div class="login-title" style="color: #450163;"><strong style="color: white;">Log In</strong> Mahasiswa</div>
+        <div class="login-title" style="color: #450163;"><strong style="color: white;">Log In</strong> Panitia</div>
         <form action="{{ route('login') }}" class="form-horizontal" method="post">
             @csrf
         <div class="form-group @error('username') has-error @enderror">
             <div class="col-md-12">
-                <input type="text" class="form-control" name='username' placeholder="Nomor Pokok mahasiswa" autocomplete="off" />
+                <input type="text" class="form-control" name='username' placeholder="Username" autocomplete="off" />
             </div>
         </div>
         <div class="form-group @error('password') has-error @enderror">
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-6">
-                <a href="{{ route('register') }}" class="btn btn-link ">Belum daftar?</a>
+
             </div>
             <div class="col-md-6">
                 <button class="btn btn-block" style="background-color: #450163; color: white;">Log In</button>
@@ -42,7 +42,8 @@
 @endsection
 
 @section('links')
-<a href="{{ route('penguji.login')}}">CBS-OSOCA</a> |
+<a href="{{ url('/feedback')}}">Feedback</a> |
+<a href="{{ route('osoca.login')}}">OSOCA</a> |
 @endsection
 
 @section('javascript')

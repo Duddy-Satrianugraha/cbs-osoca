@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(OnilaisTableSeeder::class);
         // $this->call(OfeedbacksTableSeeder::class);
+        $this->call(OpengujisTableSeeder::class);
     }
 }

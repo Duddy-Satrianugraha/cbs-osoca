@@ -48,7 +48,7 @@
         <li class="xn-title">Tim Materi</li>
         <li class="{{ \Request::is('admin/templates/*') || \Request::is('admin/templates') ? 'active' : ''  }}"><a href="{{ route('admin.templates.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Template ujian</span></a></li>
         <li class="{{ \Request::is('admin/ujian/*') || \Request::is('admin/ujian') ? 'active' : ''  }}"><a href="{{ route('admin.ujian.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Ujian OSOCA</span></a></li>
-
+        <li class="{{ \Request::is('admin/penguji/*') || \Request::is('admin/penguji') ? 'active' : ''  }}"><a href="{{ route('admin.penguji.index')}}"><span class="fa fa-folder"></span><span class="xn-text"> Penguji</span></a></li>
         @endcan
         @can('admin')
 

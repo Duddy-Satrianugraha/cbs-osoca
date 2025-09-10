@@ -7,6 +7,7 @@ use App\Models\Osesi;
 use Illuminate\Http\Request;
 use App\Models\Oujian;
 use App\Models\Ostation;
+use App\Models\Openguji;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +23,8 @@ class DashbordController extends Controller
            $sesi = Osesi::all();
            $station = Ostation::all();
            $peserta = Opeserta::all();
-           $penguji = Ostation::whereNotNull('nama_penguji')->get();
+           $penguji = Openguji::all();
+           //$penguji = Ostation::whereNotNull('nama_penguji')->get();
         return view('start', compact('ujian', 'sesi', 'station', 'peserta','penguji'));
     }
 

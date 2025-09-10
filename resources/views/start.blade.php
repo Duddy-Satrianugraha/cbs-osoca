@@ -54,7 +54,7 @@
             <div class="widget-data">
                 <div class="widget-int num-count">{{count($penguji)}}</div>
                 <div class="widget-title">penguji</div>
-                <div class="widget-subtitle">terdaftar pada OSIN</div>
+                <div class="widget-subtitle">terdaftar pada CBS-OSOCA</div>
             </div>
             <div class="widget-controls">
                 <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
