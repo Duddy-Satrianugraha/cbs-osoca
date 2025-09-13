@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('npm');
             $table->text('feedback')->nullable();
+            $table->boolean('is_sent')->default(false);
             $table->timestamps();
         });
     }

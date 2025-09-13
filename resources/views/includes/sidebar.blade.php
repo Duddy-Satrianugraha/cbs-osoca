@@ -39,6 +39,7 @@
         @can('it')
         <li class="xn-title">IT Administrator</li>
         <li class="{{ \Request::is('admin/users/*') || \Request::is('admin/users') ? 'active' : ''  }}"><a href="{{ route('admin.users.index')}}"><span class="fa fa-users"></span><span class="xn-text"> Users</span> </a></li>
+        <li class="{{ \Request::is('admin/peserta/*') || \Request::is('admin/peserta') ? 'active' : ''  }}"><a href="{{ route('admin.peserta.index')}}"><span class="fa fa-users"></span><span class="xn-text"> Peserta</span> </a></li>
         @endcan
          @can('koc')
         <li class="xn-title">KA OSOCA</li>

@@ -12,4 +12,10 @@ class Ofeedback extends Model
     public function peserta(){
         return $this->belongsTo(Opeserta::class);
     }
+
+    public function station()
+    {
+        return $this->belongsTo(Ostation::class, 'station_id');
+    }
+
 }

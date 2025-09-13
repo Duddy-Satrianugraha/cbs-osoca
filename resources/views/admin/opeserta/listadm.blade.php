@@ -68,21 +68,28 @@
                                                 <tr id="trow_{{$i}}">
                                                     <td class="text-center">{{$i}}</td>
                                                     <td>{{$data->name}} ({{$data->ta}})
-                                                        <a href="{{ route('admin.pdf.station', $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-print"></span> Cetak Kartu station</a>
 
                                                     </td>
                                                     <td>
                                                         <a class="badge badge-deafult"> {{ $data->jml_station }} station</a>
                                                         <a class="badge badge-primary"> {{ $data->jml_sesi }} sesi</a>
                                                         <a class="badge badge-success"> {{ $data->peserta->count() }} peserta</a>
+                                                        @can("it")
 
+                                                        <a href="{{ route("admin.kirim.feedback", $data->id)}}" class="btn btn-info btn-sm"><span class="fa fa-search"></span>Kirim Feedback</a>
+                                                        @endcan
 
                                                     </td>
                                                     <td>{{$data->tgl_ujian}}</td>
                                                     <td>
+                                                        @can("admin")
                                                         <a href="{{ route("admin.peserta.show", $data->id)}}" class="btn btn-info btn-sm"><span class="fa fa-search"></span>Daftar Peserta</a>
                                                         <a href="{{ route('admin.pdf.peserta', $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-print"></span> Cetak Kartu Peserta</a>
-
+                                                      @endcan
+                                                        @can("it")
+                                                        <a href="{{ route('admin.pdf.station', $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-print"></span> Cetak Kartu station</a>
+                                                        <a href="{{ route("admin.peserta.avatar.update", $data->id)}}" class="btn btn-info btn-sm"><span class="fa fa-search"></span>Update Avatar</a>
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                                 @php $i++;@endphp

@@ -67,6 +67,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::resource('/ujian', OujianController::class);
     Route::post('/sesi/store', [OujianController::class, 'sesi_store'])->name('sesi.store');
     Route::resource('/peserta', OpesertaController::class)->except(['create']);
+    Route::get('/peserta/{uid}/avatar',[OpesertaController::class, 'avatar_update'])->name('peserta.avatar.update');
     Route::get('/peserta/{uid}/baru',[OpesertaController::class, 'create'])->name('peserta.create');
     Route::get('/peserta/{uid}/upload',[OpesertaController::class, 'upload'])->name('peserta.upload');
     Route::post('/peserta/upload',[OpesertaController::class, 'store_upload'])->name('peserta.store_upload');
@@ -74,7 +75,7 @@ Route::prefix('admin')->middleware(['auth', Panitia::class ])->name('admin.')->g
     Route::get('/kartu/station/{uid}', [PdfController::class, 'station'])->name('pdf.station');
     Route::resource('/nilai', NilaiController::class);
     Route::get('/export/nilai/{uid}', [NilaiController::class, 'export'])->name('export.nilai');
-
+    Route::get('/export/feedback/{uid}', [OfeedbackController::class, 'kirim_feedback'])->name('kirim.feedback');
     Route::resource('/penguji', OpengujiController::class);
     Route::post('/print/penguji', [OpengujiController::class, 'print'])->name('penguji.print');
     Route::post('/massdelete/penguji', [OpengujiController::class, 'massDelete'])->name('penguji.massdelete');

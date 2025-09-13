@@ -86,7 +86,14 @@
 <div class="card">
     <div class="row">
 
-        <div class="col-xs-12">
+      <div class="col-xs-4 text-center">
+        @if(is_null($peserta->avatar))
+                    <img src="{{ asset('img/nouserr.jpg')}}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
+        @else
+                    <img src="http://localhost:82/f/{{ $peserta->qrpeserta }}/{{ $peserta->avatar }}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
+         @endif
+                </div>
+        <div class="col-xs-8">
 
             <h5 style="margin-top:0;">Nama :<strong> {{$peserta->name}}</strong></h5>
             <p style="margin: 0;">Npm: <strong>{{ $peserta->npm}}</strong></p>
@@ -96,7 +103,7 @@
     <div class="row">
         <div class="col-xs-4 text-center">
 
-                
+
 
 
         </div>
