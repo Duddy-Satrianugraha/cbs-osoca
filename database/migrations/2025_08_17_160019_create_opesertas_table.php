@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('qrpeserta');
             $table->integer('station');
             $table->integer('sesi');
+            $table->string('avatar')->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

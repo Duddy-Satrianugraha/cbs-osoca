@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'feedback_api' => [
+        'url' => env('FEEDBACK_API_URL', 'http://host.docker.internal:82/api/'),
+    ],
+
 ];

@@ -6,6 +6,7 @@ use App\Models\Opeserta;
 use App\Models\Oujian;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Http;
 
 use App\Imports\ImportPeserta;
 
@@ -201,7 +202,7 @@ class OpesertaController extends Controller
         .count($existing).' baris dilewati (duplikat/kosong).');
     }
 
-    public function store_upload(Request $request)
+    public function store_uploadY(Request $request)
         {
             $validated = $request->validate([
                 'file' => ['required','file','mimes:xlsx,xls,csv','max:51200'],
@@ -302,5 +303,111 @@ class OpesertaController extends Controller
                 .$skippedDuplicateInFile.' baris dilewati (duplikat di file).'
             );
         }
+
+        public function store_upload(Request $request)
+{
+    $validated = $request->validate([
+        'file' => ['required','file','mimes:xlsx,xls,csv','max:51200'],
+        'uid'  => ['required','integer','exists:oujians,id'],
+    ]);
+
+    $dataPeserta = Excel::toCollection(new ImportPeserta, $validated['file']);
+    $sheet = $dataPeserta[0] ?? collect();
+
+    $npms = collect($sheet)
+        ->skip(1)
+        ->pluck(2)
+        ->filter()
+        ->all();
+
+    $existing = \App\Models\Opeserta::where('oujian_id', $validated['uid'])
+        ->whereIn('npm', $npms)
+        ->pluck('npm')
+        ->all();
+
+    $running = [];
+    $pesertaarray = [];
+    $seenInThisImport = [];
+    $skippedDuplicateInFile = 0;
+
+    foreach ($sheet as $key => $row) {
+        if ($key < 1) continue;
+
+        if ($row->filter(fn($val) => !is_null($val) && $val !== '')->isEmpty()) {
+            continue;
+        }
+
+        $nama    = trim((string)($row[1] ?? ''));
+        $npm     = trim((string)($row[2] ?? ''));
+        $station = $row[3] ?? null;
+
+        if ($npm === '') {
+            return back()->withErrors([
+                'file' => "Baris ke-".($key+1).": NPM wajib diisi."
+            ]);
+        }
+        if (!ctype_digit((string)$station)) {
+            return back()->withErrors([
+                'file' => "Baris ke-".($key+1).": kolom Station harus angka bilangan bulat."
+            ]);
+        }
+        $station = (int)$station;
+
+        if (in_array($npm, $existing, true)) {
+            continue;
+        }
+
+        if (isset($seenInThisImport[$npm])) {
+            $skippedDuplicateInFile++;
+            continue;
+        }
+        $seenInThisImport[$npm] = true;
+
+        $running[$station] = ($running[$station] ?? 0) + 1;
+        $sesi = $running[$station];
+
+        $pesertaarray[] = [
+            'oujian_id'  => $validated['uid'],
+            'name'       => $nama,
+            'npm'        => $npm,
+            'station'    => $station,
+            'sesi'       => $sesi,
+            'qrpeserta'  => md5($npm),
+        ];
+    }
+
+    if (count($pesertaarray)) {
+        \App\Models\Opeserta::insert($pesertaarray);
+    }
+
+    // 🔹 Ambil avatar dengan bulk request ke App B bisa dipindah ke tempat lain dan pake tombol
+    $apiUrl = config('services.feedback_api.url').'avatars';
+    $response = Http::post($apiUrl, [
+        'npms' => $npms,
+    ]);
+    //dd($response->json());
+    if ($response->successful()) {
+        $avatars = $response->json();
+        foreach ($avatars as $npm => $url) {
+            if ($url) {
+                \App\Models\Opeserta::where('oujian_id', $validated['uid'])
+                    ->where('npm', $npm)
+                    ->update(['avatar' => $url]);
+            }
+        }
+    }
+
+    $inserted = count($pesertaarray);
+    $skippedExisting = count($existing);
+
+    return redirect(route('admin.peserta.show', $validated['uid']))->with(
+        'msg',
+        'success-Import selesai. '
+        .$inserted.' baris baru dimasukkan, '
+        .$skippedExisting.' baris dilewati (duplikat di DB), '
+        .$skippedDuplicateInFile.' baris dilewati (duplikat di file).'
+    );
+}
+
 
 }
