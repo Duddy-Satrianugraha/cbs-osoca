@@ -9,8 +9,8 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-80}:80'
-            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+            - '81:80'
+            - '${VITE_PORT:-9173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
@@ -20,14 +20,14 @@ services:
         volumes:
             - '.:/var/www/html'
         networks:
-            - sail
+            - sail-shared
         depends_on:
-            - mysql
-            - mailpit
-    mysql:
+            - mysqly
+            - mailpity
+    mysqly:
         image: 'mysql/mysql-server:8.0'
         ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
+            - '${FORWARD_DB_PORT:-33062}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: '%'
@@ -39,7 +39,7 @@ services:
             - 'sail-mysql:/var/lib/mysql'
             - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
-            - sail
+            - sail-shared
         healthcheck:
             test:
                 - CMD
@@ -48,16 +48,17 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
-    mailpit:
+    mailpity:
         image: 'axllent/mailpit:latest'
         ports:
-            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
-            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+            - '${FORWARD_MAILPIT_PORT:-1125}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8125}:8025'
         networks:
-            - sail
+            - sail-shared
 networks:
-    sail:
-        driver: bridge
+  sail-shared:
+    external: true
+    name: sail-network
 volumes:
     sail-mysql:
         driver: local
