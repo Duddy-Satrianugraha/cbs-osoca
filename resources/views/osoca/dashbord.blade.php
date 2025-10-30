@@ -90,7 +90,7 @@
         @if(is_null($peserta->avatar))
                     <img src="{{ asset('img/nouserr.jpg')}}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
         @else
-                    <img src="http://localhost:82/f/{{ $peserta->qrpeserta }}/{{ $peserta->avatar }}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
+                    <img src="https://cbs-feed.flarology.my.id/f/{{ $peserta->qrpeserta }}/{{ $peserta->avatar }}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
          @endif
                 </div>
         <div class="col-xs-8">
@@ -144,14 +144,14 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="text-center">7 .</td>
+                                                    <td class="text-center">3 .</td>
                                                     <td>Skenario Klinik</td>
                                                     <td>
                                                          {!!$template->soal !!}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center">7 .</td>
+                                                    <td class="text-center">4 .</td>
                                                     <td>Tugas</td>
                                                     <td>
                                                          {!! $template->tugas_mhs !!}
@@ -159,7 +159,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="text-center" rowspan="2">8 .</td>
+                                                    <td class="text-center" rowspan="2">5 .</td>
                                                     <td rowspan="2">Mininotes</td>
                                                     <td>
                                                         {!! $template->mininotes !!}

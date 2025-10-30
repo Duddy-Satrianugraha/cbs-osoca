@@ -30,7 +30,7 @@
                                 <div class="panel-heading">
                                     <h3 class="panel-title">List peserta Ujian</h3>
 
-                                    
+
                                   <form action="{{ route('admin.peserta.show', $ujian->id) }}" method="GET" class="row">
                                     <div class="col-md-4">
                                         <div class="input-group">
@@ -47,12 +47,12 @@
                                         </div>
                                     </div>
                                 </form>
-                               
+
                                     <ul class="panel-controls">
                                             <li><a href="{{ route('admin.pdf.peserta', $ujian->id)}}" class="panel-add"><span class="fa fa-print"></span></a></li>
                                             <li><a href="{{ route('admin.peserta.upload', $ujian->id)}}" class="panel-add"><span class="fa fa-upload"></span></a></li>
                                             <li><a href="{{ route('admin.peserta.create', $ujian->id)}}" class="panel-add"><span class="fa fa-plus"></span></a></li>
-                                        
+
                                     </ul>
                                 </div>
                                 <div class="panel-body">
@@ -62,7 +62,7 @@
                                             <thead>
                                                 <tr>
                                                     <th width="50">Nomor</th>
-                                                    
+
                                                     <th width="200">Station</th>
                                                     <th width="200">Urutan</th>
                                                     <th>Nama</th>
@@ -74,13 +74,18 @@
                                                 @php $i =  1;@endphp
                                                 @foreach ($peserta as $data)
                                                 <tr id="trow_{{$i}}">
-                                                    <td class="text-center">{{$i}}</td> 
+                                                    <td class="text-center">{{$i}}</td>
                                                     <td>Station {{$data->station}}</td>
                                                     <td>Sesi {{$data->sesi}}</td>
                                                     <td>{{$data->name}} </td>
-                                                    <td>{{$data->npm}}</td>
-                                                   
-                                                    
+                                                    <td>{{$data->npm}}<br>
+                                                        @if(is_null($data->avatar))
+                                                                    <img src="{{ asset('img/nouserr.jpg')}}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
+                                                        @else
+                                                                    <img src="https://cbs-feed.flarology.my.id/f/{{ $data->qrpeserta }}/{{ $data->avatar }}" alt="avatar" class="logo" style="height: 80px; border-radius: 10%; object-fit: cover;">
+                                                         @endif</td>
+
+
                                                     <td>
                                                         <a href="{{ route("admin.peserta.edit", $data->id)}}" class="btn btn-warning btn-sm"><span class="fa fa-pencil"></span>Edit</a>
                                                         <form id="del-temp-{{$data->id}}" action="{{ route('admin.peserta.destroy', $data->id)}}" method="POST" style="display: inline;">

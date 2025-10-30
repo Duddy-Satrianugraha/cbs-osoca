@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Penguji OSOCA</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -94,7 +94,7 @@
     <div class="center-info flex-grow-1 text-center">
         <strong>SELAMAT DATANG DI {{strtoupper( $osodata['ujian']->name) }} {{ strtoupper($osodata['ujian']->ta) }}</strong><br>
        Tanggal : {{ tgl_indo($osodata['ujian']->tgl_ujian) }}
-        
+
     </div>
     <div class="user-info">
         <div class="dropdown">
@@ -115,8 +115,8 @@
         <div class="col-lg-8 col-md-7 mb-4">
             <h6>Rubrik Soal {{$template->judul_station}}</h6>
 
-            
-              
+
+
                 <div style="max-height: 340px; overflow-y: auto;">
     <table class="table table-borderless">
         <thead>
@@ -148,7 +148,7 @@
 
             </tr>
             @endforeach
-            
+
             <tr><td></td>
                 <td></td>
                 <td id="feed"></td>
@@ -157,7 +157,7 @@
         </tbody>
     </table>
     </div>
-             
+
 
 
         </div>
@@ -167,7 +167,7 @@
             <!-- Card 1: Info Station dengan Foto di Kiri -->
             <div class="card mb-3">
                 <div class="card-body d-flex">
-                    
+
 
                     <!-- Informasi Station + Tombol -->
                     <div class="flex-grow-1 w-100">
@@ -191,7 +191,7 @@
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <p class="mb-0 font-weight-bold">Peserta Ujian:</p>
                         <div class="d-flex align-items-center">
-                            
+
                         </div>
                     </div>
 
@@ -219,7 +219,7 @@
         <div class="card-body">
             <div class="mb-3">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#modalPenilaian">LIHAT DETAIL SOAL</button>
-                
+
             </div>
             <div class="detail-soal">
                 <div class="table-responsive">
@@ -242,38 +242,38 @@
                                                     <td>Judul Soal</td>
                                                     <td>{{$template->judul_station}}</td>
                                                 </tr>
-                                                
+
                                                 <tr>
-                                                    <td class="text-center">7 .</td>
+                                                    <td class="text-center">3 .</td>
                                                     <td>Skenario Klinik</td>
-                                                    <td>                                                   
-                                                         {!!$template->soal !!}  
+                                                    <td>
+                                                         {!!$template->soal !!}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center">7 .</td>
+                                                    <td class="text-center">4 .</td>
                                                     <td>Tugas</td>
-                                                    <td>                           
+                                                    <td>
                                                          {!! $template->tugas_mhs !!}
                                                     </td>
                                                 </tr>
-                                              
+
                                                 <tr>
-                                                    <td class="text-center" rowspan="2">8 .</td>
+                                                    <td class="text-center" rowspan="2">5 .</td>
                                                     <td rowspan="2">Mininotes</td>
                                                     <td>
                                                         {!! $template->mininotes !!}
 
                                                     </td>
                                                 </tr>
-                                                
+
                                             </tbody>
                                         </table>
                                         <hr/>
                                         <div class="text-center">
                                             <h3>Rubrik Ujian</h3>
                                             <h4>{{$template->judul_station}}</h4>
-                                            
+
                                         </div>
                                         <table class="table table-bordered table-striped">
                                             <thead>
@@ -284,7 +284,7 @@
                                                     <th width="200">Nilai 1</th>
                                                     <th width="200">Nilai 2</th>
                                                     <th width="200">Nilai 3</th>
-                                                    
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -306,7 +306,7 @@
                                                     <td>
                                                        {!! $data['nilai_3'] !!}
                                                     </td>
-                                                   
+
                                                 </tr>
                                                 @endforeach
 

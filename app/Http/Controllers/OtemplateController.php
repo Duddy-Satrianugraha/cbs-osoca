@@ -17,7 +17,7 @@ class OtemplateController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {   
+    {
             $search = $request->query('search');
 
         // Ambil 1 team pertama milik user (atau null)
@@ -38,7 +38,7 @@ class OtemplateController extends Controller
           return view('admin.otemplate.list', compact('templates', 'search'));
     }
 
-   
+
     /**
      * Show the form for creating a new resource.
      */
@@ -47,10 +47,68 @@ class OtemplateController extends Controller
         return view('admin.otemplate.new');
     }
 
+
+    public function store(Request $request)
+    {
+        // VALIDASI
+        $validated = $request->validate([
+            'nama_template' => 'required|string|max:255',
+            'nomor_soal'    => 'required|string|max:255',
+            'judul_soal'    => 'required|string|max:255',
+
+            // rubrik: array minimal 1 elemen, tiap elemen punya field name
+            'rubrik'            => ['required', 'array', 'min:1'],
+            'rubrik.*.name'     => ['required', 'string', 'max:255'],
+        ], [
+            'rubrik.required'           => 'Minimal harus ada satu rubrik.',
+            'rubrik.array'              => 'Format rubrik tidak valid.',
+            'rubrik.min'                => 'Minimal harus ada satu rubrik.',
+            'rubrik.*.name.required'    => 'Nama rubrik wajib diisi.',
+            'rubrik.*.name.max'         => 'Nama rubrik maksimal 255 karakter.',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $template = Otemplate::create([
+                'user_id'       => Auth::id(),
+                'nama_template' => $validated['nama_template'],
+                'nomor_station' => $validated['nomor_soal'],
+                'judul_station' => $validated['judul_soal'],
+            ]);
+
+            // SUSUN DATA RUBRIK (urut mulai 1)
+            $rows = [];
+            $now  = now();
+            foreach (array_values($validated['rubrik']) as $i => $item) {
+                $rows[] = [
+                    'otemplate_id' => $template->id,
+                    'urutan'       => $i + 1,
+                    'name'         => trim($item['name']),
+                    'created_at'   => $now,
+                    'updated_at'   => $now,
+                ];
+            }
+
+            Orubrik::insert($rows);
+
+            DB::commit();
+            return redirect()
+                ->route('admin.templates.index')
+                ->with('msg', 'success-Data berhasil disimpan');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()
+                ->route('admin.templates.index')
+                ->with('msg', 'danger-Data gagal disimpan: '.$e->getMessage());
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+
+
+    public function store1(Request $request)
     {
        $validated =  $request->validate([
             'nama_template' => 'required|string|max:255',
@@ -91,7 +149,7 @@ class OtemplateController extends Controller
      * Display the specified resource.
      */
     public function show($id)
-    { 
+    {
         $otemplate = Otemplate::find($id);
         $temp = $otemplate->rubrix()->get();
       // dd($temp);
@@ -282,11 +340,11 @@ class OtemplateController extends Controller
                 return $q->whereIn('user_id', $userIds);
             })
             ->get();
-        
+
         return view('admin.otemplate.copy', compact('templates'));
     }
     public function copy(Request $request){
-            $request->validate([                
+            $request->validate([
                 'old_id_template' => 'required|integer',
                 'nama_template' => 'required|string',
             ]);
